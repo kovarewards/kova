@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kova — Interactive Build Checklist (Claude Code · Windows Edition)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D1117;--surf:#161E2C;--surf2:#1A2438;--surf3:#1E2A40;
+  --border:#1E2433;--border2:#263354;
+  --acc:#7C8FFF;--acc2:#5A6ADA;--as:rgba(124,143,255,.10);--ab:rgba(124,143,255,.28);
+  --text:#E8EEFF;--dim:#5A6A9A;--muted:#3A4A7A;
+  --red:#F87171;--green:#4ADE80;--gold:#FBBF24;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dim);font-family:'Inter',sans-serif;font-size:14px;line-height:1.65}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 80px}
+#top{position:sticky;top:0;z-index:100;background:rgba(13,17,23,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 20px}
+.topin{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:14px}
+.tname{font-size:16px;font-weight:900;color:var(--text);letter-spacing:-.5px;white-space:nowrap}
+.tsub{font-size:9px;color:var(--muted);letter-spacing:2px}
+.pbar{flex:1;height:8px;background:var(--surf2);border-radius:99px;overflow:hidden}
+.pfill{height:100%;width:0%;background:linear-gradient(90deg,var(--acc2),var(--acc));border-radius:99px;transition:width .3s}
+.pct{font-size:12px;font-weight:800;color:var(--acc);min-width:74px;text-align:right;font-variant-numeric:tabular-nums}
+.eyebrow{font-size:10px;color:var(--acc);letter-spacing:2.5px;font-weight:700;text-transform:uppercase;margin:44px 0 8px}
+h1{font-size:clamp(26px,4vw,42px);font-weight:900;letter-spacing:-1.5px;color:var(--text);line-height:1.08;margin-bottom:14px}
+.lead{max-width:660px;line-height:1.8;margin-bottom:8px}
+.step{background:var(--surf);border:1px solid var(--border);border-radius:16px;margin-top:22px;overflow:hidden}
+.shead{display:flex;align-items:center;gap:14px;padding:18px 22px;border-bottom:1px solid var(--border);background:var(--surf2)}
+.snum{font-size:10px;font-weight:800;letter-spacing:2px;color:var(--acc);white-space:nowrap}
+.stitle{font-size:16px;font-weight:800;color:var(--text);letter-spacing:-.4px;flex:1}
+.scount{font-size:11px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.scount.done{color:var(--green)}
+.sbody{padding:10px 22px 22px}
+.sbody p{font-size:13px;margin:12px 0}
+.sbody p b,.sbody li b{color:var(--text);font-weight:600}
+.warn{border-left:3px solid var(--gold);background:rgba(251,191,36,.06);border-radius:0 10px 10px 0;padding:10px 14px;font-size:12.5px;margin:12px 0}
+.warn b{color:var(--gold)}
+.danger{border-left:3px solid var(--red);background:rgba(248,113,113,.06);border-radius:0 10px 10px 0;padding:10px 14px;font-size:12.5px;margin:12px 0}
+.danger b{color:var(--red)}
+.ask{border-left:3px solid var(--acc);background:var(--as);border-radius:0 10px 10px 0;padding:11px 15px;font-size:12.5px;margin:12px 0}
+.ask .al{font-size:9px;letter-spacing:2px;font-weight:800;color:var(--acc);text-transform:uppercase;margin-bottom:5px}
+.ask .q{color:var(--text);line-height:1.7}
+.item{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border)}
+.item:last-of-type{border-bottom:none}
+.item input{display:none}
+.box{flex:none;width:19px;height:19px;border:1.5px solid var(--muted);border-radius:6px;margin-top:2px;cursor:pointer;position:relative;transition:all .15s}
+.item input:checked + .box{background:var(--acc);border-color:var(--acc)}
+.item input:checked + .box::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#0D1117;font-size:12px;font-weight:900}
+.itext{font-size:13px;cursor:pointer;flex:1;user-select:none}
+.item input:checked ~ .itext{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--muted)}
+.itext b{color:var(--text);font-weight:600}
+.item input:checked ~ .itext b{color:var(--muted)}
+.item.commit .box{border-color:var(--green);border-radius:50%}
+.item.commit input:checked + .box{background:var(--green);border-color:var(--green)}
+.sub{font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--acc);margin:20px 0 4px}
+pre{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 16px;overflow-x:auto;margin:10px 0;position:relative}
+code{font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.6;color:#B8C4E8}
+.cm{color:var(--muted)}
+.copy{position:absolute;top:8px;right:8px;background:var(--surf2);border:1px solid var(--border2);color:var(--dim);font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;border-radius:6px;padding:4px 9px;cursor:pointer}
+.copy:hover{color:var(--acc);border-color:var(--ab)}
+details{margin:10px 0}
+details summary{cursor:pointer;font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;padding:6px 0}
+details summary:hover{color:var(--acc)}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+th{font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--border2)}
+td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+td:first-child{color:var(--text);font-weight:600}
+.k{background:var(--surf3);border:1px solid var(--border2);border-radius:4px;padding:1px 6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--acc)}
+footer{text-align:center;font-size:11px;color:var(--muted);padding:40px 0 0}
+</style>
+</head>
+<body>
+
+<div id="top"><div class="topin">
+  <div><div class="tname">Kova Build</div><div class="tsub">CLAUDE CODE · WINDOWS · V3</div></div>
+  <div class="pbar"><div class="pfill" id="pfill"></div></div>
+  <div class="pct" id="pct">0 / 0</div>
+</div></div>
+
+<div class="wrap">
+
+<div class="eyebrow">Kova — Fresh Machine Build · No Coding Experience Required</div>
+<h1>Interactive build checklist</h1>
+<p class="lead">This version is built around one workflow decision: <b style="color:var(--text)">you don't write the code — Claude Code does.</b> Your job is accounts, dashboards, decisions, verification, and the card database. Each build step has three parts: a <b style="color:var(--acc)">prompt you give Claude Code</b>, reference code it should match (collapsed — Claude Code reads it from the docs folder, you rarely need to), and a <b style="color:var(--green)">verify + commit checkpoint</b>. The commit checkpoint is your insurance: a saved working state you can always roll back to.</p>
+<p class="lead" style="font-size:12px;color:var(--muted)">Written for Windows: your terminal is <b style="color:var(--text)">PowerShell</b>, and there is no Mac in the loop — iOS builds happen on Expo's cloud Macs (EAS), and testing happens on your real iPhone via Expo Go. Checkboxes track progress while this page is open (they reset on reload). Code blocks have copy buttons. Green circles are commit checkpoints — never skip them.</p>
+
+<!-- ================= STEP 0 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 0</span><span class="stitle">Accounts &amp; prerequisites</span><span class="scount"></span></div>
+  <div class="sbody">
+    <p>Six accounts plus your development environment, in this order — Apple first because its approval is the only one measured in days. Before anything: install a <b>password manager</b> (1Password, Bitwarden). You're about to generate five secrets; the table near the end of this step says where each is allowed to live.</p>
+
+    <div class="sub">0.1 · Apple Developer — $99/yr, start today</div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Enable 2FA on your Apple ID</b> at appleid.apple.com → Sign-In and Security (enrollment is refused without it)</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Decide Individual vs Organization.</b> Individual: often same-day, but the App Store seller name is your legal personal name. Organization: shows "Kova LLC", but needs a legal entity + a D-U-N-S number (free, 1–2 weeks). If Kova will be an LLC and the store name matters, request D-U-N-S now</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Enroll:</b> fastest for Individual is the Apple Developer app on iPhone → Enroll → ID scan → pay $99. Web: developer.apple.com → Account → Enroll</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>When approved, confirm sign-in at appstoreconnect.apple.com</b></span></label>
+
+    <div class="sub">0.2 · GitHub</div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Create / sign in to GitHub</b> and enable 2FA</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Create a private repo named</b> <span class="k">kova</span> — no README</span></label>
+
+    <div class="sub">0.3 · Supabase — database, auth, Edge Function</div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>supabase.com → Start your project</b> → sign in with GitHub → org "Kova" (Free plan)</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>New project</b> <span class="k">kova-prod</span>: Generate the DB password and <b>save it to the password manager immediately</b> (shown once); region closest to beta users (US East)</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Collect keys</b> (Project Settings → <b>API Keys</b>; Project URL is in the Connect dialog or Integrations → Data API): the <span class="k">Publishable</span> key (sb_publishable_…) is your "anon" key → goes in .env later; the <span class="k">Secret</span> key (sb_secret_…) is your "service_role" key → password manager <b>only</b> (bypasses all security, used once in Step 10, never in .env/repo/app)</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Copy the Project Ref</b> (Settings → General) and <b>confirm Email auth is on</b> (Authentication → Providers)</span></label>
+
+    <div class="sub">0.4 · Google Cloud — Places API, bill under control</div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>console.cloud.google.com</b> → New Project <span class="k">kova</span> → confirm selected → <b>enable billing</b> (Places errors without it)</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Enable the API:</b> APIs &amp; Services → Library → "Places API" → Enable</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Create + restrict the key:</b> Credentials → Create API key → name <span class="k">kova-places-server</span> → <b>API restrictions → Places API only</b> → save to password manager. It goes in Supabase secrets (Step 6), nowhere else</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Guardrails:</b> Budget alert $25/mo (50/90/100%) + quota cap ~1,000 requests/day</span></label>
+    <div class="warn"><b>If your console only offers "Places API (New)":</b> the endpoint in Step 6 changes to <span class="k">POST https://places.googleapis.com/v1/places:searchNearby</span>. Tell Claude Code — it will adapt the Edge Function. Only that one file changes; the app never talks to Google directly.</div>
+
+    <div class="sub">0.5 · Expo / EAS</div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>expo.dev → Sign up</b> with the GitHub login (free tier covers Phase 1 builds)</span></label>
+
+    <div class="sub">0.6 · PostHog — the gate metrics live here</div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>posthog.com → Get started free</b> → US Cloud → org + project "Kova" → pick <b>React Native</b> → copy the <span class="k">phc_</span> key (goes in .env; safe to ship)</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Leave autocapture off</b> — the four gate events are hand-instrumented on purpose</span></label>
+
+    <div class="sub">0.7 · Machine setup (Windows)</div>
+    <p><b>No Mac needed:</b> Xcode and the iOS simulator don't exist on Windows — and you don't need them. EAS builds the iOS app in the cloud, and your physical iPhone with Expo Go is the test device.</p>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Install Node.js LTS v20+</b> — nodejs.org → Windows Installer (.msi), accept the defaults</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Install Git for Windows</b> — git-scm.com → default options are fine (Claude Code on Windows requires it)</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Install Windows Terminal</b> from the Microsoft Store (nicer PowerShell) — open it via Start menu, type "terminal". Every "PowerShell" instruction in this guide means this window</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Install the global CLIs</b> in PowerShell, then close and reopen the window:</span></label>
+<pre><button class="copy">COPY</button><code>npm install -g @expo/cli eas-cli
+<span class="cm"># Supabase CLI is added inside the project in Step 2 (used via npx)</span></code></pre>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Install Expo Go on your iPhone</b> (App Store) — it's your simulator</span></label>
+
+    <div class="sub">0.8 · Claude Code — your development environment</div>
+    <p>This is who writes the code. Requires a Claude subscription (Pro is enough to start).</p>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Install Claude Code</b> — in PowerShell, run the official Windows installer:</span></label>
+<pre><button class="copy">COPY</button><code>irm https://claude.ai/install.ps1 | iex
+<span class="cm"># alternatives + details: code.claude.com/docs → Getting started</span></code></pre>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Log in:</b> close and reopen PowerShell, then type <span class="k">claude</span> — your browser opens for a one-time sign-in with your Claude account, then you're set for every future session</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Learn the three commands you'll actually use:</b> type plain English to work; <span class="k">/clear</span> between unrelated tasks (stale context hurts new tasks); Esc to stop it mid-action. Optional: Anthropic's free "Claude Code 101" course at anthropic.skilljar.com</span></label>
+    <div class="warn"><b>Two working rules for a non-coder:</b> (1) keep the permission prompts ON — reviewing what it's about to do is your safety net, don't use any "skip permissions" shortcuts from tutorials; (2) one checklist step per session, <span class="k">/clear</span> in between. If it fails at the same thing twice, stop and ask it to explain the options in plain English instead of letting it thrash.</div>
+
+    <div class="sub">0.9 · Where every secret lives</div>
+    <table>
+      <tr><th>Secret</th><th>Lives in</th><th>Never in</th></tr>
+      <tr><td>Supabase Project URL + anon key</td><td>.env</td><td>— (safe; RLS protects data)</td></tr>
+      <tr><td>Supabase service_role key</td><td>Password manager; shell env for seed only</td><td>.env, repo, app, <b>Claude Code prompts</b></td></tr>
+      <tr><td>Supabase DB password</td><td>Password manager</td><td>anywhere else</td></tr>
+      <tr><td>Google Places API key</td><td>Supabase secrets (Step 6)</td><td>.env, repo, app</td></tr>
+      <tr><td>PostHog phc_ key</td><td>.env</td><td>— (safe to ship)</td></tr>
+      <tr><td>Apple ID / App Store Connect</td><td>Password manager + 2FA</td><td>—</td></tr>
+    </table>
+    <div class="danger"><b>Never paste a "never" secret into a Claude Code prompt or any file it writes.</b> When a step needs one, you type it yourself where the step says. And if a secret ever lands in a Git commit — even a deleted one — rotate it. Git history is forever.</div>
+  </div>
+</div>
+
+<!-- ================= STEP 1 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 1</span><span class="stitle">The project brain — CLAUDE.md &amp; the docs folder</span><span class="scount"></span></div>
+  <div class="sbody">
+    <p>Before any code: give Claude Code the full context of everything designed so far. <span class="k">CLAUDE.md</span> is a file it reads at the start of every session — your standing instructions. The docs folder holds the build guide, mockups, and plan as the source of truth it builds against.</p>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Make the project folder and docs:</b> in PowerShell: <span class="k">mkdir $HOME\kova\docs; cd $HOME\kova</span> — then move your downloaded files (this checklist, kova-screen-mockups.html, kova-business-plan-v2.html) into <span class="k">C:\Users\&lt;you&gt;\kova\docs</span> using File Explorer</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Create CLAUDE.md</b> in <span class="k">~/kova</span> with exactly this content (easiest: ask Claude Code to create it and paste this in; Notepad also works — in Save As, set "Save as type" to All Files and name it exactly CLAUDE.md):</span></label>
+<pre><button class="copy">COPY</button><code># Kova — project instructions
+
+## What this is
+Kova: a credit-card rewards optimization app. React Native + Expo
+(TypeScript), Supabase backend. Founder is non-technical — explain
+what you're doing in plain English before and after changes.
+
+## Source of truth (read before big tasks)
+- docs/kova-build-checklist.html — the build plan; follow its steps in order
+- docs/kova-screen-mockups.html — the six core screens; match them exactly
+- docs/kova-business-plan-v2.html — product decisions and rationale
+
+## Hard rules
+- No bank login, ever. No transaction-data features.
+- Design tokens live in src/constants/theme.ts (Midnight Slate).
+  Never hardcode colors. Never redraw src/components/KovaLogo.tsx.
+- Secrets: only EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_ANON_KEY,
+  EXPO_PUBLIC_POSTHOG_KEY belong in .env. The Google Places key lives
+  ONLY in Supabase secrets. Never write any key into source files.
+  Never commit .env.
+- Places API: never combine radius with rankby=distance.
+- Analytics events are exactly: rec_viewed, rec_used, trial_started,
+  card_application_started. No new events without asking me.
+- Use `npx expo install` for packages. Never upgrade the Expo SDK
+  unless I explicitly ask.
+
+## Workflow
+- One checklist step per session where possible.
+- After each working step: git commit with a clear message.
+- If something fails twice, stop and explain my options in plain
+  English instead of retrying variations.</code></pre>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Start your first session:</b> in PowerShell, from your project folder (<span class="k">cd $HOME\kova</span>), type <span class="k">claude</span> — then give it the prompt below and confirm it summarizes the project back correctly</span></label>
+    <div class="ask"><div class="al">You say to Claude Code</div><div class="q">Read CLAUDE.md and everything in the docs folder. Summarize in plain English what we’re building, the six screens, and the hard rules — so I can confirm you've got it right.</div></div>
+    <label class="item commit"><input type="checkbox"><span class="box"></span><span class="itext"><b>Commit checkpoint:</b> tell it — "Initialize git, connect it to my GitHub repo github.com/YOUR_USERNAME/kova, and commit everything as 'Project brain: CLAUDE.md + docs'"</span></label>
+  </div>
+</div>
+
+<!-- ================= STEP 2 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 2</span><span class="stitle">Scaffold the project</span><span class="scount"></span></div>
+  <div class="sbody">
+    <div class="ask"><div class="al">You say to Claude Code</div><div class="q">Do Step 2 of the checklist: scaffold the Expo TypeScript app in this folder, add the .npmrc, install all the dependencies listed in the reference block (including the Supabase CLI as a dev dependency), and create the folder structure (src/components, src/screens, src/engine, src/lib, src/constants, src/hooks, supabase/functions/places-lookup, scripts, seed). Then run it to confirm the blank app starts.</div></div>
+    <details><summary>Reference — what it should run</summary>
+<pre><button class="copy">COPY</button><code><span class="cm"># PowerShell versions — Claude Code runs these for you</span>
+npx create-expo-app . --template blank-typescript
+Set-Content .npmrc "legacy-peer-deps=true"
+npm install supabase --save-dev   <span class="cm"># Supabase CLI, project-local (used as: npx supabase …)</span>
+
+npx expo install expo-location expo-secure-store expo-notifications
+npx expo install expo-font @expo-google-fonts/inter
+npx expo install react-native-svg
+npm install @react-navigation/native @react-navigation/bottom-tabs @react-navigation/stack
+npx expo install react-native-screens react-native-safe-area-context
+npm install react-native-reanimated react-native-gesture-handler
+npm install @supabase/supabase-js
+npm install posthog-react-native expo-file-system expo-application expo-device
+
+mkdir src\components, src\screens, src\engine, src\lib, src\constants, src\hooks
+mkdir supabase\functions\places-lookup, scripts, seed</code></pre>
+    </details>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Verify:</b> Claude Code ran <span class="k">npx expo start</span> and the blank app opened in <b>Expo Go on your iPhone</b> (scan the QR code; phone and PC on the same Wi-Fi — if it won't connect, ask Claude Code to restart with <span class="k">--tunnel</span>)</span></label>
+    <label class="item commit"><input type="checkbox"><span class="box"></span><span class="itext"><b>Commit checkpoint:</b> "Commit as 'Step 2: scaffold + dependencies'"</span></label>
+  </div>
+</div>
+
+<!-- ================= STEP 3 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 3</span><span class="stitle">Environment file — the one you type yourself</span><span class="scount"></span></div>
+  <div class="sbody">
+    <div class="ask"><div class="al">You say to Claude Code</div><div class="q">Create a .env file in the project root with placeholder lines for EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_ANON_KEY, and EXPO_PUBLIC_POSTHOG_KEY, and make sure .env and .env.* are in .gitignore. Then tell me how to open the file so I can paste the real values in myself.</div></div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>You paste the real values</b> (Supabase URL + anon key from Step 0.3, PostHog key from 0.6) into .env yourself — real secrets never go through prompts. Note what's absent: the Google Places key lives server-side (Step 6), because anything in .env ships inside the app binary</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Verify:</b> ask — "Confirm .env is gitignored and would not be included in a commit"</span></label>
+    <label class="item commit"><input type="checkbox"><span class="box"></span><span class="itext"><b>Commit checkpoint:</b> "Commit as 'Step 3: env scaffolding' (the .env file itself must not appear in the commit)"</span></label>
+  </div>
+</div>
+
+<!-- ================= STEP 4 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 4</span><span class="stitle">Theme &amp; The Pick logo</span><span class="scount"></span></div>
+  <div class="sbody">
+    <div class="ask"><div class="al">You say to Claude Code</div><div class="q">Create src/constants/theme.ts and src/components/KovaLogo.tsx exactly as written in the reference blocks for Step 4 in docs/kova-build-checklist.html — character for character, these are locked brand assets. Then show me the logo rendered in the blank app so I can confirm it matches the mockups.</div></div>
+    <details><summary>Reference — theme.ts (Midnight Slate, locked)</summary>
+<pre><button class="copy">COPY</button><code><span class="cm">// Kova brand — Midnight Slate design system (locked)</span>
+export const dark = {
+  bg:           '#0D1117',
+  surf:         '#161E2C',   <span class="cm">// also logo background</span>
+  surf2:        '#1A2438',
+  surf3:        '#1E2A40',
+  border:       '#1E2433',
+  border2:      '#263354',
+  accent:       '#7C8FFF',
+  accent2:      '#5A6ADA',
+  accentSoft:   'rgba(124,143,255,0.10)',
+  accentBorder: 'rgba(124,143,255,0.28)',
+  text:         '#E8EEFF',
+  dim:          '#5A6A9A',
+  muted:        '#3A4A7A',
+  red:          '#F87171',
+  green:        '#4ADE80',
+  gold:         '#FBBF24',
+  purple:       '#C084FC',
+};
+
+<span class="cm">// Light mode — accent deepens to hold contrast on white (brand spec)</span>
+export const light = {
+  bg:           '#FFFFFF',
+  surf:         '#F2F4FA',
+  surf2:        '#E9EDF7',
+  surf3:        '#DDE2F0',
+  border:       '#E3E7F2',
+  border2:      '#C8CFE6',
+  accent:       '#5A6ADA',   <span class="cm">// Periwinkle-Deep — never #7C8FFF on white</span>
+  accent2:      '#4553B8',
+  accentSoft:   'rgba(90,106,218,0.08)',
+  accentBorder: 'rgba(90,106,218,0.25)',
+  text:         '#1A2333',
+  dim:          '#6B7699',
+  muted:        '#9AA4C4',
+  red:          '#DC2626',
+  green:        '#16A34A',
+  gold:         '#D97706',
+  purple:       '#9333EA',
+};
+
+export const radii   = { sm: 8, md: 12, lg: 16, xl: 20, xxl: 28 };
+export const spacing = { xs: 4, sm: 8, md: 14, lg: 20, xl: 32 };</code></pre>
+    </details>
+    <details><summary>Reference — KovaLogo.tsx (The Pick, locked: −8° tilt, pick card always brightest, stripe drops below 24px)</summary>
+<pre><button class="copy">COPY</button><code>import Svg, { Rect, G } from 'react-native-svg';
+import { dark, light } from '../constants/theme';
+
+type Props = { size?: number; mode?: 'dark' | 'light' };
+
+export function KovaLogo({ size = 48, mode = 'dark' }: Props) {
+  const c = mode === 'dark' ? dark : light;
+  const stripe = mode === 'dark' ? c.bg : '#FFFFFF';
+  return (
+    &lt;Svg width={size} height={size} viewBox="0 0 48 48"&gt;
+      &lt;Rect x={7} y={21} width={30} height={19} rx={4}
+        fill={c.surf3} stroke={c.border2} strokeWidth={1.5} /&gt;
+      &lt;Rect x={11} y={16} width={30} height={19} rx={4}
+        fill={c.surf2} stroke={c.border2} strokeWidth={1.5} /&gt;
+      &lt;G transform="rotate(-8 30 15)"&gt;
+        &lt;Rect x={15} y={6} width={30} height={19} rx={4} fill={c.accent} /&gt;
+        {size &gt;= 24 &amp;&amp; (
+          &lt;Rect x={19} y={11} width={12} height={3} rx={1.5}
+            fill={stripe} opacity={0.85} /&gt;
+        )}
+      &lt;/G&gt;
+    &lt;/Svg&gt;
+  );
+}</code></pre>
+    </details>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Verify:</b> the logo on screen matches The Pick from the brand board — three stacked cards, top one periwinkle and tilted</span></label>
+    <label class="item commit"><input type="checkbox"><span class="box"></span><span class="itext"><b>Commit checkpoint:</b> "Commit as 'Step 4: theme + logo'"</span></label>
+  </div>
+</div>
+
+<!-- ================= STEP 5 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 5</span><span class="stitle">Supabase schema (v2) + client</span><span class="scount"></span></div>
+  <div class="sbody">
+    <p>The schema runs in Supabase's dashboard, not on your machine — this one's you, with Claude Code as safety-checker.</p>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Run the schema:</b> copy the reference SQL below → Supabase → kova-prod → SQL Editor → New query → paste → Run. It should say "Success"</span></label>
+    <details><summary>Reference — full v2 schema (tables, ledger, changelog, RLS, indexes)</summary>
+<pre><button class="copy">COPY</button><code>CREATE TABLE cards (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name        TEXT NOT NULL,
+  issuer      TEXT NOT NULL,
+  network     TEXT NOT NULL,
+  annual_fee  INTEGER DEFAULT 0,
+  color_hex   TEXT,
+  created_at  TIMESTAMPTZ DEFAULT NOW(),
+  verified_at TIMESTAMPTZ,           <span class="cm">-- v2: shown in-app as the accuracy SLA</span>
+  source_url  TEXT                   <span class="cm">-- v2: issuer page verified against</span>
+);
+
+CREATE TABLE reward_categories (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  card_id     UUID REFERENCES cards(id) ON DELETE CASCADE,
+  mcc_codes   INTEGER[],
+  category    TEXT NOT NULL,
+  multiplier  NUMERIC(4,2) NOT NULL,
+  points_type TEXT NOT NULL,
+  cpp         NUMERIC(6,4),
+  start_date  DATE,
+  end_date    DATE,
+  notes       TEXT,
+  verified_at TIMESTAMPTZ,
+  source_url  TEXT
+);
+
+CREATE TABLE annual_benefits (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  card_id     UUID REFERENCES cards(id) ON DELETE CASCADE,
+  title       TEXT NOT NULL,
+  value_usd   INTEGER,
+  period      TEXT NOT NULL,
+  category    TEXT,
+  description TEXT,
+  verified_at TIMESTAMPTZ,
+  source_url  TEXT
+);
+
+CREATE TABLE user_cards (
+  id        UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id   UUID NOT NULL,
+  card_id   UUID REFERENCES cards(id),
+  nickname  TEXT,
+  added_at  TIMESTAMPTZ DEFAULT NOW(),
+  is_active BOOLEAN DEFAULT TRUE
+);
+
+<span class="cm">-- v2: the Recovered Rewards Ledger — the retention product</span>
+CREATE TABLE user_captures (
+  id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id        UUID NOT NULL,
+  card_id        UUID REFERENCES cards(id),
+  category       TEXT NOT NULL,
+  spend_estimate NUMERIC(8,2),
+  value_captured NUMERIC(8,2) NOT NULL,
+  captured_at    TIMESTAMPTZ DEFAULT NOW()
+);
+
+<span class="cm">-- v2: every DB change is logged — freshness is the moat</span>
+CREATE TABLE benefit_changelog (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  table_name  TEXT NOT NULL,
+  record_id   UUID NOT NULL,
+  change_note TEXT NOT NULL,
+  changed_at  TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE cards             ENABLE ROW LEVEL SECURITY;
+ALTER TABLE reward_categories ENABLE ROW LEVEL SECURITY;
+ALTER TABLE annual_benefits   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_cards        ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_captures     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE benefit_changelog ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "public read cards"
+  ON cards FOR SELECT USING (true);
+CREATE POLICY "public read reward_categories"
+  ON reward_categories FOR SELECT USING (true);
+CREATE POLICY "public read annual_benefits"
+  ON annual_benefits FOR SELECT USING (true);
+CREATE POLICY "public read changelog"
+  ON benefit_changelog FOR SELECT USING (true);
+
+CREATE POLICY "users manage own cards"
+  ON user_cards USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "users manage own captures"
+  ON user_captures USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE INDEX ON reward_categories(card_id);
+CREATE INDEX ON reward_categories USING GIN(mcc_codes);
+CREATE INDEX ON annual_benefits(card_id);
+CREATE INDEX ON user_captures(user_id, captured_at);</code></pre>
+    </details>
+    <div class="ask"><div class="al">You say to Claude Code</div><div class="q">I've run the Step 5 schema in Supabase. Save a copy of that SQL as supabase/schema.sql so the database is reproducible, and create src/lib/supabase.ts exactly per the Step 5 reference (SecureStore-backed client). Explain in one paragraph what RLS is doing for us.</div></div>
+    <details><summary>Reference — src/lib/supabase.ts</summary>
+<pre><button class="copy">COPY</button><code>import { createClient } from '@supabase/supabase-js';
+import * as SecureStore from 'expo-secure-store';
+
+const storage = {
+  getItem: (k: string) =&gt; SecureStore.getItemAsync(k),
+  setItem: (k: string, v: string) =&gt; SecureStore.setItemAsync(k, v),
+  removeItem: (k: string) =&gt; SecureStore.deleteItemAsync(k),
+};
+
+export const supabase = createClient(
+  process.env.EXPO_PUBLIC_SUPABASE_URL!,
+  process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!,
+  { auth: { storage, autoRefreshToken: true, persistSession: true } }
+);</code></pre>
+    </details>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Verify:</b> Supabase → Table Editor shows all six tables</span></label>
+    <label class="item commit"><input type="checkbox"><span class="box"></span><span class="itext"><b>Commit checkpoint:</b> "Commit as 'Step 5: schema + supabase client'"</span></label>
+  </div>
+</div>
+
+<!-- ================= STEP 6 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 6</span><span class="stitle">Places lookup — server-side Edge Function</span><span class="scount"></span></div>
+  <div class="sbody">
+    <p>The Places key never ships in the app (it'd be extractable from the binary) — it lives in a small server function.</p>
+    <div class="ask"><div class="al">You say to Claude Code</div><div class="q">Create supabase/functions/places-lookup/index.ts per the Step 6 reference. Then run `npx supabase login` and `npx supabase link --project-ref MY_REF` (I'll type the ref when you ask). Stop before setting the secret — I'll run that command myself so the key never enters this chat — then deploy the function and show me how to test it with a sample lat/lng.</div></div>
+    <details><summary>Reference — Edge Function (contains the v1 bug fix: rankby=distance can't combine with radius)</summary>
+<pre><button class="copy">COPY</button><code>import { serve } from 'https://deno.land/std@0.192.0/http/server.ts';
+
+serve(async (req) =&gt; {
+  const { lat, lng } = await req.json();
+  if (typeof lat !== 'number' || typeof lng !== 'number') {
+    return new Response(JSON.stringify({ error: 'lat/lng required' }), { status: 400 });
+  }
+  const url =
+    `https://maps.googleapis.com/maps/api/place/nearbysearch/json` +
+    `?location=${lat},${lng}&amp;rankby=distance&amp;type=establishment` +
+    `&amp;key=${Deno.env.get('GOOGLE_PLACES_KEY')}`;
+  const data = await fetch(url).then((r) =&gt; r.json());
+  const top = data.results?.[0] ?? null;
+  return new Response(
+    JSON.stringify(
+      top
+        ? {
+            name: top.name,
+            types: top.types,
+            placeId: top.place_id,
+            lat: top.geometry.location.lat,
+            lng: top.geometry.location.lng,
+          }
+        : null
+    ),
+    { headers: { 'Content-Type': 'application/json' } }
+  );
+});</code></pre>
+    </details>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>You run the secret command yourself</b> in a separate PowerShell window, from the kova folder (key from your password manager) — close the window afterward:</span></label>
+<pre><button class="copy">COPY</button><code>npx supabase secrets set GOOGLE_PLACES_KEY=paste_your_key_here</code></pre>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Verify:</b> the test call returns a real business near the coordinates you gave it</span></label>
+    <label class="item commit"><input type="checkbox"><span class="box"></span><span class="itext"><b>Commit checkpoint:</b> "Commit as 'Step 6: places-lookup edge function'"</span></label>
+  </div>
+</div>
+
+<!-- ================= STEP 7 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 7</span><span class="stitle">GPS engine — fixed, cached, confidence-gated</span><span class="scount"></span></div>
+  <div class="sbody">
+    <div class="ask"><div class="al">You say to Claude Code</div><div class="q">Create src/engine/gpsDetection.ts exactly per the Step 7 reference: foreground-only location, 5-minute/30-meter cache so we don't burn Places API calls, and the 60-meter confidence gate — if there's no confident match, return null, never guess. Then walk me through testing it on my real iPhone with Expo Go, because the simulator can't do GPS properly.</div></div>
+    <details><summary>Reference — gpsDetection.ts</summary>
+<pre><button class="copy">COPY</button><code>import * as Location from 'expo-location';
+import { supabase } from '../lib/supabase';
+
+const PLACES_MAP: Record&lt;string, string&gt; = {
+  restaurant: 'dining', food: 'dining', cafe: 'dining', bar: 'dining',
+  grocery_or_supermarket: 'groceries', supermarket: 'groceries',
+  gas_station: 'gas', airport: 'travel', lodging: 'travel',
+  pharmacy: 'pharmacy', drugstore: 'pharmacy',
+  movie_theater: 'entertainment', shopping_mall: 'shopping',
+};
+
+export type DetectedMerchant = {
+  name: string; category: string; placeId: string; distanceM: number;
+};
+
+const CACHE_TTL_MS = 5 * 60 * 1000;
+const CACHE_RADIUS_M = 30;
+const MAX_CONFIDENT_DISTANCE_M = 60;
+
+let cache: {
+  lat: number; lng: number; at: number; result: DetectedMerchant | null;
+} | null = null;
+
+function haversineM(lat1: number, lng1: number, lat2: number, lng2: number) {
+  const R = 6371000, toRad = (d: number) =&gt; (d * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1), dLng = toRad(lng2 - lng1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(a));
+}
+
+export async function detectNearbyMerchant(): Promise&lt;DetectedMerchant | null&gt; {
+  const { status } = await Location.requestForegroundPermissionsAsync();
+  if (status !== 'granted') return null;
+
+  const { coords } = await Location.getCurrentPositionAsync({
+    accuracy: Location.Accuracy.Balanced,
+  });
+
+  if (
+    cache &amp;&amp;
+    Date.now() - cache.at &lt; CACHE_TTL_MS &amp;&amp;
+    haversineM(coords.latitude, coords.longitude, cache.lat, cache.lng) &lt; CACHE_RADIUS_M
+  ) {
+    return cache.result;
+  }
+
+  const { data: top, error } = await supabase.functions.invoke('places-lookup', {
+    body: { lat: coords.latitude, lng: coords.longitude },
+  });
+
+  let result: DetectedMerchant | null = null;
+  if (!error &amp;&amp; top) {
+    const d = haversineM(coords.latitude, coords.longitude, top.lat, top.lng);
+    if (d &lt;= MAX_CONFIDENT_DISTANCE_M) {
+      let category = 'other';
+      for (const t of top.types ?? []) {
+        if (PLACES_MAP[t]) { category = PLACES_MAP[t]; break; }
+      }
+      result = { name: top.name, category, placeId: top.placeId, distanceM: Math.round(d) };
+    }
+  }
+
+  cache = { lat: coords.latitude, lng: coords.longitude, at: Date.now(), result };
+  return result;
+}</code></pre>
+    </details>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Verify on your real iPhone:</b> stand in/near a business, open the app in Expo Go — it names the right merchant (or correctly stays silent when ambiguous)</span></label>
+    <label class="item commit"><input type="checkbox"><span class="box"></span><span class="itext"><b>Commit checkpoint:</b> "Commit as 'Step 7: GPS engine'"</span></label>
+  </div>
+</div>
+
+<!-- ================= STEP 8 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 8</span><span class="stitle">Recommendation engine + ledger</span><span class="scount"></span></div>
+  <div class="sbody">
+    <div class="ask"><div class="al">You say to Claude Code</div><div class="q">Create src/engine/recommendations.ts per the Step 8 reference: getRecommendations (ranked by dollar value per $100, with vsWorstSaving and verifiedAt), logCapture for the one-tap "Used it" confirm, and getLedgerSummary for the year-to-date total. Then write a small test that runs these against the database and shows me the ranked output for the "dining" category.</div></div>
+    <details><summary>Reference — recommendations.ts</summary>
+<pre><button class="copy">COPY</button><code>import { supabase } from '../lib/supabase';
+
+export type CardRecommendation = {
+  cardId: string; cardName: string; colorHex: string;
+  multiplier: number; pointsType: string;
+  valuePerHundred: number; vsWorstSaving: number;
+  isRotating: boolean; expiresAt?: string;
+  verifiedAt?: string;
+};
+
+export async function getRecommendations(
+  userId: string,
+  merchantCategory: string,
+  spendAmount = 100
+): Promise&lt;CardRecommendation[]&gt; {
+  const { data: userCards } = await supabase
+    .from('user_cards')
+    .select(`card_id, cards(id, name, color_hex,
+      reward_categories(category, multiplier, points_type,
+      cpp, start_date, end_date, verified_at))`)
+    .eq('user_id', userId)
+    .eq('is_active', true);
+
+  if (!userCards?.length) return [];
+  const today = new Date().toISOString().split('T')[0];
+
+  const scored: CardRecommendation[] = userCards.flatMap((uc) =&gt; {
+    const card = uc.cards as any;
+    const cats: any[] = card.reward_categories || [];
+    const match =
+      cats.find(
+        (c) =&gt;
+          c.category === merchantCategory &amp;&amp;
+          (!c.start_date || c.start_date &lt;= today) &amp;&amp;
+          (!c.end_date || c.end_date &gt;= today)
+      ) || cats.find((c) =&gt; c.category === 'other');
+    if (!match) return [];
+    const cpp = match.cpp ?? 0.01;
+    return [{
+      cardId: card.id,
+      cardName: card.name,
+      colorHex: card.color_hex,
+      multiplier: match.multiplier,
+      pointsType: match.points_type,
+      valuePerHundred: match.multiplier * spendAmount * cpp,
+      vsWorstSaving: 0,
+      isRotating: !!(match.start_date &amp;&amp; match.end_date),
+      expiresAt: match.end_date ?? undefined,
+      verifiedAt: match.verified_at ?? undefined,
+    }];
+  });
+
+  scored.sort((a, b) =&gt; b.valuePerHundred - a.valuePerHundred);
+  const worst = scored.at(-1)?.valuePerHundred ?? 0;
+  scored.forEach((r) =&gt; {
+    r.vsWorstSaving = +(r.valuePerHundred - worst).toFixed(2);
+  });
+  return scored;
+}
+
+export async function logCapture(
+  userId: string,
+  rec: CardRecommendation,
+  category: string,
+  spendEstimate: number
+) {
+  return supabase.from('user_captures').insert({
+    user_id: userId,
+    card_id: rec.cardId,
+    category,
+    spend_estimate: spendEstimate,
+    value_captured: rec.vsWorstSaving,
+  });
+}
+
+export async function getLedgerSummary(userId: string) {
+  const yearStart = `${new Date().getFullYear()}-01-01`;
+  const { data } = await supabase
+    .from('user_captures')
+    .select('value_captured, captured_at')
+    .eq('user_id', userId)
+    .gte('captured_at', yearStart);
+  const total = (data ?? []).reduce((s, r) =&gt; s + Number(r.value_captured), 0);
+  return { yearToDate: +total.toFixed(2), captureCount: data?.length ?? 0 };
+}</code></pre>
+    </details>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Verify:</b> the test output ranks cards sensibly for dining (highest dollar value first)</span></label>
+    <label class="item commit"><input type="checkbox"><span class="box"></span><span class="itext"><b>Commit checkpoint:</b> "Commit as 'Step 8: recommendation engine + ledger'"</span></label>
+  </div>
+</div>
+
+<!-- ================= STEP 9 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 9</span><span class="stitle">Analytics from day one</span><span class="scount"></span></div>
+  <div class="sbody">
+    <p>Gate 1 (≥40% of beta checks a recommendation 3+×/week) cannot be judged without this.</p>
+    <div class="ask"><div class="al">You say to Claude Code</div><div class="q">Create src/lib/analytics.ts per the Step 9 reference with exactly the four events from CLAUDE.md — rec_viewed, rec_used, trial_started, card_application_started — and nothing else. As we build screens in Step 11, wire rec_viewed wherever a recommendation renders and rec_used in the "Used it" handler, and remind me when you do.</div></div>
+    <details><summary>Reference — analytics.ts</summary>
+<pre><button class="copy">COPY</button><code>import PostHog from 'posthog-react-native';
+
+export const posthog = new PostHog(process.env.EXPO_PUBLIC_POSTHOG_KEY!, {
+  host: 'https://us.i.posthog.com',
+});
+
+<span class="cm">// The four numbers reviewed every week — nothing else matters yet.</span>
+export const track = {
+  recViewed: (category: string, source: 'gps' | 'manual' | 'widget') =&gt;
+    posthog.capture('rec_viewed', { category, source }),
+  recUsed: (category: string, valueCaptured: number) =&gt;
+    posthog.capture('rec_used', { category, value_captured: valueCaptured }),
+  trialStarted: () =&gt; posthog.capture('trial_started'),
+  cardApplicationStarted: (cardName: string) =&gt;
+    posthog.capture('card_application_started', { card_name: cardName }),
+};</code></pre>
+    </details>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Verify:</b> trigger one event, then see it appear in PostHog → Activity</span></label>
+    <label class="item commit"><input type="checkbox"><span class="box"></span><span class="itext"><b>Commit checkpoint:</b> "Commit as 'Step 9: analytics'"</span></label>
+  </div>
+</div>
+
+<!-- ================= STEP 10 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 10</span><span class="stitle">Seed the database — top 50 cards (your real job begins)</span><span class="scount"></span></div>
+  <div class="sbody">
+    <p>Claude Code writes the plumbing; <b>the data is founder work</b> — verifying multipliers against issuer pages is the moat, and no AI output gets seeded unverified.</p>
+    <div class="ask"><div class="al">You say to Claude Code</div><div class="q">Create seed/cards.json using the Step 10 reference format with the three example cards, and scripts/seed.mjs per the reference. Then draft entries for the top 50 US rewards cards in the same format — but mark every one "UNVERIFIED" in a notes field. I will verify each against the issuer's page myself and remove the flag; the seed script must refuse to insert any card still marked UNVERIFIED.</div></div>
+    <details><summary>Reference — cards.json format (values are format examples, not verified data)</summary>
+<pre><button class="copy">COPY</button><code>[
+  {
+    "name": "Amex Gold",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 325,
+    "color_hex": "#D4AF37",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+    "categories": [
+      { "category": "dining",    "multiplier": 4, "points_type": "MR", "cpp": 0.02 },
+      { "category": "groceries", "multiplier": 4, "points_type": "MR", "cpp": 0.02 },
+      { "category": "other",     "multiplier": 1, "points_type": "MR", "cpp": 0.02 }
+    ]
+  },
+  {
+    "name": "Chase Sapphire Preferred",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 95,
+    "color_hex": "#1A3C6E",
+    "source_url": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+    "categories": [
+      { "category": "dining", "multiplier": 3, "points_type": "UR", "cpp": 0.0205 },
+      { "category": "travel", "multiplier": 2, "points_type": "UR", "cpp": 0.0205 },
+      { "category": "other",  "multiplier": 1, "points_type": "UR", "cpp": 0.0205 }
+    ]
+  },
+  {
+    "name": "Chase Freedom Unlimited",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#3B6CB7",
+    "source_url": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
+    "categories": [
+      { "category": "dining", "multiplier": 3,   "points_type": "UR", "cpp": 0.01 },
+      { "category": "other",  "multiplier": 1.5, "points_type": "UR", "cpp": 0.01 }
+    ]
+  }
+]</code></pre>
+    </details>
+    <details><summary>Reference — seed.mjs</summary>
+<pre><button class="copy">COPY</button><code>import { createClient } from '@supabase/supabase-js';
+import { readFileSync } from 'fs';
+
+<span class="cm">// Service role key: NEVER ship this in the app or paste into prompts.</span>
+const db = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+const cards = JSON.parse(readFileSync('./seed/cards.json', 'utf8'));
+
+for (const c of cards) {
+  const { categories, ...card } = c;
+  const { data, error } = await db
+    .from('cards')
+    .insert({ ...card, verified_at: new Date().toISOString() })
+    .select()
+    .single();
+  if (error) { console.error(card.name, error.message); continue; }
+  await db.from('reward_categories').insert(
+    categories.map((cat) =&gt; ({
+      ...cat, card_id: data.id,
+      verified_at: new Date().toISOString(), source_url: card.source_url,
+    }))
+  );
+  await db.from('benefit_changelog').insert({
+    table_name: 'cards', record_id: data.id, change_note: 'Initial seed',
+  });
+  console.log('✓', card.name);
+}</code></pre>
+    </details>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>You verify the data:</b> for each card, open the issuer's own page, confirm every multiplier and fee, remove the UNVERIFIED flag. Budget real time — this is days of work, and it's the product</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>You run the seed yourself</b> in a separate PowerShell window, from the kova folder (your Supabase <b>Secret</b> key, sb_secret_…, from the password manager — session env only, never a prompt or file):</span></label>
+<pre><button class="copy">COPY</button><code>$env:SUPABASE_URL = "https://YOUR_PROJECT.supabase.co"
+$env:SUPABASE_SERVICE_KEY = "paste_secret_key_here"
+node scripts/seed.mjs
+<span class="cm"># close this PowerShell window afterward — the key lives only in this session</span></code></pre>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Verify:</b> Supabase → Table Editor → seeded rows show with verified_at stamped</span></label>
+    <label class="item commit"><input type="checkbox"><span class="box"></span><span class="itext"><b>Commit checkpoint:</b> "Commit as 'Step 10: seed data + script' (seed JSON belongs in git — the database must be rebuildable from files)"</span></label>
+  </div>
+</div>
+
+<!-- ================= STEP 11 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 11</span><span class="stitle">The six screens — one per session</span><span class="scount"></span></div>
+  <div class="sbody">
+    <p>The mockups are the spec. One screen per Claude Code session, <span class="k">/clear</span> between screens, commit after each. Start every session the same way:</p>
+    <div class="ask"><div class="al">You say to Claude Code (template — swap the screen name)</div><div class="q">Open docs/kova-screen-mockups.html and build Screen 2 (Home) to match it exactly — layout, colors from theme.ts, spacing, copy. Wire it per the caption under the mockup: GPS banner renders only when detectNearbyMerchant() returns a match, ledger card uses getLedgerSummary(), fire track.recViewed on banner render. Then show it to me in the simulator next to the mockup.</div></div>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>First:</b> app.json update — name "Kova", slug "kova", the expo-location plugin with the trust-building permission copy ("Kova uses your location only to detect the merchant you're at… never stored or shared"), expo-secure-store, expo-notifications</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Screen 1 · Onboarding</b> — card search → add flow, 30-second target, "No bank login — ever" above the fold</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Screen 2 · Home</b> — GPS banner (confident match only), ledger summary, wallet strip, rotating alert</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Screen 3 · Recommendation</b> — ranked list, dollar framing, verified badge, <b>"Used it"</b> → logCapture + track.recUsed, dashed wallet-gap card</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Screen 4 · Wallet</b> — fee-vs-value bars from ledger captures, verified_at badge per card</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Screen 5 · Alerts</b> — activations, expiring credits, bonus tracker labeled "manual · optional"</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Screen 6 · Ledger</b> — YTD hero from <span class="k">getLedgerSummary</span>, monthly bars + category breakdown grouped from <span class="k">user_captures</span>, recent captures list, pace projection, "Share my recap" (totals only, no personal data)</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Verify the whole app on your real iPhone</b> — every screen against its mockup, GPS at a real business, one full loop: see recommendation → tap "Used it" → ledger increments → event lands in PostHog</span></label>
+    <label class="item commit"><input type="checkbox"><span class="box"></span><span class="itext"><b>Commit checkpoint after each screen:</b> "Step 11: onboarding screen", "Step 11: home screen", …</span></label>
+  </div>
+</div>
+
+<!-- ================= STEP 12 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 12</span><span class="stitle">Builds, TestFlight — and the widget descope</span><span class="scount"></span></div>
+  <div class="sbody">
+    <div class="warn"><b>Deliberate descope:</b> the lock-screen widget is a native Swift extension — the one part of this build that regularly defeats the AI-assisted workflow, and it can't run in Expo Go. <b>Ship the beta without it.</b> Manual lookup + the in-app flow answers Gate 1's question. Add the widget in month 2–3 via a dev build — and if it fights back, this is the planned freelancer moment: $1–2K for a React Native dev to build the widget <i>and</i> security-review your Supabase RLS policies before 500 real users arrive. Highest-leverage $2K in the plan.</div>
+    <p><b>No Mac required for any of this:</b> <span class="k">eas build</span> compiles the iOS app on Expo's cloud Macs and <span class="k">eas submit</span> uploads it to TestFlight — all from Windows. The $99 Apple Developer account is the only Apple thing in the loop.</p>
+    <div class="ask"><div class="al">You say to Claude Code</div><div class="q">Run eas build:configure, then walk me through a TestFlight production build and submission step by step — tell me before each command what it does and what Apple will ask me for. If certificates or provisioning fail, explain the fix in plain English before retrying.</div></div>
+    <details><summary>Reference — the commands</summary>
+<pre><button class="copy">COPY</button><code>eas login
+eas build:configure
+
+<span class="cm"># TestFlight beta build (Phase 1 — the r/creditcards 500)</span>
+eas build --profile production --platform ios
+eas submit --platform ios
+
+<span class="cm"># Month 2–3, for the widget: development build + @bacons/apple-targets</span>
+eas build --profile development --platform ios</code></pre>
+    </details>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Set up beta feedback before invites go out:</b> a support email (support@ your domain) + TestFlight's built-in feedback; every crash report is gold</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Verify:</b> the build appears in App Store Connect → TestFlight and installs on your own phone</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Android waits for Phase 3</b> — only after iOS passes Gates 1–2</span></label>
+    <label class="item commit"><input type="checkbox"><span class="box"></span><span class="itext"><b>Commit checkpoint:</b> "Step 12: EAS config" — and tag it: "tag this commit beta-1"</span></label>
+  </div>
+</div>
+
+<!-- ================= STEP 13 ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STEP 13</span><span class="stitle">Legal &amp; App Store readiness — review blocks without these</span><span class="scount"></span></div>
+  <div class="sbody">
+    <p>Apple's review will reject a finance-adjacent app with location access that's missing its paperwork. Do this in parallel with Step 11, not after.</p>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Privacy policy (mandatory):</b> a public URL covering location use (foreground-only, never stored server-side, never sold), analytics (PostHog events), and account data (email + your added cards). Ask Claude Code to draft it against what the app actually collects, then have a lawyer or a reputable generator sanity-check it</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Terms of service + a disclaimer</b> that Kova provides information, not financial advice, and benefits data may contain errors (the verified_at badge is your good-faith evidence)</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Support page/email</b> — App Store Connect requires a support URL</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>App Store privacy "nutrition labels":</b> declare location (app functionality, not linked to identity if you keep it that way), identifiers/usage data for analytics — truthfully; mismatches between labels and app behavior cause rejections</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>FTC affiliate disclosure</b> — the moment the affiliate flow ships (Phase 2): clear "we may earn a commission if you're approved" language at the point of recommendation, not buried in the ToS</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>LLC + business bank account before affiliate revenue arrives</b> — affiliate networks pay businesses; set it up now, not mid-payout</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Store assets:</b> 1024px app icon (The Pick, dark-color version), screenshots from the finished screens, description leading with "No bank login"</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Supabase backups on</b> (dashboard → Database → Backups) — the seed JSON in git plus backups means nothing is ever unrecoverable</span></label>
+  </div>
+</div>
+
+<!-- ================= WEEKLY ================= -->
+<div class="step" data-step>
+  <div class="shead"><span class="snum">STANDING</span><span class="stitle">Every week, never skipped</span><span class="scount"></span></div>
+  <div class="sbody">
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Verify 10 cards</b> against issuer sources — freshness is the moat, and it's founder work, not code</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Review the four numbers:</b> rec views/user · "used it" confirms · trial conversion · affiliate applications</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Talk to 3 users</b> — at least one who churned</span></label>
+    <label class="item"><input type="checkbox"><span class="box"></span><span class="itext"><b>Confirm the last commit is recent</b> — if you've worked for days without a commit checkpoint, stop and make one</span></label>
+    <table style="margin-top:16px">
+      <tr><th>Build step</th><th>Execution-checklist phase</th></tr>
+      <tr><td>Steps 0–3</td><td>Phase 0 · Foundation</td></tr>
+      <tr><td>Steps 5–7</td><td>Phase 0 · schema versioning + fixed GPS</td></tr>
+      <tr><td>Step 9</td><td>Phase 0 · analytics from day one</td></tr>
+      <tr><td>Steps 8, 10, 11</td><td>Phase 1 · top-50 DB + iOS core + ledger</td></tr>
+      <tr><td>Steps 12–13</td><td>Phase 1 · TestFlight beta → Gate 1</td></tr>
+    </table>
+  </div>
+</div>
+
+<footer>Kova · Build Checklist v3 — Claude Code Edition · You steer, it types. Zero effort. Maximum rewards. Honest numbers.</footer>
+</div>
+
+<script>
+function refresh(){
+  let allC=0, allT=0;
+  document.querySelectorAll('[data-step]').forEach(function(s){
+    const boxes=s.querySelectorAll('input[type=checkbox]');
+    const done=s.querySelectorAll('input[type=checkbox]:checked').length;
+    allT+=boxes.length; allC+=done;
+    const c=s.querySelector('.scount');
+    c.textContent=done+' / '+boxes.length;
+    c.classList.toggle('done', done===boxes.length && boxes.length>0);
+  });
+  document.getElementById('pct').textContent=allC+' / '+allT;
+  document.getElementById('pfill').style.width=(allT? (100*allC/allT):0)+'%';
+}
+document.addEventListener('change',function(e){
+  if(e.target && e.target.type==='checkbox') refresh();
+});
+document.querySelectorAll('.copy').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    const code=btn.parentElement.querySelector('code');
+    navigator.clipboard.writeText(code.innerText).then(function(){
+      btn.textContent='COPIED';
+      setTimeout(function(){btn.textContent='COPY';},1200);
+    });
+  });
+});
+refresh();
+</script>
+</body>
+</html>

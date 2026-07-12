@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kova — Business Plan v2 · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D1117;--surf:#161E2C;--surf2:#1A2438;--surf3:#1E2A40;
+  --border:#1E2433;--border2:#263354;
+  --acc:#7C8FFF;--acc2:#5A6ADA;--as:rgba(124,143,255,.10);--ab:rgba(124,143,255,.28);
+  --text:#E8EEFF;--dim:#5A6A9A;--muted:#3A4A7A;
+  --red:#F87171;--green:#4ADE80;--gold:#FBBF24;--purple:#C084FC;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dim);font-family:'Inter',sans-serif;min-height:100vh;font-size:14px;line-height:1.65}
+::selection{background:var(--as);color:var(--acc)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+.eyebrow{font-size:10px;color:var(--acc);letter-spacing:2.5px;font-weight:700;text-transform:uppercase;margin-bottom:8px}
+.h1{font-size:clamp(28px,4.5vw,50px);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:18px;color:var(--text)}
+.h2{font-size:clamp(18px,2.5vw,26px);font-weight:800;letter-spacing:-1px;margin-bottom:8px;color:var(--text)}
+.h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px}
+.lead{color:var(--dim);font-size:14px;line-height:1.85;max-width:640px;margin-bottom:22px}
+p{margin-bottom:12px}
+section{padding:56px 0;border-bottom:1px solid var(--border)}
+#nav{position:sticky;top:0;z-index:200;background:rgba(13,17,23,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.nav-brand{display:flex;align-items:center;gap:11px}
+.nav-name{font-size:18px;font-weight:900;color:var(--text);letter-spacing:-1px}
+.nav-sub{font-size:9px;color:var(--muted);letter-spacing:2px}
+.nav-tabs{display:flex;gap:3px;flex-wrap:wrap}
+.nt{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 11px;font-size:11px;font-weight:600;font-family:inherit;cursor:pointer;text-decoration:none}
+.nt:hover{color:var(--acc);border-color:var(--ab)}
+.logo{width:34px;height:24px;border:2px solid var(--text);border-radius:5px;background:var(--surf);position:relative;display:inline-block}
+.logo::after{content:"✦";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:11px}
+.badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--ab);color:var(--acc);background:var(--as);border-radius:999px;padding:4px 12px;margin-bottom:16px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.card{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:20px}
+.card.acc{border-color:var(--ab);background:linear-gradient(180deg,var(--as),var(--surf))}
+.stat{font-size:26px;font-weight:900;color:var(--text);letter-spacing:-1px;line-height:1.1}
+.stat.green{color:var(--green)}.stat.red{color:var(--red)}.stat.gold{color:var(--gold)}
+.stat-l{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:5px}
+.stat-s{font-size:11px;color:var(--dim);margin-top:3px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:left;padding:10px 12px;border-bottom:1px solid var(--border2)}
+td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--dim);vertical-align:top}
+td:first-child{color:var(--text);font-weight:600}
+tr.hl td{background:var(--as)}
+.tnum{font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:10px;font-weight:700;border-radius:5px;padding:2px 8px;letter-spacing:.5px}
+.tag.cut{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.tag.new{background:rgba(74,222,128,.10);color:var(--green);border:1px solid rgba(74,222,128,.3)}
+.tag.keep{background:var(--as);color:var(--acc);border:1px solid var(--ab)}
+.diff{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:10px}
+.diff>div{padding:14px 16px;font-size:12.5px}
+.diff .v1{background:rgba(248,113,113,.05);border-right:1px solid var(--border)}
+.diff .v2{background:rgba(74,222,128,.05)}
+.diff .dl{font-size:9px;letter-spacing:2px;font-weight:800;text-transform:uppercase;margin-bottom:5px}
+.diff .v1 .dl{color:var(--red)}.diff .v2 .dl{color:var(--green)}
+.gate{border-left:3px solid var(--gold);background:var(--surf2);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0}
+.gate .gl{font-size:10px;letter-spacing:2px;font-weight:800;color:var(--gold);text-transform:uppercase;margin-bottom:4px}
+ul.tick{list-style:none;font-size:13px}
+ul.tick li{padding:5px 0 5px 22px;position:relative}
+ul.tick li::before{content:"→";position:absolute;left:0;color:var(--acc);font-weight:700}
+ul.tick li.x::before{content:"✗";color:var(--red)}
+ul.tick li.ok::before{content:"✓";color:var(--green)}
+.note{font-size:11.5px;color:var(--muted);border-top:1px dashed var(--border2);padding-top:10px;margin-top:12px}
+.check{list-style:none;font-size:13px}
+.check li{padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--border)}
+.check li::before{content:"";position:absolute;left:0;top:9px;width:15px;height:15px;border:1.5px solid var(--muted);border-radius:4px}
+.check li b{color:var(--text);font-weight:600}
+.check li .m{color:var(--gold);font-weight:600}
+.phase-h{display:flex;align-items:baseline;gap:12px;margin:30px 0 10px}
+.phase-n{font-size:11px;font-weight:800;letter-spacing:2px;color:var(--acc)}
+footer{padding:40px 24px;text-align:center;font-size:11px;color:var(--muted)}
+@media(max-width:640px){.diff{grid-template-columns:1fr}.diff .v1{border-right:none;border-bottom:1px solid var(--border)}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-brand">
+    <span class="logo"></span>
+    <div><div class="nav-name">Kova</div><div class="nav-sub">BUSINESS PLAN · V2 · 2026</div></div>
+  </div>
+  <div class="nav-tabs">
+    <a class="nt" href="#revisions">Revisions</a>
+    <a class="nt" href="#market">Market</a>
+    <a class="nt" href="#product">Product</a>
+    <a class="nt" href="#revenue">Revenue</a>
+    <a class="nt" href="#financials">Financials</a>
+    <a class="nt" href="#gtm">GTM</a>
+    <a class="nt" href="#data">Data Ops</a>
+    <a class="nt" href="#risks">Risks</a>
+    <a class="nt" href="#kovapay">Kova Pay</a>
+    <a class="nt" href="#milestones">Milestones</a>
+    <a class="nt" href="#checklist">Checklist</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ============ EXEC SUMMARY ============ -->
+<section id="summary">
+  <div class="badge">Executive Summary — Revised</div>
+  <h1 class="h1">Zero effort. Maximum rewards.<br>Honest numbers.</h1>
+  <p class="lead">Kova puts the answer to "which card should I use?" on your lock screen at the moment of purchase — no bank login, no spreadsheet. Every recommendation is also a monetization event: users subscribe to stop leaking rewards, and when their wallet has a gap, Kova recommends the card that fills it and earns $100–$300 per approval. v2 rebuilds the plan around two things v1 assumed instead of proving: <b style="color:var(--text)">retention at the point of sale</b> and <b style="color:var(--text)">affiliate as the primary engine</b>.</p>
+  <div class="grid g4">
+    <div class="card"><div class="stat">$750K</div><div class="stat-l">Pre-seed target</div><div class="stat-s">24+ months lean runway</div></div>
+    <div class="card"><div class="stat gold">35% M3</div><div class="stat-l">Retention gate</div><div class="stat-s">The number everything hinges on</div></div>
+    <div class="card"><div class="stat green">$750K</div><div class="stat-l">Year 3 revenue (base)</div><div class="stat-s">Churn-modeled, defensible</div></div>
+    <div class="card"><div class="stat">Month 12</div><div class="stat-l">Venture / indie gate</div><div class="stat-s">Data decides the path</div></div>
+  </div>
+</section>
+
+<!-- ============ REVISION LOG ============ -->
+<section id="revisions">
+  <div class="eyebrow">Revision Log</div>
+  <h2 class="h2">What changed from v1 — and why</h2>
+  <p class="lead">Every change below traces to a specific weakness a diligence pass would catch. Keeping this log in the plan is deliberate: it shows investors the team can kill its own bad assumptions.</p>
+
+  <div class="diff"><div class="v1"><div class="dl">v1 assumed</div>20% install-to-paid conversion, rising to 35% by Year 3. No churn modeled.</div><div class="v2"><div class="dl">v2 uses</div>2.5% install-to-paid (RevenueCat consumer-utility benchmark range), 5% monthly churn, modeled monthly.</div></div>
+  <div class="diff"><div class="v1"><div class="dl">v1 assumed</div>Subscriptions as primary revenue; affiliate as a side stream.</div><div class="v2"><div class="dl">v2 uses</div>Affiliate CPA as the primary engine — the model that funds the entire points-media economy — with Pro subscriptions as the second engine.</div></div>
+  <div class="diff"><div class="v1"><div class="dl">v1 claimed</div>GPS layer as a moat; competitors listed as having "no GPS."</div><div class="v2"><div class="dl">v2 states</div>GPS is a feature, not a moat (CardPointers ships location-based widget suggestions today). Defensibility = dataset quality + creator distribution + retention loop.</div></div>
+  <div class="diff"><div class="v1"><div class="dl">v1 included</div>Kova Premium $9.99, B2B API / white-label licensing, ML spend modeling, international expansion.</div><div class="v2"><div class="dl">v2 cuts</div>All four from the 18-month plan. B2B has a fatal incentive conflict (our engine recommends competitors' cards). ML features require transaction data the architecture forbids.</div></div>
+  <div class="diff"><div class="v1"><div class="dl">v1 shipped</div>Welcome-bonus and spend-analytics features that silently require bank transaction data — while positioning "no bank login."</div><div class="v2"><div class="dl">v2 resolves</div>Zero-transaction-data design, honestly. Manual bonus tracking is optional and one-tap. Everything else works with zero PII.</div></div>
+  <div class="diff"><div class="v1"><div class="dl">v1 planned</div>r/creditcards organic seeding to 18,000 Year-1 downloads.</div><div class="v2"><div class="dl">v2 plans</div>r/creditcards as a 500-user beta credibility channel only. Volume comes from card-creator rev-share partnerships, ASO, and points-blog reviews.</div></div>
+</section>
+
+<!-- ============ MARKET ============ -->
+<section id="market">
+  <div class="eyebrow">Market Analysis</div>
+  <h2 class="h2">Bottom-up, from demonstrated demand</h2>
+  <p class="lead">v1 sized top-down from all US cardholders ($4.2B TAM). No investor believes that number, because the demonstrated market — what people actually pay for card optimization today — is small. The honest frame: the paid category is early and under-monetized, and Kova's job is to expand it by fusing the two proven revenue behaviors (subscription utilities and card affiliate) at the point of decision.</p>
+  <div class="grid g3">
+    <div class="card"><div class="stat">47M</div><div class="stat-l">US multi-card holders</div><div class="stat-s">Top of funnel — not the addressable market. The constraint is willingness to pay, not population.</div></div>
+    <div class="card"><div class="stat">~3–5M</div><div class="stat-l">Active optimizers</div><div class="stat-s">People who research cards, follow creators, or track categories. Reachable via existing channels.</div></div>
+    <div class="card"><div class="stat gold">$25–40</div><div class="stat-l">Blended revenue / engaged user / yr</div><div class="stat-s">Subscription + affiliate. The unit we build the model on.</div></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <div class="h3">The vitamin problem, addressed directly</div>
+    <p style="font-size:13px">Uncaptured rewards (~$340/user/yr) are invisible money — nobody feels the pain at checkout. Kova's answer is to make the loss visible and the recovery concrete: the <b style="color:var(--text)">Recovered Rewards Ledger</b> shows real dollars captured because of Kova, per week and per year. This is the retention product and the reason to keep paying. It is also the wedge that converts a vitamin into a painkiller: "you left $212 on the table last year" is a painkiller sentence.</p>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <div class="h3">Competitive landscape — corrected</div>
+    <table>
+      <tr><th>Competitor</th><th>Location-aware rec.</th><th>Benefit tracking</th><th>Model</th><th>Honest gap Kova exploits</th></tr>
+      <tr><td>CardPointers</td><td>✓ Widget / Watch suggestions</td><td>✓ Strong</td><td>Sub + affiliate</td><td>Dated UX; weak dollar-value framing; no creator channel</td></tr>
+      <tr><td>MaxRewards</td><td>⚠ Requires bank login</td><td>✓ Automated</td><td>Sub (Gold)</td><td>Plaid friction kills funnel; privacy-sensitive users excluded</td></tr>
+      <tr><td>AwardWallet</td><td>✗</td><td>✓ Points balances</td><td>Sub</td><td>Post-earn tracking, not at-checkout decisions</td></tr>
+      <tr class="hl"><td>Kova ✦</td><td>✓ Lock-screen first</td><td>✓ Full + dollar ledger</td><td>Affiliate-first + sub</td><td>Decision moment + zero login + creator distribution</td></tr>
+    </table>
+    <div class="note">v1 claimed competitors had "no GPS." That was wrong and would fail diligence. Kova's edge is not the location feature — it's owning the decision moment with better data, better framing (dollars, not points), and a distribution channel competitors don't have.</div>
+  </div>
+</section>
+
+<!-- ============ PRODUCT ============ -->
+<section id="product">
+  <div class="eyebrow">Product</div>
+  <h2 class="h2">Widget-first. GPS as delight, not dependency.</h2>
+  <p class="lead">v1 made background GPS the hero. Real-world constraints — iOS background-location opt-in rates, 50m accuracy failure in strip malls and multi-story retail, Places API cost, notification fatigue — mean most sessions won't start from a geofence push. v2 inverts the hierarchy: the fastest manual answer wins, and GPS upgrades it when conditions allow.</p>
+  <div class="grid g3">
+    <div class="card acc">
+      <div class="h3">1 · Lock-screen widget <span class="tag new">NEW PRIORITY</span></div>
+      <ul class="tick">
+        <li>Best-card answer without opening the app</li>
+        <li>One-tap merchant category tiles</li>
+        <li>Works offline from local DB cache</li>
+        <li>iOS Live Activity at known merchants</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="h3">2 · GPS layer <span class="tag keep">KEPT, DEMOTED</span></div>
+      <ul class="tick">
+        <li>Foreground detection on app open (fixes v1's invalid <code style="font-size:11px">radius + rankby=distance</code> Places call)</li>
+        <li>Aggressive caching to control API cost</li>
+        <li>Geofence pushes only for user-starred merchants</li>
+        <li>Confidence threshold — no guess, no push</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="h3">3 · Recovered Rewards Ledger <span class="tag new">NEW</span></div>
+      <ul class="tick">
+        <li>One-tap "used it" confirm after each rec</li>
+        <li>Running dollar total: captured vs leaked</li>
+        <li>Shareable year-end recap (only viral surface)</li>
+        <li>The retention loop and the renewal argument</li>
+      </ul>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <div class="h3">Kept from v1</div>
+      <ul class="tick">
+        <li class="ok">300+ card benefits database (top 50 first)</li>
+        <li class="ok">Rotating category countdowns + activation alerts</li>
+        <li class="ok">Annual credit expiry reminders</li>
+        <li class="ok">Annual fee vs. value tracker</li>
+        <li class="ok">No bank login — now consistently enforced</li>
+        <li class="ok">React Native / Expo + Supabase stack, Midnight Slate identity</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="h3">Cut or changed</div>
+      <ul class="tick">
+        <li class="x">AI spend-pattern analysis — impossible without transaction data <span class="tag cut">CUT</span></li>
+        <li class="x">Auto welcome-bonus tracking — now optional manual, one-tap <span class="tag cut">REWORKED</span></li>
+        <li class="x">Family wallet, concierge — Year 3 problems <span class="tag cut">DEFERRED</span></li>
+        <li class="x">Background always-on GPS as default UX <span class="tag cut">DEMOTED</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVENUE ============ -->
+<section id="revenue">
+  <div class="eyebrow">Business Model</div>
+  <h2 class="h2">Two engines, in the right order</h2>
+  <p class="lead">v1 ranked subscriptions first and treated affiliate as a bonus. The economics run the other way: affiliate is how this entire category monetizes at scale, it has zero marginal cost, and Kova owns the single best application trigger in existence — the moment a user sees a gap in their own wallet.</p>
+  <div class="grid g2">
+    <div class="card acc">
+      <div class="h3">Engine 1 — Affiliate CPA <span class="tag keep">PRIMARY</span></div>
+      <div class="stat green">$100–$300</div><div class="stat-l">Per approved card</div>
+      <ul class="tick" style="margin-top:10px">
+        <li>"Wallet gap" recs: you're missing 4× dining — this card fixes it</li>
+        <li>Only surfaced when genuinely user-positive (trust is the asset)</li>
+        <li>Network access via Impact / partner platforms; direct issuer deals at scale</li>
+        <li>Creator rev-share: creators earn on approvals they drive — acquisition and monetization fused</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="h3">Engine 2 — Kova Pro · $4.99/mo <span class="tag keep">SECOND</span></div>
+      <div class="stat">$49.99/yr</div><div class="stat-l">Annual plan pushed hard — churn defense</div>
+      <ul class="tick" style="margin-top:10px">
+        <li>Free tier: 3 cards, manual lookup, ledger</li>
+        <li>Pro: unlimited cards, widget, alerts, GPS, rotating tracker</li>
+        <li>7-day trial from the first "saved money" moment, not from install</li>
+        <li>Renewal pitch is the ledger: "Kova recovered $212 for you this year"</li>
+      </ul>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card" style="opacity:.65">
+      <div class="h3">Kova Premium $9.99 <span class="tag cut">CUT FROM 18-MO PLAN</span></div>
+      <p style="font-size:12.5px">Revisit at 10K+ subscribers. Family wallet is the one feature with organic-growth value; it returns first.</p>
+    </div>
+    <div class="card" style="opacity:.65">
+      <div class="h3">B2B API / white-label <span class="tag cut">CUT ENTIRELY</span></div>
+      <p style="font-size:12.5px">Fatal incentive conflict: the engine recommends competitors' cards, so no issuer licenses it. If the dataset becomes best-in-market, the buyer is points-media (NerdWallet tier) — an exit conversation, not a Year-2 revenue line.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINANCIALS ============ -->
+<section id="financials">
+  <div class="eyebrow">Financial Projections</div>
+  <h2 class="h2">Churn-modeled, assumption-stated</h2>
+  <p class="lead">Every number below survives the question "where did that come from?" Base case uses published consumer-subscription benchmarks; upside case requires the creator channel to work. v1's Year-3 $9.44M is gone — it required 35% install-to-paid conversion, which no consumer utility has ever sustained.</p>
+
+  <div class="card">
+    <div class="h3">Stated assumptions</div>
+    <table>
+      <tr><th>Assumption</th><th>Base</th><th>Upside</th><th>Source / rationale</th></tr>
+      <tr><td>Install → paid conversion</td><td class="tnum">2.5%</td><td class="tnum">4.0%</td><td>RevenueCat consumer-utility benchmark range; v1 assumed 20–35%</td></tr>
+      <tr><td>Monthly subscriber churn</td><td class="tnum">5%</td><td class="tnum">4%</td><td>Typical utility-app range; annual plans reduce effective rate</td></tr>
+      <tr><td>Affiliate revenue / download (lifetime)</td><td class="tnum">$3.00</td><td class="tnum">$5.00</td><td>~2% of downloads apply × $150 avg CPA; upside assumes creator-driven intent</td></tr>
+      <tr><td>Blended CAC</td><td class="tnum">$3.50</td><td class="tnum">$2.50</td><td>Creator rev-share (paid on results) + ASO organic mix</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="h3">Base case</div>
+    <table>
+      <tr><th>Metric</th><th class="tnum">Year 1</th><th class="tnum">Year 2</th><th class="tnum">Year 3</th></tr>
+      <tr><td>Downloads</td><td class="tnum">15,000</td><td class="tnum">60,000</td><td class="tnum">150,000</td></tr>
+      <tr><td>Ending Pro subscribers</td><td class="tnum">~350</td><td class="tnum">~1,340</td><td class="tnum">~3,600</td></tr>
+      <tr><td>Subscription revenue</td><td class="tnum">$10K</td><td class="tnum">$50K</td><td class="tnum">$150K</td></tr>
+      <tr><td>Affiliate revenue</td><td class="tnum">$40K</td><td class="tnum">$210K</td><td class="tnum">$600K</td></tr>
+      <tr class="hl"><td>Total revenue</td><td class="tnum">$50K</td><td class="tnum">$260K</td><td class="tnum">$750K</td></tr>
+      <tr><td>Operating costs</td><td class="tnum">$300K</td><td class="tnum">$520K</td><td class="tnum">$850K</td></tr>
+      <tr><td>Net</td><td class="tnum" style="color:var(--red)">($250K)</td><td class="tnum" style="color:var(--red)">($260K)</td><td class="tnum" style="color:var(--red)">($100K)</td></tr>
+    </table>
+    <div class="note">Subscriber counts simulated monthly: gross adds = downloads × 2.5%, decayed at 5%/mo. Costs: founder + 1 engineer + part-time data ops (Y2), + growth hire (Y3), infra and Places API included.</div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="h3">Upside case — creator channel works</div>
+    <table>
+      <tr><th>Metric</th><th class="tnum">Year 1</th><th class="tnum">Year 2</th><th class="tnum">Year 3</th></tr>
+      <tr><td>Downloads</td><td class="tnum">25,000</td><td class="tnum">100,000</td><td class="tnum">250,000</td></tr>
+      <tr><td>Ending Pro subscribers</td><td class="tnum">~900</td><td class="tnum">~3,700</td><td class="tnum">~8,900</td></tr>
+      <tr class="hl"><td>Total revenue</td><td class="tnum">$140K</td><td class="tnum">$630K</td><td class="tnum">$1.65M</td></tr>
+      <tr><td>Net</td><td class="tnum" style="color:var(--red)">($160K)</td><td class="tnum" style="color:var(--gold)">~breakeven</td><td class="tnum" style="color:var(--green)">+$700K</td></tr>
+    </table>
+    <div class="note">The upside case is what a Series A story requires. The base case is a profitable indie business by Year 4. Both are real outcomes; Month 12 data decides which one this is.</div>
+  </div>
+
+  <div class="grid g3" style="margin-top:14px">
+    <div class="card"><div class="stat">$750K</div><div class="stat-l">Raise (pre-seed / seed)</div><div class="stat-s">24+ months at lean burn — v1's $1.2M for "12 months" implied burn the plan never justified</div></div>
+    <div class="card"><div class="stat">55 / 30 / 15</div><div class="stat-l">Use of funds</div><div class="stat-s">Engineering / creator & growth / data ops</div></div>
+    <div class="card"><div class="stat gold">Gate</div><div class="stat-l">Series A raise only if</div><div class="stat-s">M3 retention ≥35% and revenue per engaged user ≥$10/yr by Month 12</div></div>
+  </div>
+</section>
+
+<!-- ============ GTM ============ -->
+<section id="gtm">
+  <div class="eyebrow">Go-To-Market</div>
+  <h2 class="h2">Channels built for this exact audience</h2>
+  <p class="lead">v1's plan — r/creditcards organic seeding to 18K downloads — hides a CAC math problem: that community bans promotion and its members optimize for free recreationally. It's the perfect 500-user beta and a terrible volume channel. v2's channels share one property: the audience arrives already caring about card rewards.</p>
+  <div class="grid g3">
+    <div class="card acc">
+      <div class="h3">1 · Card creators (YouTube / TikTok)</div>
+      <p style="font-size:12.5px">The highest-leverage channel. Creators' audiences are pre-qualified and creators are already affiliate-motivated. Kova's offer: rev-share on affiliate approvals their referrals generate — a growing annuity instead of a flat sponsorship. Acquisition cost is paid on results, not upfront.</p>
+    </div>
+    <div class="card">
+      <div class="h3">2 · App Store ASO</div>
+      <p style="font-size:12.5px">Own high-intent queries: "best card for groceries," "credit card rewards tracker," "which card to use." This is how CardPointers built its base. Compounding, free, and defensible with review velocity from the beta cohort.</p>
+    </div>
+    <div class="card">
+      <div class="h3">3 · Points blogs & newsletters</div>
+      <p style="font-size:12.5px">Doctor of Credit, Frequent Miler, r/CreditCards weekly threads (organically earned). One genuine review moves thousands of exactly-right installs. Requires the product to be honestly good — which is the plan.</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <div class="h3">Virality: planned at k ≈ 0.1</div>
+    <p style="font-size:13px">Card choice at checkout is private behavior with no social surface. The only organic loops are the shareable year-end "Kova recovered $X for me" recap and (later) the family wallet. Anything above k = 0.1 is upside, never a plan input.</p>
+  </div>
+</section>
+
+<!-- ============ DATA OPS ============ -->
+<section id="data">
+  <div class="eyebrow">Data Operations</div>
+  <h2 class="h2">The database is the moat only if it's run like one</h2>
+  <p class="lead">v1 asserted the 300+ card database as the core moat without an operating plan. The truth: the data is public and replicable, so the moat is <i>freshness and trust</i> — being the source that's never wrong. One bad multiplier that costs a user money destroys the entire premise.</p>
+  <div class="grid g2">
+    <div class="card">
+      <div class="h3">Operating plan</div>
+      <ul class="tick">
+        <li>Top 50 cards at launch — 95% of user wallets — before breadth</li>
+        <li>Versioned records with effective dates (schema already supports this)</li>
+        <li>LLM-assisted change detection on issuer pages → human review queue</li>
+        <li>In-app "report an error" with 1-month Pro credit bounty</li>
+        <li>Quarterly rotation calendar staffed 1 week in advance</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="h3">Cost & scaling honesty</div>
+      <ul class="tick">
+        <li>Solo-maintainable at 50 cards: ~4 hrs/wk</li>
+        <li>At 300 cards: 10–15 hrs/wk with quarterly spikes → part-time data ops hire budgeted from Month 9</li>
+        <li>No quality licensing source exists today — that's why the asset has value, and why it could itself be the acquirable asset</li>
+        <li>Accuracy SLA published in-app: last-verified date on every card</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RISKS ============ -->
+<section id="risks">
+  <div class="eyebrow">Risk Register</div>
+  <h2 class="h2">What actually kills this</h2>
+  <div class="grid g2">
+    <div class="card">
+      <div class="h3" style="color:var(--red)">1 · The checkout moment is too fast</div>
+      <p style="font-size:12.5px">The existential risk: people won't consult anything at the register. Mitigation is the entire widget-first strategy — the answer must exist at a glance, pre-computed. Measured directly in beta: % of recommendations viewed within 60s of a merchant visit.</p>
+    </div>
+    <div class="card">
+      <div class="h3" style="color:var(--red)">2 · Affiliate access & volatility</div>
+      <p style="font-size:12.5px">Small apps struggle to get into issuer affiliate programs, and terms change unilaterally. Mitigation: start via aggregator networks, diversify across issuers, and never let one program exceed 40% of affiliate revenue.</p>
+    </div>
+    <div class="card">
+      <div class="h3" style="color:var(--gold)">3 · Incumbent copies the framing</div>
+      <p style="font-size:12.5px">CardPointers can ship a dollar-ledger too. Defense is speed plus the creator channel — distribution is harder to copy than features — and the design/UX gap the category has never closed.</p>
+    </div>
+    <div class="card">
+      <div class="h3" style="color:var(--gold)">4 · Data error breaks trust</div>
+      <p style="font-size:12.5px">One wrong recommendation with real money attached undoes months of trust. Defense: top-50 depth before breadth, verified-date transparency, error bounty, and conservative CPP estimates by default.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KOVA PAY ============ -->
+<section id="kovapay">
+  <div class="eyebrow">Long-Term · Series A Expansion</div>
+  <h2 class="h2">Kova Pay — from telling you the card to being the card</h2>
+  <p class="lead">The endgame the recommendation product builds toward: a single Kova card (tokenized in Apple Pay / Google Wallet) that <b style="color:var(--text)">automatically routes every transaction to whichever of the user's cards earns the most</b> at that merchant — the same engine, moved from advice to execution. This is not in the 18-month plan and is not funded by the seed round. It's here because it's the honest answer to "how does this get big," and because Phase 1–3 quietly builds its two prerequisites: the benefits database and proof that users follow the engine's recommendations.</p>
+
+  <div class="grid g3">
+    <div class="card acc">
+      <div class="h3">Why it's possible</div>
+      <p style="font-size:12.5px">The mechanics are proven: issue a front card via a BaaS issuer-processor, approve each tap in real time via a just-in-time authorization webhook where the routing engine picks the winner, then charge the user's chosen underlying card as the funding source. Curve has run this model in the UK/EU for years, including category-based Smart Rules — the concept works.</p>
+    </div>
+    <div class="card">
+      <div class="h3">Why it's hard</div>
+      <p style="font-size:12.5px">It makes Kova a regulated payments program: sponsor bank, KYC, fraud liability, network rules. Three structural risks are inherited from Curve's experience: imperfect merchant-category passthrough can break the very bonuses being optimized; issuers can block the front card (Amex did); and US network support is the graveyard detail — Curve US never supported Visa or Amex and later paused issuance while switching sponsor banks.</p>
+    </div>
+    <div class="card">
+      <div class="h3">Why Kova, why then</div>
+      <p style="font-size:12.5px">By Gate 3, Kova will hold the two assets that de-risk the build: the freshest benefits dataset (the routing brain) and observed recommendation-follow behavior (demand proof). Apple's NFC &amp; SE platform (iOS 18.1+) now allows third-party contactless payment apps in the US via a licensed PSP partnership — a door that did not exist when Coin, Plastc, and Stratos died.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="h3">Honest status: shape known, numbers not</div>
+    <p style="font-size:13px">The architecture and phasing are well understood (see the Kova Pay build plan, companion document). What cannot be known until real partner conversations: net unit economics per swipe (interchange earned on the front card vs. the cost of charging the underlying credit card — the number that decides whether routing is a business or a subsidized feature), sponsor-bank appetite for a rewards-routing program, and network posture on category passthrough. These are Series A diligence questions, funded by Series A capital — pursued only if Gate 3 passes. Kova Pay is an option the seed plan purchases cheaply, not a promise it makes.</p>
+  </div>
+</section>
+
+<!-- ============ MILESTONES ============ -->
+<section id="milestones">
+  <div class="eyebrow">Roadmap</div>
+  <h2 class="h2">18 months, gated by metrics — not by calendar</h2>
+  <p class="lead">Each phase ends with a gate. Passing the gate unlocks the next phase's spend. Failing it triggers the written fallback, not improvisation. The single most important thing to prove in 18 months: <b style="color:var(--text)">users return to the recommendation moment, and that moment monetizes.</b></p>
+
+  <div class="grid g2">
+    <div class="card">
+      <div class="h3">Phase 1 · Months 1–4 — Prove the moment</div>
+      <ul class="tick">
+        <li>Top-50 benefits DB, verified twice</li>
+        <li>iOS app: widget, lookup, wallet, ledger, alerts</li>
+        <li>Fixed GPS layer (foreground, cached)</li>
+        <li>500-user beta via r/creditcards</li>
+      </ul>
+      <div class="gate"><div class="gl">Gate 1</div>≥40% of beta users check a recommendation 3+ times/week in Week 4. Fail → the checkout moment doesn't exist; pivot to alerts-first product before spending on growth.</div>
+    </div>
+    <div class="card">
+      <div class="h3">Phase 2 · Months 5–9 — Prove monetization</div>
+      <ul class="tick">
+        <li>App Store launch + ASO foundation</li>
+        <li>Kova Pro live, trial triggered by first saved-money moment</li>
+        <li>Affiliate flow live via aggregator network</li>
+        <li>First 5 creator rev-share partnerships</li>
+      </ul>
+      <div class="gate"><div class="gl">Gate 2</div>≥2% of installs convert to paid AND ≥1.5% submit a card application. Fail on subs but pass on affiliate → drop the paywall, go free + affiliate.</div>
+    </div>
+    <div class="card">
+      <div class="h3">Phase 3 · Months 10–14 — Prove retention</div>
+      <ul class="tick">
+        <li>Android launch</li>
+        <li>DB to 150+ cards, data-ops hire</li>
+        <li>Year-end shareable recap</li>
+        <li>Creator network to 20+ partners</li>
+      </ul>
+      <div class="gate"><div class="gl">Gate 3 — the venture / indie decision</div>M3 retention ≥35% and revenue per engaged user ≥$10/yr → prepare Series A. Below → cut burn to ramen-profitable indie path. Both are wins; only drift is failure.</div>
+    </div>
+    <div class="card">
+      <div class="h3">Phase 4 · Months 15–18 — Compound the winner</div>
+      <ul class="tick">
+        <li>Double down on whichever engine Gate 2/3 proved</li>
+        <li>DB to 300 cards</li>
+        <li>Family wallet returns if referral data supports it</li>
+        <li>Series A raise ($6–10M) or profitability push, per Gate 3</li>
+        <li>If raising: open Kova Pay partner conversations (BaaS issuers, sponsor banks) — diligence only, no build</li>
+      </ul>
+      <div class="gate"><div class="gl">18-month success state</div>40–60K downloads · 1,500–2,500 subscribers · $150–300K affiliate run-rate · best card dataset in market · a channel that acquires profitably.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section id="checklist">
+  <div class="eyebrow">Execution Checklist</div>
+  <h2 class="h2">Founder checklist — metric-gated</h2>
+  <p class="lead">Items marked <span class="m" style="color:var(--gold);font-weight:700">◆</span> are gate metrics: they must be measured, not just shipped.</p>
+
+  <div class="phase-h"><span class="phase-n">PHASE 0 · WEEKS 1–2</span><span class="h3">Foundation</span></div>
+  <ul class="check">
+    <li><b>Fix gpsDetection.ts</b> — remove the invalid <code style="font-size:11px">radius</code> + <code style="font-size:11px">rankby=distance</code> combination; add result caching and a confidence threshold</li>
+    <li><b>Add versioning columns</b> to reward_categories and annual_benefits (verified_at, source_url) and a changelog table</li>
+    <li><b>Instrument analytics from day one</b> — recommendation views, "used it" confirms, D1/D7/D30 retention, trial starts. No gate can be judged without this</li>
+    <li><b>Apply to affiliate aggregator networks</b> (Impact, FlexOffers, Bankrate partners) — approval takes weeks; start now</li>
+    <li><b>Write the one-page metrics memo</b> — the three gate numbers and their thresholds, shared with any advisor/investor up front</li>
+  </ul>
+
+  <div class="phase-h"><span class="phase-n">PHASE 1 · MONTHS 1–4</span><span class="h3">Prove the moment</span></div>
+  <ul class="check">
+    <li><b>Build & double-verify top-50 card database</b> — every multiplier checked against issuer source, verified_at stamped</li>
+    <li><b>Ship iOS core:</b> lock-screen widget, manual lookup, wallet, Recovered Rewards Ledger, rotating-category alerts</li>
+    <li><b>Recruit 500 beta users</b> from r/creditcards + churning Discords — credibility channel, not volume</li>
+    <li><b>Run weekly beta interviews</b> — 5/week minimum; the question is always "when did you last actually use it at a register?"</li>
+    <li><span class="m">◆</span> <b>Gate 1: ≥40% of beta checks a rec 3+×/week at Week 4</b> — if failed, pivot to alerts-first before any growth spend</li>
+  </ul>
+
+  <div class="phase-h"><span class="phase-n">PHASE 2 · MONTHS 5–9</span><span class="h3">Prove monetization</span></div>
+  <ul class="check">
+    <li><b>App Store launch</b> with ASO targets: "best card for groceries," "credit card rewards tracker" — review-velocity push from beta cohort</li>
+    <li><b>Launch Kova Pro</b> — trial triggers on first saved-money moment, annual plan pushed at checkout</li>
+    <li><b>Ship affiliate flow</b> — wallet-gap recommendations, application tracking, disclosure done right</li>
+    <li><b>Sign first 5 creator rev-share deals</b> — mid-size card YouTubers/TikTokers, paid on approvals</li>
+    <li><b>Publish data accuracy SLA in-app</b> + error-report bounty (1 month Pro)</li>
+    <li><span class="m">◆</span> <b>Gate 2: ≥2% install→paid AND ≥1.5% install→card application</b> — affiliate-only pass → drop the paywall</li>
+  </ul>
+
+  <div class="phase-h"><span class="phase-n">PHASE 3 · MONTHS 10–14</span><span class="h3">Prove retention</span></div>
+  <ul class="check">
+    <li><b>Android launch</b> (Expo makes this cheap — but only after iOS gates pass)</li>
+    <li><b>Hire part-time data ops</b>; expand DB to 150+ cards with the same verification standard</li>
+    <li><b>Ship shareable year-end recap</b> — "Kova recovered $X for me" — the only viral surface; measure k honestly</li>
+    <li><b>Scale creator network to 20+</b>; kill any partnership below $2.50 effective CAC</li>
+    <li><span class="m">◆</span> <b>Gate 3: M3 retention ≥35% AND revenue/engaged user ≥$10/yr</b> — pass → Series A prep; fail → cut burn, indie path. Decide in writing</li>
+  </ul>
+
+  <div class="phase-h"><span class="phase-n">PHASE 4 · MONTHS 15–18</span><span class="h3">Compound</span></div>
+  <ul class="check">
+    <li><b>Double down on the proven engine</b> — resource the winner of Gate 2, starve the loser</li>
+    <li><b>DB to 300 cards</b>; quarterly rotation calendar fully systematized</li>
+    <li><b>Family wallet returns</b> only if recap-share data shows referral intent</li>
+    <li><b>Raise Series A ($6–10M) or push to profitability</b> — per Gate 3, no third option</li>
+  </ul>
+
+  <div class="phase-h"><span class="phase-n">STANDING · EVERY WEEK</span><span class="h3">Never skipped</span></div>
+  <ul class="check">
+    <li><b>Verify 10 cards against issuer sources</b> — freshness is the moat</li>
+    <li><b>Review the four numbers:</b> rec-views/user, "used it" confirms, trial conversion, affiliate applications</li>
+    <li><b>Talk to 3 users</b> — at least one who churned</li>
+  </ul>
+</section>
+
+</div>
+
+<footer>
+  <span class="logo" style="transform:scale(.8)"></span><br><br>
+  Kova · Confidential Business Plan v2 · 2026<br>
+  Zero effort. Maximum rewards. Honest numbers.
+</footer>
+
+</body>
+</html>

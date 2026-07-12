@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kova Pay — Long-Term Build Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D1117;--surf:#161E2C;--surf2:#1A2438;--surf3:#1E2A40;
+  --border:#1E2433;--border2:#263354;
+  --acc:#7C8FFF;--acc2:#5A6ADA;--as:rgba(124,143,255,.10);--ab:rgba(124,143,255,.28);
+  --text:#E8EEFF;--dim:#5A6A9A;--muted:#3A4A7A;
+  --red:#F87171;--green:#4ADE80;--gold:#FBBF24;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--dim);font-family:'Inter',sans-serif;font-size:14px;line-height:1.65;padding:48px 24px 80px}
+.wrap{max-width:1020px;margin:0 auto}
+.eyebrow{font-size:10px;color:var(--acc);letter-spacing:2.5px;font-weight:700;text-transform:uppercase;margin-bottom:8px}
+h1{font-size:clamp(26px,4vw,44px);font-weight:900;letter-spacing:-1.5px;color:var(--text);line-height:1.08;margin-bottom:14px}
+.h2{font-size:clamp(17px,2.3vw,24px);font-weight:800;letter-spacing:-.8px;color:var(--text);margin-bottom:8px}
+.h3{font-size:14.5px;font-weight:700;color:var(--text);margin-bottom:6px}
+.lead{max-width:680px;line-height:1.85;margin-bottom:24px}
+section{padding:44px 0;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--ab);color:var(--acc);background:var(--as);border-radius:999px;padding:4px 12px;margin-bottom:16px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:18px}
+.card.acc{border-color:var(--ab);background:linear-gradient(180deg,var(--as),var(--surf))}
+.card p{font-size:12.5px;margin-bottom:8px}
+.card p b, li b{color:var(--text);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:left;padding:9px 11px;border-bottom:1px solid var(--border2)}
+td{padding:9px 11px;border-bottom:1px solid var(--border);color:var(--dim);vertical-align:top}
+td:first-child{color:var(--text);font-weight:600}
+.tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:1px;border-radius:5px;padding:2px 8px;text-transform:uppercase}
+.tag.k{background:rgba(74,222,128,.1);color:var(--green);border:1px solid rgba(74,222,128,.3)}
+.tag.m{background:rgba(251,191,36,.1);color:var(--gold);border:1px solid rgba(251,191,36,.3)}
+.tag.u{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+ul.tick{list-style:none;font-size:13px}
+ul.tick li{padding:5px 0 5px 22px;position:relative}
+ul.tick li::before{content:"→";position:absolute;left:0;color:var(--acc);font-weight:700}
+.gate{border-left:3px solid var(--gold);background:var(--surf2);border-radius:0 12px 12px 0;padding:13px 17px;margin-top:14px;font-size:12.5px}
+.gate .gl{font-size:10px;letter-spacing:2px;font-weight:800;color:var(--gold);text-transform:uppercase;margin-bottom:4px}
+.kill{border-left:3px solid var(--red);background:rgba(248,113,113,.05);border-radius:0 12px 12px 0;padding:13px 17px;margin-top:10px;font-size:12.5px}
+.kill .gl{font-size:10px;letter-spacing:2px;font-weight:800;color:var(--red);text-transform:uppercase;margin-bottom:4px}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;counter-reset:fs}
+.fstep{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:15px;position:relative;counter-increment:fs}
+.fstep::before{content:counter(fs);position:absolute;top:-11px;left:14px;width:22px;height:22px;background:var(--acc);color:#0D1117;font-size:11px;font-weight:900;border-radius:7px;display:flex;align-items:center;justify-content:center}
+.fstep .t{font-size:12px;font-weight:800;color:var(--text);margin:4px 0 5px}
+.fstep p{font-size:11.5px}
+.fstep.hot{border-color:var(--ab);background:linear-gradient(180deg,var(--as),var(--surf))}
+.note{font-size:11.5px;color:var(--muted);border-top:1px dashed var(--border2);padding-top:10px;margin-top:12px}
+.math{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 16px;color:#B8C4E8;line-height:1.9;overflow-x:auto}
+.math .r{color:var(--red)}.math .g{color:var(--green)}.math .go{color:var(--gold)}
+footer{text-align:center;font-size:11px;color:var(--muted);padding:40px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="badge">Companion to Business Plan v2 · Not funded by seed</div>
+<div class="eyebrow">Kova Pay — Long-Term Build Plan</div>
+<h1>From telling you the card<br>to being the card</h1>
+<p class="lead">One Kova card in Apple Pay / Google Wallet. Every tap gets routed, in real time, to whichever of the user's cards earns the most at that merchant. This document maps how it gets built, what each phase must prove, and — because honesty is the house style — exactly which numbers we cannot know yet. <b style="color:var(--text)">The shape is known. Three numbers are not. Phase B exists to get them.</b></p>
+
+<!-- ============ WHAT IT UNLOCKS ============ -->
+<section>
+  <div class="eyebrow">Why bother</div>
+  <h2 class="h2">Three things routing unlocks that advice never can</h2>
+  <div class="grid g3">
+    <div class="card acc"><div class="h3">Zero-effort, literally</div><p>The core brand promise, completed. No glance at a widget, no memory required — the optimization happens inside the tap. This is the version of the product for the 95% who will never care enough to check an app.</p></div>
+    <div class="card"><div class="h3">Real transaction data — without bank login</div><p>Users pay <i>through</i> Kova, so the Recovered Rewards Ledger becomes automatic and exact, bonus tracking becomes real, and the privacy promise survives: Kova sees only its own transactions, because the user chose to make them through Kova.</p></div>
+    <div class="card"><div class="h3">A payments business, not an app</div><p>Interchange revenue on every swipe, a top-of-wallet position issuers can't ignore, and the dataset (real category-level spend of rewards optimizers) that the entire card industry wants. This is the "how it gets big" answer.</p></div>
+  </div>
+</section>
+
+<!-- ============ ARCHITECTURE ============ -->
+<section>
+  <div class="eyebrow">Architecture</div>
+  <h2 class="h2">Anatomy of one tap</h2>
+  <p class="lead">The mechanics are proven — Curve has operated this model in the UK/EU for years. Kova's version, built on a US BaaS issuer-processor (Lithic, Marqeta, or Stripe Issuing class):</p>
+  <div class="flow">
+    <div class="fstep"><div class="t">User taps the Kova card</div><p>Tokenized in Apple Pay / Google Wallet via push provisioning. One card, every merchant.</p></div>
+    <div class="fstep"><div class="t">Auth request reaches Kova's processor</div><p>Merchant → acquirer → network → the issuer-processor holding Kova's card program.</p></div>
+    <div class="fstep hot"><div class="t">JIT webhook → the routing engine</div><p>The processor asks Kova to approve or decline in real time (sub-3-second SLA). Merchant name + MCC + amount come in; <b>the existing recommendation engine picks the winning card.</b> This is the moment the whole company was built for.</p></div>
+    <div class="fstep"><div class="t">Approve &amp; settle</div><p>Kova approves; the merchant is paid through Kova's program; settlement T+1. Kova earns interchange on the front card.</p></div>
+    <div class="fstep hot"><div class="t">Charge the underlying card</div><p>Kova charges the user's chosen card as a stored card-on-file transaction, passing merchant context in the descriptor (e.g. KOVA* TRADER JOE'S). <b>This step carries the two hardest problems: category passthrough and funding cost.</b></p></div>
+    <div class="fstep"><div class="t">Reconcile &amp; ledger</div><p>Auto-entry in the Recovered Rewards Ledger. "Go back in time": re-route to a different underlying card within 30 days. Failed underlying charges = Kova's credit risk (dunning + retry + spending pause).</p></div>
+  </div>
+  <div class="note">Longer term: Apple's NFC &amp; SE platform (iOS 18.1+) allows authorized apps, via a licensed PSP partnership and commercial agreement with Apple, to run contactless payments natively — including becoming the user's default double-click payment app. Evaluated in Phase D, not before; Apple Pay tokenization covers the pilot.</div>
+</section>
+
+<!-- ============ KNOWNS/UNKNOWNS ============ -->
+<section>
+  <div class="eyebrow">Epistemic Status</div>
+  <h2 class="h2">What we know, what we've modeled, what we can't know yet</h2>
+  <table>
+    <tr><th>Question</th><th>Status</th><th>Detail</th></tr>
+    <tr><td>Technical architecture</td><td><span class="tag k">KNOWN</span></td><td>JIT-funded card programs are standard BaaS offerings; the routing decision is exactly the engine Kova already runs. Build risk is execution, not invention.</td></tr>
+    <tr><td>User demand for routing</td><td><span class="tag m">MODELED → measurable</span></td><td>Phase A instruments it for free: the gap between "recommendation shown" and "used it" is the demand signal for automation, plus a Kova Pay waitlist inside the app.</td></tr>
+    <tr><td>Regulatory structure</td><td><span class="tag m">MODELED</span></td><td>Program-manager-under-sponsor-bank is the standard shape; staged-wallet rules and state money-transmission analysis need real counsel, not a blog post. Budgeted in Phase B.</td></tr>
+    <tr><td>Net economics per swipe</td><td><span class="tag u">UNKNOWN — the big one</span></td><td>Interchange earned on the front card vs. the cost of charging the underlying credit card. Cannot be known without real quotes from processors and acquirers. See the math below.</td></tr>
+    <tr><td>Category (MCC) passthrough fidelity</td><td><span class="tag u">UNKNOWN</span></td><td>Whether the underlying issuer awards category bonuses on charges arriving via Kova. Curve's record here is mixed — some transactions coded through, some didn't. If passthrough fails broadly, routing breaks its own promise. Testable cheaply in Phase B with a handful of real cards.</td></tr>
+    <tr><td>Issuer &amp; network posture</td><td><span class="tag u">UNKNOWN</span></td><td>Amex blocked Curve; US network support was Curve's graveyard detail (no Visa or Amex at US launch, issuance later paused during a sponsor-bank switch). Kova's mitigations: launch as optional layer, keep the advice product independent, and never build a P&amp;L that assumes universal card support.</td></tr>
+  </table>
+
+  <div class="card" style="margin-top:16px">
+    <div class="h3">The unit-economics problem, stated plainly</div>
+    <p>The number that decides whether Kova Pay is a business or a subsidized feature:</p>
+    <div class="math">
+earn:  front-card interchange            <span class="g">~1.0–1.8%</span>  (rails &amp; mix dependent)
+pay:   charging the underlying credit    <span class="r">~2.0–3.0%</span>  (card-not-present acceptance)
+       ─────────────────────────────────────────────
+net:   per routed dollar                 <span class="r">roughly −0.5% to −1.5%</span>
+
+offset by:
+  · Kova Pay subscription tier           <span class="g">$10–15/mo</span>
+  · wholesale acquiring at volume        <span class="go">negotiable, unknown today</span>
+  · rewards delta captured for the user  <span class="g">avg ~2%+ per routed txn</span> (why they'll pay)
+    </div>
+    <p style="margin-top:10px">Curve's answer to the same math was subscriptions plus FX revenue — and roughly £150M of accumulated losses getting there. Kova's discipline: <b>the spread gets measured with real quotes in Phase B before a single line of Phase C is built.</b> If subscription revenue per active router can't clear the net routing cost at modeled usage, the project parks. That's a kill criterion, not a footnote.</p>
+  </div>
+</section>
+
+<!-- ============ PHASES ============ -->
+<section>
+  <div class="eyebrow">The Plan</div>
+  <h2 class="h2">Four phases, each with a gate and a kill switch</h2>
+
+  <div class="grid g2">
+    <div class="card acc">
+      <div class="h3">Phase A · Now → Gate 3 (runs inside the seed plan) — <span style="color:var(--green)">~$0</span></div>
+      <ul class="tick">
+        <li>Instrument routing demand: track the gap between recommendations shown and "used it" confirms — every unfollowed recommendation is a vote for automation</li>
+        <li>Add a "Kova Pay — join the waitlist" card in-app; waitlist size becomes Series A evidence</li>
+        <li>Write the regulatory scoping memo (2 weeks of specialist counsel, ~$10–15K, the only spend)</li>
+        <li>Keep the benefits DB schema routing-ready: MCC arrays are already first-class</li>
+      </ul>
+      <div class="gate"><div class="gl">Gate A</div>Proceed to Phase B only if the seed plan's Gate 3 passes (M3 retention ≥35%, revenue/engaged user ≥$10) AND the waitlist exceeds ~20% of MAU. Routing is an amplifier for a product people already use — never a rescue for one they don't.</div>
+    </div>
+
+    <div class="card">
+      <div class="h3">Phase B · Series A months 0–4 — Diligence &amp; the three numbers — <span style="color:var(--gold)">~$150–250K</span></div>
+      <ul class="tick">
+        <li>Real quotes: 3+ BaaS issuer-processors and sponsor banks; acquiring costs for underlying charges; compute the actual net spread</li>
+        <li>MCC passthrough field test: route live transactions across the top 10 issuer cards via a prototype program or partner sandbox; measure which bonuses actually post</li>
+        <li>Counsel deliverables: program structure, staged-wallet network rules, state MT analysis, card agreement T&amp;Cs</li>
+        <li>Hire the payments lead — someone who has shipped a card program before; this hire is half the phase</li>
+      </ul>
+      <div class="kill"><div class="gl">Kill criteria</div>Park the project if: net routing cost exceeds what a $15/mo tier covers at modeled usage; or passthrough fails on &gt;40% of top-10 cards; or no credible sponsor bank will touch a rewards-routing program. Parking is cheap here; discovering these in Phase C costs $3M.</div>
+    </div>
+
+    <div class="card">
+      <div class="h3">Phase C · Months 4–14 — Build &amp; closed pilot — <span style="color:var(--gold)">~$2.5–4M</span></div>
+      <ul class="tick">
+        <li>Virtual Kova card + Apple/Google push provisioning</li>
+        <li>JIT authorization service: routing engine answers the webhook inside the SLA, with a static-default fallback if the engine times out</li>
+        <li>Underlying-charge service: card-on-file vaulting, descriptors, retries, dunning, spend-pause on failed funding</li>
+        <li>Risk &amp; compliance ops: KYC flow, fraud rules, dispute handling — headcount, not just code</li>
+        <li>Closed pilot: 1,000 users from the waitlist, Kova-Pay tier priced from day one (no free routing, ever — the economics forbid it)</li>
+        <li>"Go back in time" re-routing within 30 days</li>
+      </ul>
+      <div class="gate"><div class="gl">Gate C</div>Pilot proves: ≥60% of pilot users' card spend migrates through Kova Pay; funding-charge failure rate &lt;2%; measured rewards delta per user ≥3× the subscription price; unit loss per routed dollar within the Phase B model. Miss badly on any → pause scale-up, fix or park.</div>
+    </div>
+
+    <div class="card">
+      <div class="h3">Phase D · Months 14–24 — Scale decisions — <span style="color:var(--gold)">sized by Gate C</span></div>
+      <ul class="tick">
+        <li>Physical card (metal is the category's love language)</li>
+        <li>Anti-embarrassment backstop (Kova fronts a declined underlying charge) — only if credit risk modeling from pilot supports it</li>
+        <li>Evaluate Apple NFC &amp; SE entitlement with the PSP partner: Kova as the user's default double-click payment app</li>
+        <li>Issuer relations program — convert hostility into partnership by proving Kova Pay grows category spend on well-matched cards</li>
+        <li>Wholesale acquiring renegotiation at volume — the lever that can flip the per-swipe spread</li>
+      </ul>
+      <div class="gate"><div class="gl">The end state</div>The advice product acquires and educates; Kova Pay converts the believers into a payments business with real transaction data, recurring revenue per swipe-month, and the top-of-wallet position. The app was the wedge. The card is the company.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAPITAL & TEAM ============ -->
+<section>
+  <div class="eyebrow">Resourcing</div>
+  <h2 class="h2">Capital &amp; team — honest ranges</h2>
+  <table>
+    <tr><th>Phase</th><th>Timeline</th><th>Capital</th><th>Team added</th><th>Funded by</th></tr>
+    <tr><td>A · Instrument &amp; scope</td><td>Inside seed plan</td><td>~$10–15K (counsel memo)</td><td>None</td><td>Seed (rounding error)</td></tr>
+    <tr><td>B · Diligence</td><td>4 months</td><td>$150–250K</td><td>Payments lead</td><td>Series A</td></tr>
+    <tr><td>C · Build &amp; pilot</td><td>10 months</td><td>$2.5–4M</td><td>2–3 backend eng, compliance officer, risk/fraud ops</td><td>Series A</td></tr>
+    <tr><td>D · Scale</td><td>Ongoing</td><td>Sized by pilot economics</td><td>Support, issuer relations</td><td>Series A/B</td></tr>
+  </table>
+  <p style="font-size:12.5px;margin-top:12px">Total to a proven pilot: <b style="color:var(--text)">roughly $3–4.5M and ~18 months from Series A close</b> — which is why the Series A is sized $6–10M in the main plan. The ranges are wide on purpose: tightening them is literally Phase B's job. Any version of this document with precise numbers today would be lying.</p>
+</section>
+
+</div>
+<footer>Kova Pay · Long-Term Build Plan · Companion to Business Plan v2 · The app is the wedge. The card is the company.</footer>
+</body>
+</html>

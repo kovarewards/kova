@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kova — Core Screen Mockups v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D1117;--surf:#161E2C;--surf2:#1A2438;--surf3:#1E2A40;
+  --border:#1E2433;--border2:#263354;
+  --acc:#7C8FFF;--acc2:#5A6ADA;--as:rgba(124,143,255,.10);--ab:rgba(124,143,255,.28);
+  --text:#E8EEFF;--dim:#5A6A9A;--muted:#3A4A7A;
+  --red:#F87171;--green:#4ADE80;--gold:#FBBF24;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--dim);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;padding:48px 24px 80px}
+.wrap{max-width:1160px;margin:0 auto}
+.eyebrow{font-size:10px;color:var(--acc);letter-spacing:2.5px;font-weight:700;text-transform:uppercase;margin-bottom:8px}
+h1{font-size:clamp(26px,4vw,42px);font-weight:900;letter-spacing:-1.5px;color:var(--text);line-height:1.08;margin-bottom:14px}
+.lead{max-width:660px;line-height:1.8;margin-bottom:40px}
+.board{display:flex;flex-wrap:wrap;gap:34px;justify-content:center}
+.unit{width:302px}
+.phone{width:302px;height:620px;background:var(--bg);border:2px solid var(--border2);border-radius:38px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.notch{height:24px;display:flex;justify-content:center;align-items:flex-end;flex:none}
+.notch::after{content:"";width:90px;height:16px;background:#000;border-radius:0 0 12px 12px;border:1px solid var(--border);border-top:none}
+.scr{flex:1;overflow:hidden;padding:12px 16px 0;display:flex;flex-direction:column;gap:10px}
+.tabbar{flex:none;height:54px;border-top:1px solid var(--border);background:var(--surf);display:flex;align-items:center;justify-content:space-around;padding-bottom:8px}
+.tab{font-size:8.5px;font-weight:700;letter-spacing:1px;color:var(--muted);text-align:center}
+.tab .ic{font-size:15px;display:block;margin-bottom:2px}
+.tab.on{color:var(--acc)}
+.cap{margin-top:14px}
+.cap .t{font-size:14px;font-weight:800;color:var(--text);letter-spacing:-.3px}
+.cap .n{font-size:8.5px;font-weight:800;letter-spacing:1.8px;color:var(--acc);text-transform:uppercase;margin-bottom:2px}
+.cap .w{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.6}
+.cap .w code{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--acc);background:var(--as);border-radius:4px;padding:0 4px}
+/* shared in-screen bits */
+.h-big{font-size:20px;font-weight:900;color:var(--text);letter-spacing:-.7px;line-height:1.15}
+.small{font-size:10.5px;color:var(--dim)}
+.tiny{font-size:9px;color:var(--muted)}
+.pill{display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;border-radius:999px;padding:3px 9px}
+.pill.acc{background:var(--as);color:var(--acc);border:1px solid var(--ab)}
+.pill.green{background:rgba(74,222,128,.1);color:var(--green);border:1px solid rgba(74,222,128,.3)}
+.pill.gold{background:rgba(251,191,36,.1);color:var(--gold);border:1px solid rgba(251,191,36,.3)}
+.card{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:12px}
+.card.hl{border-color:var(--ab);background:linear-gradient(180deg,var(--as),var(--surf))}
+.btn{border-radius:11px;text-align:center;font-size:12px;font-weight:800;padding:11px;letter-spacing:-.2px}
+.btn.p{background:var(--acc);color:#0D1117}
+.btn.s{background:var(--surf2);color:var(--text);border:1px solid var(--border2)}
+.minicard{width:44px;height:29px;border-radius:5px;flex:none}
+.bar{height:5px;background:var(--surf3);border-radius:99px;overflow:hidden}
+.bar>div{height:100%;border-radius:99px}
+.rowline{display:flex;align-items:center;gap:9px}
+.spread{display:flex;align-items:center;justify-content:space-between}
+.vbadge{font-size:8px;color:var(--muted);letter-spacing:.5px}
+.vbadge b{color:var(--green);font-weight:700}
+.input{background:var(--surf);border:1px solid var(--border2);border-radius:11px;padding:10px 12px;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="eyebrow">Kova — Product Design</div>
+<h1>The six core screens</h1>
+<p class="lead">Built on the v2 decisions: dollar framing everywhere, the ledger as the retention centerpiece, GPS shown only on a confident match, verified-date transparency on every recommendation, and manual bonus tracking kept optional. Under each screen: exactly which engine/analytics functions it wires to, so mockup and code can be adjusted together.</p>
+
+<div class="board">
+
+<!-- ================= 1 · ONBOARDING ================= -->
+<div class="unit">
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="scr">
+      <div style="display:flex;justify-content:center;padding-top:14px">
+        <svg width="56" height="56" viewBox="0 0 48 48">
+          <rect x="7" y="21" width="30" height="19" rx="4" fill="#1E2A40" stroke="#263354" stroke-width="1.5"/>
+          <rect x="11" y="16" width="30" height="19" rx="4" fill="#1A2438" stroke="#263354" stroke-width="1.5"/>
+          <g transform="rotate(-8 30 15)"><rect x="15" y="6" width="30" height="19" rx="4" fill="#7C8FFF"/><rect x="19" y="11" width="12" height="3" rx="1.5" fill="#0D1117" opacity=".85"/></g>
+        </svg>
+      </div>
+      <div style="text-align:center">
+        <div class="h-big">Zero effort.<br>Maximum rewards.</div>
+        <div class="small" style="margin-top:6px">Add your cards. Kova tells you which one<br>to use, everywhere you go.</div>
+        <div style="margin-top:9px"><span class="pill green">🔒 No bank login — ever</span></div>
+      </div>
+      <div class="input">🔍&nbsp; Search your cards — "Amex Gold"…</div>
+      <div class="card spread">
+        <div class="rowline"><div class="minicard" style="background:#D4AF37"></div><div><div style="font-size:11.5px;font-weight:700;color:var(--text)">Amex Gold</div><div class="tiny">American Express</div></div></div>
+        <div class="pill acc" style="font-size:10px">＋ ADDED</div>
+      </div>
+      <div class="card spread">
+        <div class="rowline"><div class="minicard" style="background:#1A3C6E"></div><div><div style="font-size:11.5px;font-weight:700;color:var(--text)">Chase Sapphire Preferred</div><div class="tiny">Chase</div></div></div>
+        <div class="pill acc" style="font-size:10px">＋ ADDED</div>
+      </div>
+      <div class="card spread" style="opacity:.65">
+        <div class="rowline"><div class="minicard" style="background:#3B6CB7"></div><div><div style="font-size:11.5px;font-weight:700;color:var(--text)">Freedom Unlimited</div><div class="tiny">Chase</div></div></div>
+        <div style="font-size:15px;color:var(--muted)">＋</div>
+      </div>
+      <div style="flex:1"></div>
+      <div class="tiny" style="text-align:center">2 cards added · most wallets take under 30 seconds</div>
+      <div class="btn p" style="margin-bottom:12px">See my best cards →</div>
+    </div>
+  </div>
+  <div class="cap">
+    <div class="n">Screen 1</div>
+    <div class="t">Onboarding</div>
+    <div class="w">Search hits the public <code>cards</code> table; each add inserts into <code>user_cards</code>. The privacy pill is the acquisition promise — it stays above the fold. 30-second target measured install → first card added.</div>
+  </div>
+</div>
+
+<!-- ================= 2 · HOME ================= -->
+<div class="unit">
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="scr">
+      <div class="spread">
+        <div><div class="tiny">FRIDAY, JUL 10</div><div style="font-size:17px;font-weight:900;color:var(--text);letter-spacing:-.5px">Hey, David</div></div>
+        <svg width="30" height="30" viewBox="0 0 48 48"><rect x="7" y="21" width="30" height="19" rx="4" fill="#1E2A40"/><rect x="11" y="16" width="30" height="19" rx="4" fill="#1A2438"/><g transform="rotate(-8 30 15)"><rect x="15" y="6" width="30" height="19" rx="4" fill="#7C8FFF"/></g></svg>
+      </div>
+      <div class="card hl">
+        <div class="spread"><span class="pill acc">📍 You're at Trader Joe's</span><span class="tiny">40m away</span></div>
+        <div class="spread" style="margin-top:9px">
+          <div class="rowline"><div class="minicard" style="background:#D4AF37"></div><div><div style="font-size:12.5px;font-weight:800;color:var(--text)">Use Amex Gold</div><div class="tiny">Groceries · 4× MR</div></div></div>
+          <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--green)">$8.00</div><div class="tiny">per $100</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="spread"><div class="tiny" style="letter-spacing:1.5px">RECOVERED THIS YEAR</div><span class="tiny" style="color:var(--acc)">View ledger →</span></div>
+        <div style="font-size:25px;font-weight:900;color:var(--text);letter-spacing:-1px;margin:2px 0">$212.40</div>
+        <div class="bar"><div style="width:62%;background:linear-gradient(90deg,var(--acc2),var(--acc))"></div></div>
+        <div class="tiny" style="margin-top:5px">47 captures · on pace for <b style="color:var(--text)">$340</b> by December</div>
+      </div>
+      <div>
+        <div class="tiny" style="letter-spacing:1.5px;margin-bottom:6px">YOUR WALLET</div>
+        <div class="rowline">
+          <div class="minicard" style="background:#D4AF37;width:52px;height:34px"></div>
+          <div class="minicard" style="background:#1A3C6E;width:52px;height:34px"></div>
+          <div class="minicard" style="background:#3B6CB7;width:52px;height:34px"></div>
+          <div class="minicard" style="width:52px;height:34px;border:1.5px dashed var(--border2);display:flex;align-items:center;justify-content:center;color:var(--muted)">＋</div>
+        </div>
+      </div>
+      <div class="card spread" style="border-left:3px solid var(--gold)">
+        <div><div style="font-size:11px;font-weight:700;color:var(--text)">Freedom Q3 · 5% gas ⛽</div><div class="tiny">Activation required — ends in 21 days</div></div>
+        <span class="pill gold">ACTIVATE</span>
+      </div>
+      <div style="flex:1"></div>
+    </div>
+    <div class="tabbar">
+      <div class="tab on"><span class="ic">◈</span>HOME</div>
+      <div class="tab"><span class="ic">▤</span>WALLET</div>
+      <div class="tab"><span class="ic">✓</span>LEDGER</div>
+      <div class="tab"><span class="ic">◔</span>ALERTS</div>
+    </div>
+  </div>
+  <div class="cap">
+    <div class="n">Screen 2</div>
+    <div class="t">Home</div>
+    <div class="w">GPS banner renders only when <code>detectNearbyMerchant()</code> returns a confident match (≤60m) — otherwise it simply isn't there, no "searching…" state. Ledger card = <code>getLedgerSummary()</code>. Banner render fires <code>track.recViewed('groceries','gps')</code>.</div>
+  </div>
+</div>
+
+<!-- ================= 3 · RECOMMENDATION ================= -->
+<div class="unit">
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="scr">
+      <div>
+        <div class="tiny">← BACK</div>
+        <div class="spread" style="margin-top:5px">
+          <div><div style="font-size:17px;font-weight:900;color:var(--text);letter-spacing:-.5px">Trader Joe's</div><div class="small">Groceries · est. $100 spend ▾</div></div>
+          <span class="pill acc">4 CARDS RANKED</span>
+        </div>
+      </div>
+      <div class="card hl">
+        <div class="spread">
+          <span class="pill acc">★ BEST CARD</span>
+          <span class="vbadge">✓ <b>Verified 3d ago</b></span>
+        </div>
+        <div class="spread" style="margin-top:8px">
+          <div class="rowline"><div class="minicard" style="background:#D4AF37;width:52px;height:34px"></div><div><div style="font-size:13px;font-weight:800;color:var(--text)">Amex Gold</div><div class="tiny">4× Membership Rewards</div></div></div>
+          <div style="text-align:right"><div style="font-size:17px;font-weight:900;color:var(--green)">$8.00</div><div class="tiny">per $100</div></div>
+        </div>
+        <div class="tiny" style="margin:7px 0 8px;color:var(--green)">+$6.00 vs your worst card here</div>
+        <div class="btn p">✓ &nbsp;Used it — log $6.00 recovered</div>
+      </div>
+      <div class="card spread">
+        <div class="rowline"><div class="minicard" style="background:#1A3C6E"></div><div><div style="font-size:11.5px;font-weight:700;color:var(--text)">Sapphire Preferred</div><div class="tiny">1× UR · ✓ verified 3d</div></div></div>
+        <div style="text-align:right"><div style="font-size:12px;font-weight:800;color:var(--dim)">$2.05</div><div class="tiny">per $100</div></div>
+      </div>
+      <div class="card spread">
+        <div class="rowline"><div class="minicard" style="background:#3B6CB7"></div><div><div style="font-size:11.5px;font-weight:700;color:var(--text)">Freedom Unlimited</div><div class="tiny">1.5× UR · ✓ verified 5d</div></div></div>
+        <div style="text-align:right"><div style="font-size:12px;font-weight:800;color:var(--dim)">$1.50</div><div class="tiny">per $100</div></div>
+      </div>
+      <div class="card" style="border-style:dashed;text-align:center">
+        <div style="font-size:10.5px;color:var(--dim)">Missing 6% groceries? <b style="color:var(--acc)">One card fills this gap →</b></div>
+      </div>
+      <div style="flex:1"></div>
+    </div>
+    <div class="tabbar">
+      <div class="tab on"><span class="ic">◈</span>HOME</div>
+      <div class="tab"><span class="ic">▤</span>WALLET</div>
+      <div class="tab"><span class="ic">✓</span>LEDGER</div>
+      <div class="tab"><span class="ic">◔</span>ALERTS</div>
+    </div>
+  </div>
+  <div class="cap">
+    <div class="n">Screen 3</div>
+    <div class="t">Recommendation</div>
+    <div class="w">Ranked list from <code>getRecommendations()</code>; dollar values are <code>valuePerHundred</code>, the green delta is <code>vsWorstSaving</code>. "Used it" calls <code>logCapture()</code> + <code>track.recUsed()</code> — the single most important tap in the product. The dashed card is the affiliate wallet-gap surface (<code>track.cardApplicationStarted</code>), shown only when a real gap exists.</div>
+  </div>
+</div>
+
+<!-- ================= 4 · WALLET ================= -->
+<div class="unit">
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="scr">
+      <div class="spread">
+        <div style="font-size:17px;font-weight:900;color:var(--text);letter-spacing:-.5px">Wallet</div>
+        <span class="pill acc">＋ ADD CARD</span>
+      </div>
+      <div class="card">
+        <div class="spread">
+          <div class="rowline"><div class="minicard" style="background:#D4AF37;width:52px;height:34px"></div><div><div style="font-size:12.5px;font-weight:800;color:var(--text)">Amex Gold</div><div class="tiny">$325 annual fee</div></div></div>
+          <span class="vbadge">✓ <b>3d</b></span>
+        </div>
+        <div class="spread" style="margin-top:8px"><span class="tiny">FEE vs VALUE EARNED</span><span class="tiny" style="color:var(--green);font-weight:700">$412 / $325 ✓ paying for itself</span></div>
+        <div class="bar" style="margin-top:4px"><div style="width:100%;background:var(--green)"></div></div>
+      </div>
+      <div class="card">
+        <div class="spread">
+          <div class="rowline"><div class="minicard" style="background:#1A3C6E;width:52px;height:34px"></div><div><div style="font-size:12.5px;font-weight:800;color:var(--text)">Sapphire Preferred</div><div class="tiny">$95 annual fee</div></div></div>
+          <span class="vbadge">✓ <b>3d</b></span>
+        </div>
+        <div class="spread" style="margin-top:8px"><span class="tiny">FEE vs VALUE EARNED</span><span class="tiny" style="color:var(--gold);font-weight:700">$61 / $95 · 64%</span></div>
+        <div class="bar" style="margin-top:4px"><div style="width:64%;background:var(--gold)"></div></div>
+      </div>
+      <div class="card">
+        <div class="spread">
+          <div class="rowline"><div class="minicard" style="background:#3B6CB7;width:52px;height:34px"></div><div><div style="font-size:12.5px;font-weight:800;color:var(--text)">Freedom Unlimited</div><div class="tiny">No annual fee</div></div></div>
+          <span class="vbadge">✓ <b>5d</b></span>
+        </div>
+        <div class="spread" style="margin-top:8px;background:var(--as);border:1px solid var(--ab);border-radius:8px;padding:6px 9px">
+          <span class="tiny" style="color:var(--acc);font-weight:700">Q3 rotating · 5% gas</span>
+          <span class="tiny" style="color:var(--gold);font-weight:700">⏳ 21 days left</span>
+        </div>
+      </div>
+      <div style="flex:1"></div>
+    </div>
+    <div class="tabbar">
+      <div class="tab"><span class="ic">◈</span>HOME</div>
+      <div class="tab on"><span class="ic">▤</span>WALLET</div>
+      <div class="tab"><span class="ic">✓</span>LEDGER</div>
+      <div class="tab"><span class="ic">◔</span>ALERTS</div>
+    </div>
+  </div>
+  <div class="cap">
+    <div class="n">Screen 4</div>
+    <div class="t">Wallet</div>
+    <div class="w">Cards from <code>user_cards</code> joined to <code>cards</code> / <code>annual_benefits</code>. Fee-vs-value bars come from the ledger's per-card captures — the honest "is this fee worth it" answer no issuer will give. Every card wears its <code>verified_at</code> badge: the accuracy SLA, worn in public.</div>
+  </div>
+</div>
+
+<!-- ================= 5 · ALERTS ================= -->
+<div class="unit">
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="scr">
+      <div class="spread">
+        <div style="font-size:17px;font-weight:900;color:var(--text);letter-spacing:-.5px">Alerts</div>
+        <span class="pill acc">3 ACTIVE</span>
+      </div>
+      <div class="card" style="border-left:3px solid var(--gold)">
+        <div class="spread"><span class="pill gold">ACTION NEEDED</span><span class="tiny">21 days</span></div>
+        <div style="font-size:12.5px;font-weight:800;color:var(--text);margin-top:6px">Activate Freedom Q3 — 5% gas</div>
+        <div class="tiny" style="margin:3px 0 8px">Unactivated quarters earn 1%. Two taps on Chase's site.</div>
+        <div class="btn s" style="padding:8px;font-size:11px">Open activation page →</div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--red)">
+        <div class="spread"><span class="pill" style="background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.3)">EXPIRING</span><span class="tiny">6 days</span></div>
+        <div style="font-size:12.5px;font-weight:800;color:var(--text);margin-top:6px">Amex Gold $10 dining credit</div>
+        <div class="tiny" style="margin-top:3px">Unused this month. Grubhub, Cheesecake Factory, Five Guys qualify.</div>
+      </div>
+      <div class="card">
+        <div class="spread"><span class="pill acc">BONUS TRACKER</span><span class="tiny" style="color:var(--muted)">manual · optional</span></div>
+        <div style="font-size:12.5px;font-weight:800;color:var(--text);margin-top:6px">Sapphire Preferred — 60K bonus</div>
+        <div class="spread" style="margin:6px 0 4px"><span class="tiny">$3,200 of $4,000 spend</span><span class="tiny" style="color:var(--acc);font-weight:700">80% · 34 days left</span></div>
+        <div class="bar"><div style="width:80%;background:linear-gradient(90deg,var(--acc2),var(--acc))"></div></div>
+        <div class="tiny" style="margin-top:7px;color:var(--acc)">＋ Log spend</div>
+      </div>
+      <div class="tiny" style="text-align:center;padding:4px 12px">Alerts are computed locally from your wallet + the benefits DB.<br>No transaction data — that's the point.</div>
+      <div style="flex:1"></div>
+    </div>
+    <div class="tabbar">
+      <div class="tab"><span class="ic">◈</span>HOME</div>
+      <div class="tab"><span class="ic">▤</span>WALLET</div>
+      <div class="tab"><span class="ic">✓</span>LEDGER</div>
+      <div class="tab on"><span class="ic">◔</span>ALERTS</div>
+    </div>
+  </div>
+  <div class="cap">
+    <div class="n">Screen 5</div>
+    <div class="t">Alerts</div>
+    <div class="w">Rotating activations and expiring credits computed from <code>reward_categories.end_date</code> and <code>annual_benefits.period</code> against the user's wallet — zero transaction data. The bonus tracker is honestly labeled <b>manual · optional</b>, resolving v1's contradiction. Push scheduling via <code>expo-notifications</code>.</div>
+  </div>
+</div>
+
+<!-- ================= 6 · LEDGER ================= -->
+<div class="unit">
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="scr">
+      <div class="spread">
+        <div style="font-size:17px;font-weight:900;color:var(--text);letter-spacing:-.5px">Ledger</div>
+        <span class="pill acc">2026 ▾</span>
+      </div>
+      <div class="card hl" style="text-align:center;padding:16px 12px">
+        <div class="tiny" style="letter-spacing:1.5px">RECOVERED THIS YEAR</div>
+        <div style="font-size:34px;font-weight:900;color:var(--text);letter-spacing:-1.5px;line-height:1.1;margin:3px 0">$212.40</div>
+        <div class="tiny">47 captures · avg <b style="color:var(--text)">$4.52</b> each</div>
+        <div style="display:flex;align-items:flex-end;justify-content:center;gap:7px;margin-top:12px;height:38px">
+          <div style="width:16px;height:12px;border-radius:3px 3px 0 0;background:var(--surf3)"></div>
+          <div style="width:16px;height:18px;border-radius:3px 3px 0 0;background:var(--surf3)"></div>
+          <div style="width:16px;height:15px;border-radius:3px 3px 0 0;background:var(--surf3)"></div>
+          <div style="width:16px;height:24px;border-radius:3px 3px 0 0;background:var(--acc2)"></div>
+          <div style="width:16px;height:28px;border-radius:3px 3px 0 0;background:var(--acc2)"></div>
+          <div style="width:16px;height:33px;border-radius:3px 3px 0 0;background:var(--acc)"></div>
+          <div style="width:16px;height:20px;border-radius:3px 3px 0 0;background:var(--acc);opacity:.45"></div>
+        </div>
+        <div class="tiny" style="display:flex;justify-content:center;gap:9px;margin-top:4px"><span>J</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span style="color:var(--acc)">J</span></div>
+        <div class="tiny" style="margin-top:8px;color:var(--green)">On pace for <b>$340</b> by December ↗</div>
+      </div>
+      <div>
+        <div class="tiny" style="letter-spacing:1.5px;margin-bottom:6px">WHERE IT CAME FROM</div>
+        <div class="spread" style="padding:3px 0"><span class="tiny" style="color:var(--text)">🍜 Dining</span><div style="flex:1;margin:0 9px"><div class="bar"><div style="width:78%;background:var(--acc)"></div></div></div><span class="tiny" style="color:var(--text);font-weight:700">$84</span></div>
+        <div class="spread" style="padding:3px 0"><span class="tiny" style="color:var(--text)">🛒 Groceries</span><div style="flex:1;margin:0 9px"><div class="bar"><div style="width:62%;background:var(--acc2)"></div></div></div><span class="tiny" style="color:var(--text);font-weight:700">$67</span></div>
+        <div class="spread" style="padding:3px 0"><span class="tiny" style="color:var(--text)">✈️ Travel</span><div style="flex:1;margin:0 9px"><div class="bar"><div style="width:34%;background:var(--muted)"></div></div></div><span class="tiny" style="color:var(--text);font-weight:700">$38</span></div>
+        <div class="spread" style="padding:3px 0"><span class="tiny" style="color:var(--text)">⛽ Gas + other</span><div style="flex:1;margin:0 9px"><div class="bar"><div style="width:21%;background:var(--muted)"></div></div></div><span class="tiny" style="color:var(--text);font-weight:700">$23</span></div>
+      </div>
+      <div>
+        <div class="tiny" style="letter-spacing:1.5px;margin-bottom:5px">RECENT CAPTURES</div>
+        <div class="card spread" style="padding:9px 12px;margin-bottom:6px">
+          <div class="rowline"><div class="minicard" style="background:#D4AF37;width:34px;height:22px"></div><div><div style="font-size:11px;font-weight:700;color:var(--text)">Trader Joe's</div><div class="tiny">Amex Gold · today</div></div></div>
+          <span style="font-size:12px;font-weight:800;color:var(--green)">+$6.00</span>
+        </div>
+        <div class="card spread" style="padding:9px 12px">
+          <div class="rowline"><div class="minicard" style="background:#1A3C6E;width:34px;height:22px"></div><div><div style="font-size:11px;font-weight:700;color:var(--text)">Delta · LGA→AUS</div><div class="tiny">Sapphire Preferred · Tue</div></div></div>
+          <span style="font-size:12px;font-weight:800;color:var(--green)">+$11.30</span>
+        </div>
+      </div>
+      <div class="btn s" style="font-size:11px">↗ &nbsp;Share my 2026 recap</div>
+      <div style="flex:1"></div>
+    </div>
+    <div class="tabbar">
+      <div class="tab"><span class="ic">◈</span>HOME</div>
+      <div class="tab"><span class="ic">▤</span>WALLET</div>
+      <div class="tab on"><span class="ic">✓</span>LEDGER</div>
+      <div class="tab"><span class="ic">◔</span>ALERTS</div>
+    </div>
+  </div>
+  <div class="cap">
+    <div class="n">Screen 6</div>
+    <div class="t">Ledger — the retention product</div>
+    <div class="w">Everything reads from <code>user_captures</code>: hero total via <code>getLedgerSummary()</code>, monthly bars and category breakdown from the same rows grouped by month/category, recent list ordered by <code>captured_at</code>. The pace projection annualizes YTD — and deliberately echoes the $340/yr market stat. "Share my recap" renders a shareable image (no personal data beyond the totals) — the product's only viral surface, so it lives here. Renewal pitch and Pro paywall arguments both point at this screen.</div>
+  </div>
+</div>
+
+</div>
+</div>
+</body>
+</html>
