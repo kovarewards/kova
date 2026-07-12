@@ -46,3 +46,6 @@ docs/DB Password.txt
 # generated native folders
 /ios
 /android
+
+# Supabase CLI local cache
+supabase/.temp/
