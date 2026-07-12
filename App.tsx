@@ -4,16 +4,24 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { KovaLogo } from './src/components/KovaLogo';
 import { dark } from './src/constants/theme';
 import { detectNearbyMerchant, DetectedMerchant } from './src/engine/gpsDetection';
+import { track, posthog } from './src/lib/analytics';
 
 export default function App() {
   const [result, setResult] = useState<DetectedMerchant | null | undefined>(undefined);
   const [checking, setChecking] = useState(false);
+  const [eventSent, setEventSent] = useState(false);
 
   const onDetect = async () => {
     setChecking(true);
     const merchant = await detectNearbyMerchant();
     setResult(merchant);
     setChecking(false);
+  };
+
+  const onTestEvent = async () => {
+    track.trialStarted();
+    await posthog.flush();
+    setEventSent(true);
   };
 
   return (
@@ -29,6 +37,10 @@ export default function App() {
             : 'No confident match'}
         </Text>
       )}
+      <Pressable style={styles.button} onPress={onTestEvent}>
+        <Text style={styles.buttonText}>Test Analytics Event</Text>
+      </Pressable>
+      {eventSent && <Text style={styles.result}>trial_started sent — check PostHog → Activity</Text>}
       <StatusBar style="light" />
     </View>
   );
