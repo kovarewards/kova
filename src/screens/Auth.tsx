@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import {
-  ActivityIndicator, KeyboardAvoidingView, Platform, StyleSheet, Text,
-  TextInput, TouchableOpacity, View,
+  ActivityIndicator, KeyboardAvoidingView, Platform, StyleSheet,
+  TouchableOpacity, View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text, TextInput } from '../components/AppText';
 import { KovaLogo } from '../components/KovaLogo';
 import { dark } from '../constants/theme';
 import { supabase } from '../lib/supabase';

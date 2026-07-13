@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Text } from '../components/AppText';
 import { KovaLogo } from '../components/KovaLogo';
 import { dark } from '../constants/theme';
 import { supabase } from '../lib/supabase';
 import { detectNearbyMerchant, DetectedMerchant } from '../engine/gpsDetection';
 import { getRecommendations, getLedgerSummary, CardRecommendation } from '../engine/recommendations';
 import { track } from '../lib/analytics';
+import type { RecommendationTarget } from './Recommendation';
 
 const CATEGORY_LABEL: Record<string, string> = {
   dining: 'Dining', groceries: 'Groceries', gas: 'Gas', ev_charging: 'EV Charging',
@@ -26,7 +28,9 @@ type RotatingAlert = {
   cardName: string; category: string; multiplier: number; daysLeft: number;
 };
 
-export function HomeScreen() {
+type Props = { onOpenRecommendation: (target: RecommendationTarget) => void };
+
+export function HomeScreen({ onOpenRecommendation }: Props) {
   const [userId, setUserId] = useState<string | null>(null);
   const [greetingName, setGreetingName] = useState('there');
   const [merchant, setMerchant] = useState<DetectedMerchant | null>(null);
@@ -118,29 +122,34 @@ export function HomeScreen() {
       </View>
 
       {merchant && topRec && (
-        <View style={[styles.card, styles.cardHighlight]}>
-          <View style={styles.bannerTopRow}>
-            <View style={styles.pillAcc}>
-              <Text style={styles.pillAccText} numberOfLines={1}>📍 You&apos;re at {merchant.name}</Text>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => onOpenRecommendation({ name: merchant.name, category: merchant.category })}
+        >
+          <View style={[styles.card, styles.cardHighlight]}>
+            <View style={styles.bannerTopRow}>
+              <View style={styles.pillAcc}>
+                <Text style={styles.pillAccText} numberOfLines={1}>📍 You&apos;re at {merchant.name}</Text>
+              </View>
+              <Text style={styles.tiny}>{merchant.distanceM}m away</Text>
             </View>
-            <Text style={styles.tiny}>{merchant.distanceM}m away</Text>
-          </View>
-          <View style={[styles.spread, { marginTop: 9 }]}>
-            <View style={styles.recInfo}>
-              <View style={[styles.minicard, { backgroundColor: topRec.colorHex ?? dark.surf3 }]} />
-              <View style={styles.recTextCol}>
-                <Text style={styles.recCardName} numberOfLines={1}>Use {topRec.cardName}</Text>
-                <Text style={styles.tiny} numberOfLines={1}>
-                  {CATEGORY_LABEL[merchant.category] ?? merchant.category} · {topRec.multiplier}× {topRec.pointsType}
-                </Text>
+            <View style={[styles.spread, { marginTop: 9 }]}>
+              <View style={styles.recInfo}>
+                <View style={[styles.minicard, { backgroundColor: topRec.colorHex ?? dark.surf3 }]} />
+                <View style={styles.recTextCol}>
+                  <Text style={styles.recCardName} numberOfLines={1}>Use {topRec.cardName}</Text>
+                  <Text style={styles.tiny} numberOfLines={1}>
+                    {CATEGORY_LABEL[merchant.category] ?? merchant.category} · {topRec.multiplier}× {topRec.pointsType}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.recValueCol}>
+                <Text style={styles.recValue}>${topRec.valuePerHundred.toFixed(2)}</Text>
+                <Text style={styles.tiny}>per $100</Text>
               </View>
             </View>
-            <View style={styles.recValueCol}>
-              <Text style={styles.recValue}>${topRec.valuePerHundred.toFixed(2)}</Text>
-              <Text style={styles.tiny}>per $100</Text>
-            </View>
           </View>
-        </View>
+        </TouchableOpacity>
       )}
 
       <View style={styles.card}>

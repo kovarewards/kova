@@ -73,6 +73,33 @@ export async function logCapture(
   });
 }
 
+export type WalletGapCard = { cardName: string; colorHex: string; valuePerHundred: number };
+
+export async function getWalletGapCard(
+  category: string,
+  spendAmount: number,
+  ownedCardIds: string[],
+  currentBestValue: number
+): Promise<WalletGapCard | null> {
+  const { data } = await supabase
+    .from('reward_categories')
+    .select('multiplier, cpp, card_id, cards(name, color_hex)')
+    .eq('category', category)
+    .not('cpp', 'is', null);
+
+  const candidates: WalletGapCard[] = (data ?? [])
+    .filter((r: any) => !ownedCardIds.includes(r.card_id))
+    .map((r: any) => ({
+      cardName: r.cards.name,
+      colorHex: r.cards.color_hex,
+      valuePerHundred: r.multiplier * spendAmount * r.cpp,
+    }))
+    .sort((a, b) => b.valuePerHundred - a.valuePerHundred);
+
+  const best = candidates[0];
+  return best && best.valuePerHundred > currentBestValue ? best : null;
+}
+
 export async function getLedgerSummary(userId: string) {
   const yearStart = `${new Date().getFullYear()}-01-01`;
   const { data } = await supabase
