@@ -1,0 +1,812 @@
+[
+  {
+    "name": "Amex Gold",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 325,
+    "color_hex": "#D4AF37",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+    "notes": "",
+    "categories": [
+      { "category": "dining",    "multiplier": 4, "points_type": "MR", "cpp": 0.02, "notes": "capped at first $50,000/yr in purchases, then 1x" },
+      { "category": "groceries", "multiplier": 4, "points_type": "MR", "cpp": 0.02, "notes": "U.S. supermarkets only, capped at first $25,000/yr, then 1x" },
+      { "category": "travel",    "multiplier": 3, "points_type": "MR", "cpp": 0.02, "notes": "3x on flights booked directly with airlines or via Amex Travel; prepaid hotels via Amex Travel earn 5x, prepaid car rentals + cruises via Amex Travel earn 2x — this row uses the flights rate as most broadly applicable" },
+      { "category": "other",     "multiplier": 1, "points_type": "MR", "cpp": 0.02 }
+    ]
+  },
+  {
+    "name": "Chase Sapphire Preferred",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 95,
+    "color_hex": "#1A3C6E",
+    "source_url": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+    "notes": "",
+    "categories": [
+      { "category": "travel",    "multiplier": 5, "points_type": "UR", "cpp": 0.0205, "notes": "5x only on travel booked through Chase Travel; other travel earns 2x" },
+      { "category": "dining",    "multiplier": 3, "points_type": "UR", "cpp": 0.0205 },
+      { "category": "gas",       "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "gas stations and select vacation rentals at top brands earn 3x" },
+      { "category": "ev_charging", "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "bundled with gas stations, confirm eligible networks" },
+      { "category": "streaming", "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "streaming services and online grocery both earn 3x, exclusions may apply" },
+      { "category": "other",     "multiplier": 1, "points_type": "UR", "cpp": 0.0205, "notes": "non-Chase-Travel travel earns 2x, not represented as a separate row" }
+    ]
+  },
+  {
+    "name": "Chase Freedom Unlimited",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#3B6CB7",
+    "source_url": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
+    "notes": "",
+    "categories": [
+      { "category": "dining",   "multiplier": 3,   "points_type": "UR", "cpp": 0.01, "notes": "includes takeout and delivery" },
+      { "category": "pharmacy", "multiplier": 3,   "points_type": "UR", "cpp": 0.01, "notes": "drugstores" },
+      { "category": "travel",   "multiplier": 5,   "points_type": "UR", "cpp": 0.01, "notes": "only travel booked via Chase Travel; other travel earns the 1.5x base rate" },
+      { "category": "other",    "multiplier": 1.5, "points_type": "UR", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Chase Sapphire Reserve",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 795,
+    "color_hex": "#0F2A4A",
+    "source_url": "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
+    "notes": "UNVERIFIED — fee $795 ($195/authorized user) double-confirmed via live page + independent press coverage of Chase's June 2025 relaunch. Source_url corrected again (travel-credit-cards → rewards-credit-cards)",
+    "categories": [
+      { "category": "dining", "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "worldwide" },
+      { "category": "travel", "multiplier": 4, "points_type": "UR", "cpp": 0.0205, "notes": "flights/hotels booked directly; 8x applies via Chase Travel/The Edit instead" },
+      { "category": "other",  "multiplier": 1, "points_type": "UR", "cpp": 0.0205 }
+    ]
+  },
+  {
+    "name": "Chase Freedom Flex",
+    "issuer": "Chase",
+    "network": "Mastercard",
+    "annual_fee": 0,
+    "color_hex": "#117ACA",
+    "source_url": "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
+    "notes": "UNVERIFIED",
+    "categories": [
+      { "category": "dining",       "multiplier": 3, "points_type": "UR", "cpp": 0.01, "notes": "plus 5% rotating quarterly categories, $1,500/quarter combined cap, activation required. Q3 2026 (Jul 1–Sep 30): gas stations & EV charging, public transit, select live entertainment, United Way donations — confirmed via Chase's own press release" },
+      { "category": "gas",          "multiplier": 5, "points_type": "UR", "cpp": 0.01, "notes": "Q3 2026 rotating category (see dining row) — will change Oct 1, 2026, reconfirm each quarter" },
+      { "category": "ev_charging",  "multiplier": 5, "points_type": "UR", "cpp": 0.01, "notes": "Q3 2026 rotating category — will change Oct 1, 2026, reconfirm each quarter" },
+      { "category": "transit",      "multiplier": 5, "points_type": "UR", "cpp": 0.01, "notes": "Q3 2026 rotating category — will change Oct 1, 2026, reconfirm each quarter" },
+      { "category": "pharmacy",     "multiplier": 3, "points_type": "UR", "cpp": 0.01 },
+      { "category": "travel",       "multiplier": 5, "points_type": "UR", "cpp": 0.01, "notes": "only travel booked via Chase Travel" },
+      { "category": "other",        "multiplier": 1, "points_type": "UR", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Chase Ink Business Preferred",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 95,
+    "color_hex": "#1A3C6E",
+    "source_url": "https://creditcards.chase.com/business-credit-cards/ink/business-preferred",
+    "notes": "UNVERIFIED — double-confirmed across two research passes, no changes found",
+    "categories": [
+      { "category": "travel", "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "shares a combined $150,000/anniversary-year cap with shipping, advertising, and internet/cable/phone bonus categories" },
+      { "category": "other",  "multiplier": 1, "points_type": "UR", "cpp": 0.0205, "notes": "this card's real bonus categories (shipping, ad spend, internet/cable/phone bills) aren't physical in-person merchant types Kova's GPS engine detects — treat as effectively flat-rate for GPS-based recommendations" }
+    ]
+  },
+  {
+    "name": "Chase Ink Business Unlimited",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#3B6CB7",
+    "source_url": "https://creditcards.chase.com/business-credit-cards/ink/unlimited",
+    "notes": "UNVERIFIED — double-confirmed across two research passes, no changes found",
+    "categories": [
+      { "category": "other", "multiplier": 1.5, "points_type": "UR", "cpp": 0.01, "notes": "flat rate on all business purchases, no caps" }
+    ]
+  },
+  {
+    "name": "Chase Ink Business Cash",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#3B6CB7",
+    "source_url": "https://creditcards.chase.com/business-credit-cards/ink/cash",
+    "notes": "UNVERIFIED — cap structure corrected: these are TWO SEPARATE $25,000/yr caps (one per tier), not one shared cap as an earlier draft implied",
+    "categories": [
+      { "category": "shopping", "multiplier": 5, "points_type": "UR", "cpp": 0.01, "notes": "office supply stores (also internet/cable/phone bills, not GPS-detectable); own separate $25,000/yr cap, then 1x" },
+      { "category": "gas",      "multiplier": 2, "points_type": "UR", "cpp": 0.01, "notes": "combined with dining in its own separate $25,000/yr cap, then 1x" },
+      { "category": "dining",   "multiplier": 2, "points_type": "UR", "cpp": 0.01, "notes": "same separate cap as gas above" },
+      { "category": "other",    "multiplier": 1, "points_type": "UR", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Chase United Explorer",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 150,
+    "color_hex": "#002244",
+    "source_url": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+    "notes": "UNVERIFIED — fee is $0 intro first year, then $150 steady-state. Categories corrected: United flights actually earn 9x total (6x MileagePlus + 3x card), not a flat 2x",
+    "categories": [
+      { "category": "travel", "multiplier": 3, "points_type": "UA", "cpp": 0.013, "notes": "other United purchases (upgrades, Economy Plus, inflight food/wifi/bags) earn 3x — used here as the most GPS-relevant in-person rate; United flights earn 9x total (6x MileagePlus membership + 3x card) when booked, hotels booked direct earn 2x" },
+      { "category": "dining", "multiplier": 2, "points_type": "UA", "cpp": 0.013, "notes": "includes delivery" },
+      { "category": "other",  "multiplier": 1, "points_type": "UA", "cpp": 0.013 }
+    ]
+  },
+  {
+    "name": "Chase United Club Infinite",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 695,
+    "color_hex": "#002244",
+    "source_url": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
+    "notes": "UNVERIFIED — URL/product confirmed correct, but Chase's own on-page title currently reads 'United Club Card' without 'Infinite' (appears to be an active rebrand of the same product — third-party sources still call it 'United Club Infinite'). Categories corrected: much richer structure than a flat 2x",
+    "categories": [
+      { "category": "travel", "multiplier": 5, "points_type": "UA", "cpp": 0.013, "notes": "other United purchases earn 5x — used here as most GPS-relevant in-person rate; United flights earn 11x total (6x membership + 5x card), hotels at select 'Renowned Hotels & Resorts' booked direct earn 5x, all other travel earns 2x" },
+      { "category": "dining", "multiplier": 2, "points_type": "UA", "cpp": 0.013 },
+      { "category": "other",  "multiplier": 1, "points_type": "UA", "cpp": 0.013 }
+    ]
+  },
+  {
+    "name": "Chase Southwest Rapid Rewards Plus",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 99,
+    "color_hex": "#304CB2",
+    "source_url": "https://creditcards.chase.com/travel-credit-cards/southwest/plus",
+    "notes": "UNVERIFIED — double-confirmed across two research passes, no changes found",
+    "categories": [
+      { "category": "gas",      "multiplier": 2, "points_type": "WN", "cpp": 0.013, "notes": "combined with groceries, capped at first $5,000/yr then reverts to 1x" },
+      { "category": "groceries", "multiplier": 2, "points_type": "WN", "cpp": 0.013, "notes": "same combined cap as gas station tier" },
+      { "category": "travel",   "multiplier": 2, "points_type": "WN", "cpp": 0.013, "notes": "Southwest purchases specifically" },
+      { "category": "other",    "multiplier": 1, "points_type": "WN", "cpp": 0.013 }
+    ]
+  },
+  {
+    "name": "Chase Southwest Rapid Rewards Priority",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 229,
+    "color_hex": "#304CB2",
+    "source_url": "https://creditcards.chase.com/travel-credit-cards/southwest/priority",
+    "notes": "UNVERIFIED — double-confirmed across two research passes, no changes found",
+    "categories": [
+      { "category": "gas",    "multiplier": 2, "points_type": "WN", "cpp": 0.013 },
+      { "category": "dining", "multiplier": 2, "points_type": "WN", "cpp": 0.013 },
+      { "category": "travel", "multiplier": 4, "points_type": "WN", "cpp": 0.013, "notes": "Southwest purchases specifically" },
+      { "category": "other",  "multiplier": 1, "points_type": "WN", "cpp": 0.013 }
+    ]
+  },
+  {
+    "name": "Chase IHG One Rewards Premier",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 99,
+    "color_hex": "#C8102E",
+    "source_url": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
+    "notes": "UNVERIFIED — double-confirmed across two research passes, no changes found",
+    "categories": [
+      { "category": "travel", "multiplier": 5, "points_type": "IHG", "cpp": 0.005, "notes": "general rate; IHG hotel stays earn up to 26x total via card + membership + elite status stacking" },
+      { "category": "dining", "multiplier": 5, "points_type": "IHG", "cpp": 0.005 },
+      { "category": "gas",    "multiplier": 5, "points_type": "IHG", "cpp": 0.005 },
+      { "category": "other",  "multiplier": 3, "points_type": "IHG", "cpp": 0.005 }
+    ]
+  },
+  {
+    "name": "Chase Marriott Bonvoy Boundless",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 95,
+    "color_hex": "#6E1E78",
+    "source_url": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
+    "notes": "UNVERIFIED",
+    "categories": [
+      { "category": "groceries", "multiplier": 3, "points_type": "MB", "cpp": 0.007, "notes": "combined with gas and dining, capped at first $6,000/yr combined then drops to 2x" },
+      { "category": "gas",       "multiplier": 3, "points_type": "MB", "cpp": 0.007, "notes": "same combined cap as groceries/dining" },
+      { "category": "dining",    "multiplier": 3, "points_type": "MB", "cpp": 0.007, "notes": "same combined cap as groceries/gas" },
+      { "category": "travel",    "multiplier": 6, "points_type": "MB", "cpp": 0.007, "notes": "Marriott hotels specifically" },
+      { "category": "other",     "multiplier": 2, "points_type": "MB", "cpp": 0.007 }
+    ]
+  },
+  {
+    "name": "Chase World of Hyatt",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 95,
+    "color_hex": "#414288",
+    "source_url": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt",
+    "notes": "UNVERIFIED",
+    "categories": [
+      { "category": "travel",  "multiplier": 2, "points_type": "HY", "cpp": 0.017, "notes": "airline tickets purchased directly; Hyatt hotel stays earn up to 9x total via card + loyalty stacking" },
+      { "category": "dining",  "multiplier": 2, "points_type": "HY", "cpp": 0.017, "notes": "restaurants" },
+      { "category": "transit", "multiplier": 2, "points_type": "HY", "cpp": 0.017, "notes": "local transit/commuting" },
+      { "category": "other",   "multiplier": 1, "points_type": "HY", "cpp": 0.017 }
+    ]
+  },
+  {
+    "name": "Chase Amazon Prime Visa",
+    "issuer": "Chase",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#FF9900",
+    "source_url": "https://creditcards.chase.com/cash-back-credit-cards/amazon-prime-rewards",
+    "notes": "UNVERIFIED",
+    "categories": [
+      { "category": "shopping", "multiplier": 5, "points_type": "UR", "cpp": 0.01, "notes": "Amazon.com, Whole Foods, Chase Travel with eligible Prime membership (3% without Prime); also a rotating 10%+ Amazon promo for Prime members, confirm active categories" },
+      { "category": "gas",      "multiplier": 2, "points_type": "UR", "cpp": 0.01 },
+      { "category": "dining",   "multiplier": 2, "points_type": "UR", "cpp": 0.01 },
+      { "category": "transit",  "multiplier": 2, "points_type": "UR", "cpp": 0.01, "notes": "local transit/commuting incl. rideshare" },
+      { "category": "other",    "multiplier": 1, "points_type": "UR", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Amex Platinum",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 895,
+    "color_hex": "#B7B7B7",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+    "notes": "UNVERIFIED — fee $895 double-confirmed via direct page-source fetch. No dining/grocery/gas category exists on this card, confirmed directly",
+    "categories": [
+      { "category": "travel", "multiplier": 5, "points_type": "MR", "cpp": 0.02, "notes": "5x on flights booked directly with any airline OR via Amex Travel (cap $500,000/yr); prepaid hotels booked via Amex Travel ONLY also earn 5x (portal-restricted, unlike flights). Does NOT apply to paying at a hotel/airport counter in person — this card's real value is mostly statement credits, not category multipliers. A GPS-triggered 'you're at a hotel' recommendation is likely WRONG unless prepaid via Amex Travel." },
+      { "category": "other",  "multiplier": 1, "points_type": "MR", "cpp": 0.02 }
+    ]
+  },
+  {
+    "name": "Amex Green",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 150,
+    "color_hex": "#00B398",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/green-card/",
+    "notes": "UNVERIFIED — double-confirmed via direct page-source fetch on second pass (first pass was only search-snippet-sourced), exact match",
+    "categories": [
+      { "category": "travel",  "multiplier": 3, "points_type": "MR", "cpp": 0.02, "notes": "flights/hotels/vacation rentals/cruises/trains/car rentals" },
+      { "category": "transit", "multiplier": 3, "points_type": "MR", "cpp": 0.02, "notes": "subway/bus/rideshare/taxis/tolls/parking/trains/ferries" },
+      { "category": "dining",  "multiplier": 3, "points_type": "MR", "cpp": 0.02, "notes": "worldwide, incl. US takeout/delivery" },
+      { "category": "other",   "multiplier": 1, "points_type": "MR", "cpp": 0.02 }
+    ]
+  },
+  {
+    "name": "Amex Blue Cash Preferred",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 95,
+    "color_hex": "#003087",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/",
+    "notes": "UNVERIFIED — double-confirmed via direct page-source fetch on second pass, exact match",
+    "categories": [
+      { "category": "groceries", "multiplier": 6, "points_type": "CB", "cpp": 0.01, "notes": "U.S. supermarkets, capped at first $6,000/yr then 1%" },
+      { "category": "streaming", "multiplier": 6, "points_type": "CB", "cpp": 0.01, "notes": "select U.S. streaming subscriptions, no stated cap, confirm which qualify" },
+      { "category": "gas",       "multiplier": 3, "points_type": "CB", "cpp": 0.01 },
+      { "category": "transit",   "multiplier": 3, "points_type": "CB", "cpp": 0.01, "notes": "taxis/rideshare, parking, tolls, trains, buses" },
+      { "category": "other",     "multiplier": 1, "points_type": "CB", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Amex Blue Cash Everyday",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 0,
+    "color_hex": "#0072CE",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-everyday/",
+    "notes": "UNVERIFIED — double-confirmed via direct page-source fetch on second pass, exact match",
+    "categories": [
+      { "category": "groceries", "multiplier": 3, "points_type": "CB", "cpp": 0.01, "notes": "U.S. supermarkets, capped at first $6,000/yr then 1%" },
+      { "category": "gas",       "multiplier": 3, "points_type": "CB", "cpp": 0.01, "notes": "capped at first $6,000/yr then 1%" },
+      { "category": "shopping",  "multiplier": 3, "points_type": "CB", "cpp": 0.01, "notes": "U.S. online retail, capped at first $6,000/yr then 1%; separate $7/mo statement credit for Disney+/Hulu/ESPN+ is a credit, not a rate bonus" },
+      { "category": "other",     "multiplier": 1, "points_type": "CB", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Amex EveryDay Preferred",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 95,
+    "color_hex": "#5A6ADA",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/amex-everyday-preferred/",
+    "notes": "UNVERIFIED — discontinued to new applicants since ~Sept 2024 (search-sourced; Amex's own page shows no indication of this and still displays live Apply CTAs — kept for existing holders per founder decision). IMPORTANT: direct page-source fetch on second pass found NO travel bonus category exists — the earlier draft's 'travel 2x via AmexTravel.com' was wrong and has been removed",
+    "categories": [
+      { "category": "groceries", "multiplier": 3, "points_type": "MR", "cpp": 0.02, "notes": "U.S. supermarkets, capped at first $6,000/yr then 1x; +50% multiplier if card used 30+ times in a billing cycle" },
+      { "category": "gas",       "multiplier": 2, "points_type": "MR", "cpp": 0.02, "notes": "+50% multiplier if used 30+ times/cycle" },
+      { "category": "other",     "multiplier": 1, "points_type": "MR", "cpp": 0.02 }
+    ]
+  },
+  {
+    "name": "Amex Delta SkyMiles Gold",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 150,
+    "color_hex": "#C01933",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
+    "notes": "UNVERIFIED — double-confirmed via direct page-source fetch on second pass, exact match",
+    "categories": [
+      { "category": "travel",    "multiplier": 2, "points_type": "DL", "cpp": 0.012, "notes": "Delta purchases specifically" },
+      { "category": "dining",    "multiplier": 2, "points_type": "DL", "cpp": 0.012, "notes": "worldwide incl. US takeout/delivery" },
+      { "category": "groceries", "multiplier": 2, "points_type": "DL", "cpp": 0.012, "notes": "U.S. supermarkets" },
+      { "category": "other",     "multiplier": 1, "points_type": "DL", "cpp": 0.012 }
+    ]
+  },
+  {
+    "name": "Amex Delta SkyMiles Platinum",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 350,
+    "color_hex": "#C01933",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum/",
+    "notes": "UNVERIFIED — double-confirmed via direct page-source fetch on second pass. Confirmed the page actually lists two distinct 3x line items (Delta purchases direct, and hotel purchases direct with any hotel) rather than one general travel category — same multiplier value either way",
+    "categories": [
+      { "category": "travel",    "multiplier": 3, "points_type": "DL", "cpp": 0.012, "notes": "Delta purchases direct, and separately hotel stays booked direct with any hotel — both 3x" },
+      { "category": "dining",    "multiplier": 2, "points_type": "DL", "cpp": 0.012 },
+      { "category": "groceries", "multiplier": 2, "points_type": "DL", "cpp": 0.012 },
+      { "category": "other",     "multiplier": 1, "points_type": "DL", "cpp": 0.012 }
+    ]
+  },
+  {
+    "name": "Amex Delta SkyMiles Reserve",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 650,
+    "color_hex": "#8B0000",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve/",
+    "notes": "UNVERIFIED — double-confirmed via direct page-source fetch on second pass, exact match. No dining/grocery bonus category exists on this card, confirmed directly",
+    "categories": [
+      { "category": "travel", "multiplier": 3, "points_type": "DL", "cpp": 0.012, "notes": "Delta purchases only" },
+      { "category": "other",  "multiplier": 1, "points_type": "DL", "cpp": 0.012 }
+    ]
+  },
+  {
+    "name": "Amex Hilton Honors Surpass",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 150,
+    "color_hex": "#104C97",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
+    "notes": "UNVERIFIED — double-confirmed via direct page-source fetch on second pass, exact match",
+    "categories": [
+      { "category": "travel",    "multiplier": 12, "points_type": "HH", "cpp": 0.005, "notes": "Hilton portfolio hotels specifically" },
+      { "category": "dining",    "multiplier": 6,  "points_type": "HH", "cpp": 0.005, "notes": "U.S. restaurants" },
+      { "category": "groceries", "multiplier": 6,  "points_type": "HH", "cpp": 0.005, "notes": "U.S. supermarkets" },
+      { "category": "gas",       "multiplier": 6,  "points_type": "HH", "cpp": 0.005, "notes": "U.S. gas stations" },
+      { "category": "shopping",  "multiplier": 4,  "points_type": "HH", "cpp": 0.005, "notes": "U.S. online retail" },
+      { "category": "other",     "multiplier": 3,  "points_type": "HH", "cpp": 0.005 }
+    ]
+  },
+  {
+    "name": "Amex Hilton Honors Aspire",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 550,
+    "color_hex": "#104C97",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/",
+    "notes": "UNVERIFIED — double-confirmed via direct page-source fetch on second pass. Card actually has 4 distinct earn tiles: Hotels 14x, Dining 7x, and a separate 'Select Travel' 7x (flights direct/Amex Travel + select car rentals) — dining and select travel are equal-rate but distinct line items",
+    "categories": [
+      { "category": "travel", "multiplier": 14, "points_type": "HH", "cpp": 0.005, "notes": "Hilton portfolio hotels; flights direct/Amex Travel and select car rentals separately earn 7x ('Select Travel')" },
+      { "category": "dining", "multiplier": 7,  "points_type": "HH", "cpp": 0.005, "notes": "U.S. restaurants" },
+      { "category": "other",  "multiplier": 3,  "points_type": "HH", "cpp": 0.005 }
+    ]
+  },
+  {
+    "name": "Amex Marriott Bonvoy Brilliant",
+    "issuer": "American Express",
+    "network": "Amex",
+    "annual_fee": 650,
+    "color_hex": "#6E1E78",
+    "source_url": "https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-brilliant/",
+    "notes": "UNVERIFIED — first pass could not retrieve any category data (draft was a pure guess); second pass got a direct page-source fetch and CORRECTED the guess significantly — dining was wrongly guessed at 6x, actually 3x",
+    "categories": [
+      { "category": "travel", "multiplier": 6, "points_type": "MB", "cpp": 0.007, "notes": "Marriott Bonvoy participating hotels" },
+      { "category": "dining", "multiplier": 3, "points_type": "MB", "cpp": 0.007, "notes": "worldwide restaurants — corrected from an earlier unconfirmed guess of 6x" },
+      { "category": "other",  "multiplier": 2, "points_type": "MB", "cpp": 0.007, "notes": "flights booked directly with airlines also separately earn 3x, not represented as its own row" }
+    ]
+  },
+  {
+    "name": "Citi Double Cash",
+    "issuer": "Citi",
+    "network": "Mastercard",
+    "annual_fee": 0,
+    "color_hex": "#003B70",
+    "source_url": "https://www.citi.com/credit-cards/citi-double-cash-credit-card",
+    "notes": "UNVERIFIED — double-confirmed across two research passes, no changes found",
+    "categories": [
+      { "category": "travel", "multiplier": 5, "points_type": "TY", "cpp": 0.01, "notes": "hotels/car rentals/attractions via Citi Travel only" },
+      { "category": "other",  "multiplier": 2, "points_type": "TY", "cpp": 0.01, "notes": "1% when you buy + 1% when you pay" }
+    ]
+  },
+  {
+    "name": "Citi Premier",
+    "issuer": "Citi",
+    "network": "Mastercard",
+    "annual_fee": 95,
+    "color_hex": "#003B70",
+    "source_url": "https://www.citi.com/credit-cards/citi-premier-credit-card",
+    "notes": "UNVERIFIED — issuer confirmed rebrand to 'Citi Strata Premier', update product name if desired",
+    "categories": [
+      { "category": "dining",      "multiplier": 3, "points_type": "TY", "cpp": 0.018, "notes": "restaurants" },
+      { "category": "groceries",   "multiplier": 3, "points_type": "TY", "cpp": 0.018, "notes": "supermarkets" },
+      { "category": "gas",         "multiplier": 3, "points_type": "TY", "cpp": 0.018, "notes": "gas stations & EV charging stations" },
+      { "category": "ev_charging", "multiplier": 3, "points_type": "TY", "cpp": 0.018, "notes": "bundled with gas stations at 3x" },
+      { "category": "travel",      "multiplier": 3, "points_type": "TY", "cpp": 0.018, "notes": "air travel & other hotel purchases; hotels/cars/attractions via Citi Travel earn 10x" },
+      { "category": "other",       "multiplier": 1, "points_type": "TY", "cpp": 0.018 }
+    ]
+  },
+  {
+    "name": "Citi Custom Cash",
+    "issuer": "Citi",
+    "network": "Mastercard",
+    "annual_fee": 0,
+    "color_hex": "#56A0D3",
+    "source_url": "https://www.citi.com/credit-cards/citi-custom-cash-credit-card",
+    "notes": "UNVERIFIED — discontinuation date (2026-05-28) double-confirmed via exact quote on live page, kept for existing holders per founder decision. Eligible category list is broader than originally drafted: restaurants, gas stations, grocery stores, select travel, select transit, select streaming services, drugstores, home improvement stores, fitness clubs, and live entertainment — auto-detects your top eligible spend category each cycle, capped at first $500 spent (max $25/cycle)",
+    "categories": [
+      { "category": "dining",    "multiplier": 5, "points_type": "TY", "cpp": 0.01, "notes": "5% on your top eligible spend category each cycle (also eligible: gas, groceries, select travel/transit/streaming, drugstores, home improvement, fitness, entertainment), capped at first $500 spent/cycle then 1%" },
+      { "category": "groceries", "multiplier": 5, "points_type": "TY", "cpp": 0.01, "notes": "see dining row for full mechanic" },
+      { "category": "gas",       "multiplier": 5, "points_type": "TY", "cpp": 0.01, "notes": "see dining row for full mechanic" },
+      { "category": "other",     "multiplier": 1, "points_type": "TY", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Citi AAdvantage Platinum Select",
+    "issuer": "Citi",
+    "network": "Mastercard",
+    "annual_fee": 99,
+    "color_hex": "#0078D2",
+    "source_url": "https://www.citi.com/credit-cards/citi-aadvantage-platinum-select-world-elite-mastercard",
+    "notes": "UNVERIFIED — fee $99 (waived first 12 months) confirmed with high consistency across multiple independent sources on second pass",
+    "categories": [
+      { "category": "travel", "multiplier": 2, "points_type": "AA", "cpp": 0.014, "notes": "eligible American Airlines purchases" },
+      { "category": "dining", "multiplier": 2, "points_type": "AA", "cpp": 0.014, "notes": "incl. takeout" },
+      { "category": "gas",    "multiplier": 2, "points_type": "AA", "cpp": 0.014 },
+      { "category": "other",  "multiplier": 1, "points_type": "AA", "cpp": 0.014 }
+    ]
+  },
+  {
+    "name": "Citi AAdvantage Executive World Elite",
+    "issuer": "Citi",
+    "network": "Mastercard",
+    "annual_fee": 595,
+    "color_hex": "#0078D2",
+    "source_url": "https://www.citi.com/credit-cards/citi-aadvantage-executive-world-elite-mastercard",
+    "notes": "UNVERIFIED — fee $595 confirmed (distinct from a separate $175/authorized-user fee). IMPORTANT addition: a 10x AAdvantage Hotels/Cars booking tier was missing from the original draft entirely",
+    "categories": [
+      { "category": "travel", "multiplier": 4, "points_type": "AA", "cpp": 0.014, "notes": "eligible American Airlines purchases, boosts to 5x for the rest of the year after $150k/yr AA spend — used here as most GPS-relevant in-person rate; AAdvantage Hotels and AAdvantage Cars bookings separately earn 10x" },
+      { "category": "other",  "multiplier": 1, "points_type": "AA", "cpp": 0.014 }
+    ]
+  },
+  {
+    "name": "Citi Rewards+",
+    "issuer": "Citi",
+    "network": "Mastercard",
+    "annual_fee": 0,
+    "color_hex": "#6FA8DC",
+    "source_url": "https://www.citi.com/credit-cards/citi-rewards-plus-credit-card",
+    "notes": "UNVERIFIED — issuer confirmed rebrand to 'Citi Strata' (drops 'Rewards+'), update product name if desired; formal cutover reportedly ~2026-07-20. Old perks (round-up to nearest 10 points, 10% annual redemption bonus on first 100k points) may be phased out in the rebrand — confirm still active. Self-Select Category defaults to Streaming if never chosen",
+    "categories": [
+      { "category": "travel",      "multiplier": 5, "points_type": "TY", "cpp": 0.01, "notes": "hotels/cars/attractions via Citi Travel only" },
+      { "category": "groceries",   "multiplier": 3, "points_type": "TY", "cpp": 0.01, "notes": "supermarkets" },
+      { "category": "gas",         "multiplier": 3, "points_type": "TY", "cpp": 0.01, "notes": "bundled with select transit and EV charging" },
+      { "category": "ev_charging", "multiplier": 3, "points_type": "TY", "cpp": 0.01, "notes": "bundled with gas stations/transit" },
+      { "category": "transit",     "multiplier": 3, "points_type": "TY", "cpp": 0.01, "notes": "select transit" },
+      { "category": "streaming",   "multiplier": 3, "points_type": "TY", "cpp": 0.01, "notes": "part of the choose-your-own 'Self-Select Category' (alternatives: fitness clubs, live entertainment, salons, pet supplies), changeable quarterly, defaults to streaming" },
+      { "category": "dining",      "multiplier": 2, "points_type": "TY", "cpp": 0.01, "notes": "restaurants" },
+      { "category": "other",       "multiplier": 1, "points_type": "TY", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Capital One Venture X",
+    "issuer": "Capital One",
+    "network": "Visa",
+    "annual_fee": 395,
+    "color_hex": "#D22630",
+    "source_url": "https://www.capitalone.com/credit-cards/venture-x/",
+    "notes": "UNVERIFIED — earlier 'suspicious' extraction resolved on second pass via cross-referenced search (Capital One's own JS-rendered pages don't expose the full rate table to direct fetch): flights and vacation rentals earn 5x, hotels and rental cars earn 10x — these are two distinct tiers, not one flat rate",
+    "categories": [
+      { "category": "travel", "multiplier": 5, "points_type": "C1", "cpp": 0.017, "notes": "flights and vacation rentals via Capital One Travel earn 5x; hotels and rental cars via Capital One Travel earn 10x instead — this row uses the more broadly-applicable 5x rate. Capital One Entertainment purchases separately earn 5x" },
+      { "category": "other",  "multiplier": 2, "points_type": "C1", "cpp": 0.017, "notes": "general/everyday purchases" }
+    ]
+  },
+  {
+    "name": "Capital One Venture",
+    "issuer": "Capital One",
+    "network": "Visa",
+    "annual_fee": 95,
+    "color_hex": "#D22630",
+    "source_url": "https://www.capitalone.com/credit-cards/venture/",
+    "notes": "UNVERIFIED — double-confirmed across two research passes",
+    "categories": [
+      { "category": "travel", "multiplier": 5, "points_type": "C1", "cpp": 0.017, "notes": "hotels/vacation rentals/rental cars via Capital One Travel only; Capital One Entertainment purchases also separately earn 5x" },
+      { "category": "other",  "multiplier": 2, "points_type": "C1", "cpp": 0.017 }
+    ]
+  },
+  {
+    "name": "Capital One VentureOne",
+    "issuer": "Capital One",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#E4736E",
+    "source_url": "https://www.capitalone.com/credit-cards/ventureone/",
+    "notes": "UNVERIFIED — IMPORTANT addition: a Capital One Travel bonus category was missing from the original draft entirely (first pass only found the 1.25x base rate)",
+    "categories": [
+      { "category": "travel", "multiplier": 5, "points_type": "C1", "cpp": 0.017, "notes": "hotels, vacation rentals, rental cars, and activities via Capital One Travel; Capital One Entertainment purchases also separately earn 5x" },
+      { "category": "other",  "multiplier": 1.25, "points_type": "C1", "cpp": 0.017 }
+    ]
+  },
+  {
+    "name": "Capital One SavorOne",
+    "issuer": "Capital One",
+    "network": "Mastercard",
+    "annual_fee": 39,
+    "color_hex": "#003D6D",
+    "source_url": "https://www.capitalone.com/credit-cards/savorone/",
+    "notes": "UNVERIFIED — fee corrected to $39 (was drafted as $0 based on outdated public knowledge). Confirmed via exact quote from the live page across two independent fetches on the second pass: \"...with a $39 annual fee.\" This is the CURRENT SavorOne product, distinct from the discontinued original $0-fee version.",
+    "categories": [
+      { "category": "dining",        "multiplier": 3, "points_type": "C1", "cpp": 0.01 },
+      { "category": "groceries",     "multiplier": 3, "points_type": "C1", "cpp": 0.01, "notes": "excludes superstores like Walmart/Target" },
+      { "category": "entertainment", "multiplier": 3, "points_type": "C1", "cpp": 0.01, "notes": "movies, sports, amusement parks, zoos, bowling" },
+      { "category": "streaming",     "multiplier": 3, "points_type": "C1", "cpp": 0.01, "notes": "popular streaming services" },
+      { "category": "other",         "multiplier": 1, "points_type": "C1", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Capital One Savor",
+    "issuer": "Capital One",
+    "network": "Mastercard",
+    "annual_fee": 0,
+    "color_hex": "#002D5B",
+    "source_url": "https://www.capitalone.com/credit-cards/savor/",
+    "notes": "UNVERIFIED — fee corrected to $0 (was drafted as $95 based on outdated public knowledge). Capital One discontinued the old $95 Savor card in July 2024 and replaced it with a redesigned $0-fee version at this URL, confirmed via exact quote across two independent fetches: \"$0 annual fee.\" Also corrected: no 3%/4% split between dining and other categories — the current card groups dining, groceries, entertainment, and streaming together at a flat 3%, unlike the discontinued legacy version this draft originally modeled",
+    "categories": [
+      { "category": "dining",        "multiplier": 3, "points_type": "C1", "cpp": 0.01 },
+      { "category": "groceries",     "multiplier": 3, "points_type": "C1", "cpp": 0.01 },
+      { "category": "entertainment", "multiplier": 3, "points_type": "C1", "cpp": 0.01 },
+      { "category": "streaming",     "multiplier": 3, "points_type": "C1", "cpp": 0.01, "notes": "popular streaming services" },
+      { "category": "travel",        "multiplier": 5, "points_type": "C1", "cpp": 0.01, "notes": "hotels/vacation rentals/rental cars via Capital One Travel only" },
+      { "category": "other",         "multiplier": 1, "points_type": "C1", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Capital One Quicksilver",
+    "issuer": "Capital One",
+    "network": "Mastercard",
+    "annual_fee": 0,
+    "color_hex": "#7C7C7C",
+    "source_url": "https://www.capitalone.com/credit-cards/quicksilver/",
+    "notes": "UNVERIFIED — $0 fee corroborated with high confidence across multiple sources (not shown as an explicit page label). IMPORTANT addition: a Capital One Travel + Entertainment bonus category was missing from the original draft entirely (first pass found only the flat 1.5% rate)",
+    "categories": [
+      { "category": "travel", "multiplier": 5,   "points_type": "C1", "cpp": 0.01, "notes": "hotels, rental cars, vacation rentals, and activities via Capital One Travel; Capital One Entertainment purchases also separately earn 5%" },
+      { "category": "other",  "multiplier": 1.5, "points_type": "C1", "cpp": 0.01, "notes": "flat cash back on everything else" }
+    ]
+  },
+  {
+    "name": "Discover it Cash Back",
+    "issuer": "Discover",
+    "network": "Discover",
+    "annual_fee": 0,
+    "color_hex": "#FF6000",
+    "source_url": "https://www.discover.com/credit-cards/cash-back/it-card.html",
+    "notes": "UNVERIFIED — first-year Cashback Match (unlimited dollar-for-dollar match of year-one cash back) also applies, not represented in this schema. Current quarter confirmed via issuer press + independent trackers: Q3 2026 (Jul 1–Sep 30) is gas stations & EV charging, transportation (airlines + local transit like buses/trains/ferries), and drug stores/pharmacies — 5% cash back, capped at $1,500/quarter COMBINED (corrected from an earlier guess of $1,000), then 1%, activation required. This will change again Oct 1, 2026 — reconfirm each quarter.",
+    "categories": [
+      { "category": "gas",         "multiplier": 5, "points_type": "CB", "cpp": 0.01, "notes": "Q3 2026 rotating category, $1,500/quarter combined cap, activation required — will change Oct 1, 2026" },
+      { "category": "ev_charging", "multiplier": 5, "points_type": "CB", "cpp": 0.01, "notes": "Q3 2026 rotating category — will change Oct 1, 2026" },
+      { "category": "travel",      "multiplier": 5, "points_type": "CB", "cpp": 0.01, "notes": "Q3 2026 rotating category (airlines specifically) — will change Oct 1, 2026" },
+      { "category": "transit",     "multiplier": 5, "points_type": "CB", "cpp": 0.01, "notes": "Q3 2026 rotating category (local transit) — will change Oct 1, 2026" },
+      { "category": "pharmacy",    "multiplier": 5, "points_type": "CB", "cpp": 0.01, "notes": "Q3 2026 rotating category — will change Oct 1, 2026" },
+      { "category": "other",       "multiplier": 1, "points_type": "CB", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Discover it Miles",
+    "issuer": "Discover",
+    "network": "Discover",
+    "annual_fee": 0,
+    "color_hex": "#FF6000",
+    "source_url": "https://www.discover.com/credit-cards/travel/it-miles.html",
+    "notes": "UNVERIFIED — double-confirmed across two research passes, no changes found",
+    "categories": [
+      { "category": "other", "multiplier": 1.5, "points_type": "CB", "cpp": 0.01, "notes": "flat rate, no bonus categories" }
+    ]
+  },
+  {
+    "name": "Discover it Chrome",
+    "issuer": "Discover",
+    "network": "Discover",
+    "annual_fee": 0,
+    "color_hex": "#FF6000",
+    "source_url": "https://www.discover.com/credit-cards/cash-back/chrome.html",
+    "notes": "UNVERIFIED — double-confirmed across two research passes, no changes found",
+    "categories": [
+      { "category": "gas",    "multiplier": 2, "points_type": "CB", "cpp": 0.01, "notes": "combined with dining, capped at first $1,000/quarter combined then 1%" },
+      { "category": "dining", "multiplier": 2, "points_type": "CB", "cpp": 0.01, "notes": "same combined cap as gas" },
+      { "category": "other",  "multiplier": 1, "points_type": "CB", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Wells Fargo Active Cash",
+    "issuer": "Wells Fargo",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#D71E28",
+    "source_url": "https://creditcards.wellsfargo.com/active-cash-credit-card/",
+    "notes": "UNVERIFIED — double-confirmed across two research passes, no changes found",
+    "categories": [
+      { "category": "other", "multiplier": 2, "points_type": "CB", "cpp": 0.01, "notes": "flat rate, no caps" }
+    ]
+  },
+  {
+    "name": "Wells Fargo Autograph",
+    "issuer": "Wells Fargo",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#FFCD41",
+    "source_url": "https://creditcards.wellsfargo.com/autograph-visa-credit-card",
+    "notes": "UNVERIFIED — double-confirmed across two research passes. Also earns 3x on cell phone/landline plan bills, not a GPS-detectable category",
+    "categories": [
+      { "category": "dining",      "multiplier": 3, "points_type": "CB", "cpp": 0.01, "notes": "restaurants" },
+      { "category": "travel",      "multiplier": 3, "points_type": "CB", "cpp": 0.01, "notes": "airline/hotel/car rental/cruise/travel agencies" },
+      { "category": "gas",         "multiplier": 3, "points_type": "CB", "cpp": 0.01 },
+      { "category": "ev_charging", "multiplier": 3, "points_type": "CB", "cpp": 0.01, "notes": "bundled with gas stations" },
+      { "category": "transit",     "multiplier": 3, "points_type": "CB", "cpp": 0.01, "notes": "subways, rideshare, parking, tolls" },
+      { "category": "streaming",   "multiplier": 3, "points_type": "CB", "cpp": 0.01 },
+      { "category": "other",       "multiplier": 1, "points_type": "CB", "cpp": 0.01, "notes": "phone plan bills also earn 3% but aren't a GPS-detectable category" }
+    ]
+  },
+  {
+    "name": "Wells Fargo Autograph Journey",
+    "issuer": "Wells Fargo",
+    "network": "Visa",
+    "annual_fee": 95,
+    "color_hex": "#C89B3C",
+    "source_url": "https://creditcards.wellsfargo.com/autograph-journey-visa-credit-card/",
+    "notes": "UNVERIFIED — structure corrected: there is no single blended travel rate as an earlier draft implied. Confirmed distinct tiers: hotels 5x, airlines 4x, other travel (car rental/cruise/timeshare/travel agencies/campgrounds) 3x, restaurants 3x",
+    "categories": [
+      { "category": "travel", "multiplier": 5, "points_type": "CB", "cpp": 0.01, "notes": "hotels specifically earn 5x; airlines earn 4x; other travel (car rental/cruise/timeshare/travel agencies/campgrounds) earns 3x — this row uses the hotel rate as most likely GPS-relevant for in-person stays" },
+      { "category": "dining", "multiplier": 3, "points_type": "CB", "cpp": 0.01 },
+      { "category": "other",  "multiplier": 1, "points_type": "CB", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Bank of America Customized Cash Rewards",
+    "issuer": "Bank of America",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#E31837",
+    "source_url": "https://www.bankofamerica.com/credit-cards/products/cash-back-credit-card/",
+    "notes": "UNVERIFIED — double-confirmed choose-your-own-category mechanic is broader than gas/EV alone: 6 total options (gas & EV charging, online shopping incl. streaming/cable/phone, dining, travel, drug stores/pharmacies, home improvement/furnishings), 6% year one then 3%, shares a combined $2,500/quarter cap with groceries",
+    "categories": [
+      { "category": "gas",         "multiplier": 6, "points_type": "CB", "cpp": 0.01, "notes": "one of 6 choose-your-own-category options; 6% year one then 3%; shares $2,500/quarter combined cap with groceries below — confirm which category is actually selected" },
+      { "category": "ev_charging", "multiplier": 6, "points_type": "CB", "cpp": 0.01, "notes": "bundled with the gas station choice category" },
+      { "category": "groceries",   "multiplier": 2, "points_type": "CB", "cpp": 0.01, "notes": "wholesale clubs included; shares the $2,500/quarter cap with the chosen category above" },
+      { "category": "other",       "multiplier": 1, "points_type": "CB", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Bank of America Premium Rewards",
+    "issuer": "Bank of America",
+    "network": "Visa",
+    "annual_fee": 95,
+    "color_hex": "#012169",
+    "source_url": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
+    "notes": "UNVERIFIED — double-confirmed across two research passes, no changes found",
+    "categories": [
+      { "category": "travel", "multiplier": 2,   "points_type": "CB", "cpp": 0.01 },
+      { "category": "dining", "multiplier": 2,   "points_type": "CB", "cpp": 0.01 },
+      { "category": "other",  "multiplier": 1.5, "points_type": "CB", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Bank of America Travel Rewards",
+    "issuer": "Bank of America",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#012169",
+    "source_url": "https://www.bankofamerica.com/credit-cards/products/travel-rewards-credit-card/",
+    "notes": "UNVERIFIED — double-confirmed across two research passes, no changes found",
+    "categories": [
+      { "category": "other", "multiplier": 1.5, "points_type": "CB", "cpp": 0.01, "notes": "flat rate, no bonus categories" }
+    ]
+  },
+  {
+    "name": "US Bank Altitude Go",
+    "issuer": "US Bank",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#0A3161",
+    "source_url": "https://www.usbank.com/credit-cards/altitude-go-visa-signature-credit-card.html",
+    "notes": "UNVERIFIED — double-confirmed across two research passes, no changes found",
+    "categories": [
+      { "category": "dining",      "multiplier": 4, "points_type": "CB", "cpp": 0.01, "notes": "incl. takeout/delivery, capped at first $2,000/quarter combined then 1x" },
+      { "category": "groceries",   "multiplier": 2, "points_type": "CB", "cpp": 0.01, "notes": "excludes discount/supercenters/wholesale clubs" },
+      { "category": "gas",         "multiplier": 2, "points_type": "CB", "cpp": 0.01, "notes": "excludes wholesale clubs/discount stores" },
+      { "category": "ev_charging", "multiplier": 2, "points_type": "CB", "cpp": 0.01, "notes": "bundled with gas stations" },
+      { "category": "streaming",   "multiplier": 2, "points_type": "CB", "cpp": 0.01 },
+      { "category": "other",       "multiplier": 1, "points_type": "CB", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "US Bank Altitude Connect",
+    "issuer": "US Bank",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#0A3161",
+    "source_url": "https://www.usbank.com/credit-cards/altitude-connect-visa-signature-credit-card.html",
+    "notes": "UNVERIFIED — fee corrected to $0 (was drafted as $95). US Bank eliminated this card's annual fee entirely as of Sept 9, 2024; the live page states 'no annual fee' with no first-year-only language. Also: 5x on prepaid hotels/car rentals via the U.S. Bank Travel Center, not represented as a separate row",
+    "categories": [
+      { "category": "travel",      "multiplier": 4, "points_type": "CB", "cpp": 0.01, "notes": "prepaid hotels/car rentals via U.S. Bank Travel Center earn 5x instead" },
+      { "category": "gas",         "multiplier": 4, "points_type": "CB", "cpp": 0.01, "notes": "capped at first $1,000/quarter then 1x; excludes wholesale/discount stores" },
+      { "category": "ev_charging", "multiplier": 4, "points_type": "CB", "cpp": 0.01, "notes": "bundled with gas stations, same cap" },
+      { "category": "dining",      "multiplier": 2, "points_type": "CB", "cpp": 0.01, "notes": "restaurants, fast food, bars" },
+      { "category": "streaming",   "multiplier": 2, "points_type": "CB", "cpp": 0.01 },
+      { "category": "groceries",   "multiplier": 2, "points_type": "CB", "cpp": 0.01, "notes": "excludes discount/supercenters/wholesale clubs" },
+      { "category": "other",       "multiplier": 1, "points_type": "CB", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "US Bank Cash+",
+    "issuer": "US Bank",
+    "network": "Visa",
+    "annual_fee": 0,
+    "color_hex": "#4A7BC8",
+    "source_url": "https://www.usbank.com/credit-cards/cash-plus-visa-signature-credit-card.html",
+    "notes": "UNVERIFIED — double-confirmed across two research passes. Also 5% on prepaid U.S. Bank Travel Center bookings, not represented as a separate row",
+    "categories": [
+      { "category": "shopping", "multiplier": 5, "points_type": "CB", "cpp": 0.01, "notes": "choose-your-own-category card — 2 categories chosen from a list (cell phone, department stores, electronics, fast food, furniture, ground transportation, gym/fitness, home utilities, movie theaters, sporting goods, select clothing, TV/internet/streaming) earn 5% each, combined $2,000/quarter cap, requires quarterly re-selection — confirm which 2 are actually selected" },
+      { "category": "gas",      "multiplier": 2, "points_type": "CB", "cpp": 0.01, "notes": "1 of 3 'everyday' category choices (gas & EV charging, groceries, restaurants) earning 2% — confirm which is selected" },
+      { "category": "other",    "multiplier": 1, "points_type": "CB", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "PenFed Pathfinder Rewards",
+    "issuer": "PenFed Credit Union",
+    "network": "Visa",
+    "annual_fee": 95,
+    "color_hex": "#002F6C",
+    "source_url": "https://www.penfed.org/credit-cards/pathfinder-rewards-visa-signature-card",
+    "notes": "UNVERIFIED — automated research could NOT fetch penfed.org directly across 9 total attempts over two passes (bot-blocked); all data here is search-snippet-sourced and needs primary-source manual verification. IMPORTANT: fee $95 is waived for PenFed Honors Advantage members, and the 4x travel rate ALSO only applies to Honors Advantage members — standard cardholders earn 3x on travel, not 4x. This is a material correction from the original draft.",
+    "categories": [
+      { "category": "travel", "multiplier": 3,   "points_type": "CB", "cpp": 0.01, "notes": "standard rate; PenFed Honors Advantage members earn 4x instead and may have the annual fee waived — confirm your own membership status" },
+      { "category": "other",  "multiplier": 1.5, "points_type": "CB", "cpp": 0.01 }
+    ]
+  },
+  {
+    "name": "Bilt Mastercard",
+    "issuer": "Bilt",
+    "network": "Mastercard",
+    "annual_fee": 0,
+    "color_hex": "#000000",
+    "source_url": "https://www.bilt.com/card",
+    "notes": "UNVERIFIED — officially branded 'Bilt Blue Card' on bilt.com, not 'Bilt Mastercard' — confirm preferred display name. Bilt is a 3-tier product; this entry is the no-annual-fee tier. See also 'Bilt Obsidian Mastercard' and 'Bilt Palladium Mastercard' as separate entries. Confirm current 'Bilt 2.0' rent-earning rules (may no longer require 5 transactions/month to earn on rent).",
+    "categories": [
+      { "category": "dining", "multiplier": 4, "points_type": "UR", "cpp": 0.0205, "notes": "up to 4x at Bilt dining partners" },
+      { "category": "travel", "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "hotels via Bilt Travel earn 3x; flights via Bilt Travel earn 2x — this row uses the hotel rate. Lyft (linked account) also earns 3x, not GPS-detectable as a distinct category" },
+      { "category": "other",  "multiplier": 1, "points_type": "UR", "cpp": 0.0205, "notes": "rent/mortgage payments earn up to 1.25x separately, not a GPS-detectable category" }
+    ]
+  },
+  {
+    "name": "Bilt Obsidian Mastercard",
+    "issuer": "Bilt",
+    "network": "Mastercard",
+    "annual_fee": 95,
+    "color_hex": "#2B2B2B",
+    "source_url": "https://www.bilt.com/card",
+    "notes": "UNVERIFIED — mid tier of Bilt's 3-tier product lineup, fee and dining/groceries/travel rates confirmed across two passes. IMPORTANT UNRESOLVED CONFLICT: the 'other purchases' rate below is shown as 2x, but bilt.com's general card page never explicitly states a base rate for this tier, and one source suggests the true base rate may be 1x with 2x only reachable via an optional 'Point Accelerator' feature (capped at $5,000 spend). Needs a targeted manual check of bilt.com/card/obsidian specifically before clearing.",
+    "categories": [
+      { "category": "dining",    "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "up to 6x at Bilt dining partners" },
+      { "category": "groceries", "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "up to $25,000/yr" },
+      { "category": "travel",    "multiplier": 4, "points_type": "UR", "cpp": 0.0205, "notes": "hotels via Bilt Travel earn 4x; flights via Bilt Travel earn 3x — this row uses the hotel rate; includes $100 annual Bilt Travel hotel credit" },
+      { "category": "other",     "multiplier": 2, "points_type": "UR", "cpp": 0.0205, "notes": "UNRESOLVED — may actually be 1x base rate with 2x only via an optional Point Accelerator feature, verify directly on bilt.com/card/obsidian" }
+    ]
+  },
+  {
+    "name": "Bilt Palladium Mastercard",
+    "issuer": "Bilt",
+    "network": "Mastercard",
+    "annual_fee": 495,
+    "color_hex": "#8A8A8A",
+    "source_url": "https://www.bilt.com/card",
+    "notes": "UNVERIFIED — top tier of Bilt's 3-tier product lineup, fee and rates double-confirmed across two passes, no changes found. Lyft (linked account) also earns 4x, not GPS-detectable as a distinct category",
+    "categories": [
+      { "category": "dining", "multiplier": 5, "points_type": "UR", "cpp": 0.0205, "notes": "at Bilt dining partners" },
+      { "category": "travel", "multiplier": 4, "points_type": "UR", "cpp": 0.0205, "notes": "hotels via Bilt Travel earn 4x; flights via Bilt Travel earn 3x — this row uses the hotel rate; includes $200 annual Bilt Cash + $400 annual Bilt Travel hotel credit" },
+      { "category": "other",  "multiplier": 2, "points_type": "UR", "cpp": 0.0205, "notes": "confirmed explicitly as '2X points on all everyday purchases'" }
+    ]
+  }
+]
