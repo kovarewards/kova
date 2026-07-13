@@ -93,3 +93,24 @@ CREATE INDEX ON reward_categories(card_id);
 CREATE INDEX ON reward_categories USING GIN(mcc_codes);
 CREATE INDEX ON annual_benefits(card_id);
 CREATE INDEX ON user_captures(user_id, captured_at);
+
+-- v2: sign-up bonus tracker — manual & optional, no transaction data
+CREATE TABLE user_bonus_trackers (
+  id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id        UUID NOT NULL,
+  card_id        UUID REFERENCES cards(id),
+  bonus_points   INTEGER NOT NULL,
+  points_type    TEXT NOT NULL,
+  spend_required NUMERIC(8,2) NOT NULL,
+  spend_logged   NUMERIC(8,2) NOT NULL DEFAULT 0,
+  deadline       DATE NOT NULL,
+  created_at     TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE user_bonus_trackers ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "users manage own bonus trackers"
+  ON user_bonus_trackers USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE INDEX ON user_bonus_trackers(user_id);

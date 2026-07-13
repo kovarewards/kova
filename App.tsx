@@ -11,11 +11,12 @@ import { OnboardingScreen } from './src/screens/Onboarding';
 import { AuthScreen } from './src/screens/Auth';
 import { RecommendationScreen, RecommendationTarget } from './src/screens/Recommendation';
 import { WalletScreen } from './src/screens/Wallet';
+import { AlertsScreen } from './src/screens/Alerts';
 import { TabKey } from './src/components/TabBar';
 import { supabase } from './src/lib/supabase';
 import { dark } from './src/constants/theme';
 
-type Screen = 'loading' | 'auth' | 'onboarding' | 'home' | 'recommendation' | 'wallet';
+type Screen = 'loading' | 'auth' | 'onboarding' | 'home' | 'recommendation' | 'wallet' | 'alerts';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -46,7 +47,8 @@ export default function App() {
   function handleNavigateTab(tab: TabKey) {
     if (tab === 'home') setScreen('home');
     else if (tab === 'wallet') setScreen('wallet');
-    // ledger/alerts not built yet
+    else if (tab === 'alerts') setScreen('alerts');
+    // ledger not built yet
   }
 
   function handleAddCard(returnTo: 'home' | 'wallet') {
@@ -82,6 +84,7 @@ export default function App() {
       {screen === 'wallet' && (
         <WalletScreen onAddCard={() => handleAddCard('wallet')} onNavigateTab={handleNavigateTab} />
       )}
+      {screen === 'alerts' && <AlertsScreen onNavigateTab={handleNavigateTab} />}
       <StatusBar style="light" />
     </SafeAreaProvider>
   );
