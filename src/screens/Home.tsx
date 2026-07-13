@@ -114,28 +114,28 @@ export function HomeScreen() {
           <Text style={styles.tiny}>{dateLabel}</Text>
           <Text style={styles.greeting}>Hey, {displayName}</Text>
         </View>
-        <KovaLogo size={30} mode="dark" />
+        <KovaLogo size={38} mode="dark" />
       </View>
 
       {merchant && topRec && (
         <View style={[styles.card, styles.cardHighlight]}>
-          <View style={styles.spread}>
+          <View style={styles.bannerTopRow}>
             <View style={styles.pillAcc}>
-              <Text style={styles.pillAccText}>📍 You&apos;re at {merchant.name}</Text>
+              <Text style={styles.pillAccText} numberOfLines={1}>📍 You&apos;re at {merchant.name}</Text>
             </View>
             <Text style={styles.tiny}>{merchant.distanceM}m away</Text>
           </View>
           <View style={[styles.spread, { marginTop: 9 }]}>
-            <View style={styles.rowline}>
+            <View style={styles.recInfo}>
               <View style={[styles.minicard, { backgroundColor: topRec.colorHex ?? dark.surf3 }]} />
-              <View>
-                <Text style={styles.recCardName}>Use {topRec.cardName}</Text>
-                <Text style={styles.tiny}>
+              <View style={styles.recTextCol}>
+                <Text style={styles.recCardName} numberOfLines={1}>Use {topRec.cardName}</Text>
+                <Text style={styles.tiny} numberOfLines={1}>
                   {CATEGORY_LABEL[merchant.category] ?? merchant.category} · {topRec.multiplier}× {topRec.pointsType}
                 </Text>
               </View>
             </View>
-            <View style={{ alignItems: 'flex-end' }}>
+            <View style={styles.recValueCol}>
               <Text style={styles.recValue}>${topRec.valuePerHundred.toFixed(2)}</Text>
               <Text style={styles.tiny}>per $100</Text>
             </View>
@@ -218,46 +218,50 @@ export function HomeScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: dark.bg },
   screen: { flex: 1 },
-  content: { padding: 16, gap: 10, paddingBottom: 24 },
+  content: { padding: 20, gap: 13, paddingBottom: 30 },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   spread: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  rowline: { flexDirection: 'row', alignItems: 'center', gap: 9 },
-  tiny: { fontSize: 10.5, color: dark.dim },
-  tinyLabel: { fontSize: 10.5, color: dark.dim, letterSpacing: 1.5 },
-  greeting: { fontSize: 17, fontWeight: '900', color: dark.text, letterSpacing: -0.5 },
-  card: { backgroundColor: dark.surf, borderWidth: 1, borderColor: dark.border, borderRadius: 14, padding: 12 },
+  rowline: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  bannerTopRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
+  recInfo: { flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1, minWidth: 0 },
+  recTextCol: { flex: 1, minWidth: 0 },
+  recValueCol: { alignItems: 'flex-end', flexShrink: 0, marginLeft: 8 },
+  tiny: { fontSize: 14, color: dark.dim },
+  tinyLabel: { fontSize: 14, color: dark.dim, letterSpacing: 2 },
+  greeting: { fontSize: 22, fontWeight: '900', color: dark.text, letterSpacing: -0.6 },
+  card: { backgroundColor: dark.surf, borderWidth: 1, borderColor: dark.border, borderRadius: 18, padding: 16 },
   cardHighlight: { borderColor: dark.accentBorder, backgroundColor: dark.accentSoft },
   pillAcc: {
     backgroundColor: dark.accentSoft, borderColor: dark.accentBorder, borderWidth: 1,
-    borderRadius: 999, paddingVertical: 3, paddingHorizontal: 9,
+    borderRadius: 999, paddingVertical: 4, paddingHorizontal: 12, flexShrink: 1,
   },
-  pillAccText: { fontSize: 8.5, fontWeight: '800', letterSpacing: 1, color: dark.accent },
-  minicard: { width: 44, height: 29, borderRadius: 5 },
-  recCardName: { fontSize: 12.5, fontWeight: '800', color: dark.text },
-  recValue: { fontSize: 15, fontWeight: '900', color: dark.green },
-  ledgerTotal: { fontSize: 25, fontWeight: '900', color: dark.text, letterSpacing: -1, marginVertical: 2 },
-  bar: { height: 5, backgroundColor: dark.surf3, borderRadius: 99, overflow: 'hidden' },
+  pillAccText: { fontSize: 11, fontWeight: '800', letterSpacing: 1.3, color: dark.accent },
+  minicard: { width: 58, height: 38, borderRadius: 7 },
+  recCardName: { fontSize: 16, fontWeight: '800', color: dark.text },
+  recValue: { fontSize: 20, fontWeight: '900', color: dark.green },
+  ledgerTotal: { fontSize: 32, fontWeight: '900', color: dark.text, letterSpacing: -1.3, marginVertical: 3 },
+  bar: { height: 6, backgroundColor: dark.surf3, borderRadius: 99, overflow: 'hidden' },
   barFill: { height: '100%', backgroundColor: dark.accent, borderRadius: 99 },
   paceValue: { color: dark.text, fontWeight: '700' },
-  walletCard: { width: 52, height: 34, borderRadius: 5 },
+  walletCard: { width: 68, height: 44, borderRadius: 7 },
   addCard: {
-    width: 52, height: 34, borderRadius: 5, borderWidth: 1.5, borderColor: dark.border2,
+    width: 68, height: 44, borderRadius: 7, borderWidth: 2, borderColor: dark.border2,
     borderStyle: 'dashed', alignItems: 'center', justifyContent: 'center',
   },
-  alertCard: { borderLeftWidth: 3, borderLeftColor: dark.gold },
-  alertTitle: { fontSize: 11, fontWeight: '700', color: dark.text },
+  alertCard: { borderLeftWidth: 4, borderLeftColor: dark.gold },
+  alertTitle: { fontSize: 14, fontWeight: '700', color: dark.text },
   pillGold: {
     backgroundColor: withOpacity(dark.gold, 0.1), borderColor: withOpacity(dark.gold, 0.3),
-    borderWidth: 1, borderRadius: 999, paddingVertical: 3, paddingHorizontal: 9,
+    borderWidth: 1, borderRadius: 999, paddingVertical: 4, paddingHorizontal: 12,
   },
-  pillGoldText: { fontSize: 8.5, fontWeight: '800', letterSpacing: 1, color: dark.gold },
+  pillGoldText: { fontSize: 11, fontWeight: '800', letterSpacing: 1.3, color: dark.gold },
   tabbar: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', height: 54,
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', height: 68,
     borderTopWidth: 1, borderTopColor: dark.border, backgroundColor: dark.surf,
-    marginTop: 8, paddingBottom: 8,
+    marginTop: 10, paddingBottom: 10,
   },
   tab: { alignItems: 'center' },
-  tabIcon: { fontSize: 15, color: dark.muted, marginBottom: 2 },
-  tabLabel: { fontSize: 8.5, fontWeight: '700', letterSpacing: 1, color: dark.muted },
+  tabIcon: { fontSize: 19, color: dark.muted, marginBottom: 3 },
+  tabLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 1.3, color: dark.muted },
   tabOn: { color: dark.accent },
 });
