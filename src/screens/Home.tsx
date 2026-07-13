@@ -160,7 +160,9 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab }: P
       <View style={styles.card}>
         <View style={styles.spread}>
           <Text style={styles.tinyLabel}>RECOVERED THIS YEAR</Text>
-          <Text style={[styles.tiny, { color: dark.accent }]}>View ledger →</Text>
+          <TouchableOpacity onPress={() => onNavigateTab('ledger')}>
+            <Text style={[styles.tiny, { color: dark.accent }]}>View ledger →</Text>
+          </TouchableOpacity>
         </View>
         <Text style={styles.ledgerTotal}>${ledger.yearToDate.toFixed(2)}</Text>
         <View style={styles.bar}>
