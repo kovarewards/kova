@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Linking, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as SecureStore from 'expo-secure-store';
 import { Text, TextInput } from '../components/AppText';
 import { TabBar, TabKey } from '../components/TabBar';
+import { SwipeToDelete } from '../components/SwipeToDelete';
 import { dark } from '../constants/theme';
 import { supabase } from '../lib/supabase';
+
+const DISMISSED_KEY = 'kova_dismissed_alerts';
 
 const CATEGORY_LABEL: Record<string, string> = {
   dining: 'Dining', groceries: 'Groceries', gas: 'Gas', ev_charging: 'EV Charging',
@@ -67,10 +71,26 @@ export function AlertsScreen({ onNavigateTab }: Props) {
   const [newDays, setNewDays] = useState('');
   const [createError, setCreateError] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
+  const [dismissedKeys, setDismissedKeys] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setUserId(data.user?.id ?? null));
   }, []);
+
+  useEffect(() => {
+    SecureStore.getItemAsync(DISMISSED_KEY).then((raw) => {
+      if (raw) setDismissedKeys(new Set(JSON.parse(raw)));
+    });
+  }, []);
+
+  function dismissAlert(key: string) {
+    setDismissedKeys((prev) => {
+      const next = new Set(prev);
+      next.add(key);
+      SecureStore.setItemAsync(DISMISSED_KEY, JSON.stringify(Array.from(next)));
+      return next;
+    });
+  }
 
   useEffect(() => {
     if (!userId) return;
@@ -107,7 +127,7 @@ export function AlertsScreen({ onNavigateTab }: Props) {
       .then(({ data }) => {
         setActivationAlerts(
           (data ?? []).map((r: any) => ({
-            key: `${r.card_id}-${r.category}`,
+            key: `${r.card_id}-${r.category}-${r.end_date}`,
             cardName: r.cards.name,
             colorHex: r.cards.color_hex,
             category: r.category,
@@ -129,7 +149,11 @@ export function AlertsScreen({ onNavigateTab }: Props) {
           if (!end) return;
           const daysLeft = Math.ceil((end.getTime() - Date.now()) / 86400000);
           if (daysLeft >= 0 && daysLeft <= 30) {
-            alerts.push({ key: r.id, cardName: r.cards.name, colorHex: r.cards.color_hex, title: r.title, daysLeft });
+            const endISO = end.toISOString().split('T')[0];
+            alerts.push({
+              key: `${r.id}-${endISO}`, cardName: r.cards.name, colorHex: r.cards.color_hex,
+              title: r.title, daysLeft,
+            });
           }
         });
         setExpiringAlerts(alerts);
@@ -160,6 +184,15 @@ export function AlertsScreen({ onNavigateTab }: Props) {
   }
 
   useEffect(loadTrackers, [userId]);
+
+  async function deleteTracker(tracker: BonusTracker) {
+    const { error } = await supabase.from('user_bonus_trackers').delete().eq('id', tracker.id);
+    if (error) {
+      setCreateError(error.message);
+      return;
+    }
+    setTrackers((prev) => prev.filter((t) => t.id !== tracker.id));
+  }
 
   async function submitLogSpend(tracker: BonusTracker) {
     const amount = parseFloat(logAmount);
@@ -212,7 +245,9 @@ export function AlertsScreen({ onNavigateTab }: Props) {
     loadTrackers();
   }
 
-  const activeCount = activationAlerts.length + expiringAlerts.length + trackers.length;
+  const visibleActivation = activationAlerts.filter((a) => !dismissedKeys.has(a.key));
+  const visibleExpiring = expiringAlerts.filter((a) => !dismissedKeys.has(a.key));
+  const activeCount = visibleActivation.length + visibleExpiring.length + trackers.length;
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
@@ -224,84 +259,90 @@ export function AlertsScreen({ onNavigateTab }: Props) {
           </View>
         </View>
 
-        {activationAlerts.map((a) => (
-          <View key={a.key} style={[styles.card, styles.goldBorder]}>
-            <View style={styles.spread}>
-              <View style={styles.pillGold}>
-                <Text style={styles.pillGoldText}>ACTION NEEDED</Text>
+        {visibleActivation.map((a) => (
+          <SwipeToDelete key={a.key} onDelete={() => dismissAlert(a.key)}>
+            <View style={[styles.card, styles.goldBorder]}>
+              <View style={styles.spread}>
+                <View style={styles.pillGold}>
+                  <Text style={styles.pillGoldText}>ACTION NEEDED</Text>
+                </View>
+                <Text style={styles.tiny}>{a.daysLeft} days</Text>
               </View>
-              <Text style={styles.tiny}>{a.daysLeft} days</Text>
+              <Text style={styles.alertTitle}>
+                Activate {a.cardName} — {a.multiplier}× {CATEGORY_LABEL[a.category] ?? a.category}
+              </Text>
+              <Text style={styles.alertBody}>Rotating categories must be activated to earn the bonus rate.</Text>
+              {a.sourceUrl && (
+                <TouchableOpacity style={styles.btnSecondary} onPress={() => Linking.openURL(a.sourceUrl!)}>
+                  <Text style={styles.btnSecondaryText}>Open activation page →</Text>
+                </TouchableOpacity>
+              )}
             </View>
-            <Text style={styles.alertTitle}>
-              Activate {a.cardName} — {a.multiplier}× {CATEGORY_LABEL[a.category] ?? a.category}
-            </Text>
-            <Text style={styles.alertBody}>Rotating categories must be activated to earn the bonus rate.</Text>
-            {a.sourceUrl && (
-              <TouchableOpacity style={styles.btnSecondary} onPress={() => Linking.openURL(a.sourceUrl!)}>
-                <Text style={styles.btnSecondaryText}>Open activation page →</Text>
-              </TouchableOpacity>
-            )}
-          </View>
+          </SwipeToDelete>
         ))}
 
-        {expiringAlerts.map((a) => (
-          <View key={a.key} style={[styles.card, styles.redBorder]}>
-            <View style={styles.spread}>
-              <View style={styles.pillRed}>
-                <Text style={styles.pillRedText}>EXPIRING</Text>
+        {visibleExpiring.map((a) => (
+          <SwipeToDelete key={a.key} onDelete={() => dismissAlert(a.key)}>
+            <View style={[styles.card, styles.redBorder]}>
+              <View style={styles.spread}>
+                <View style={styles.pillRed}>
+                  <Text style={styles.pillRedText}>EXPIRING</Text>
+                </View>
+                <Text style={styles.tiny}>{a.daysLeft} days</Text>
               </View>
-              <Text style={styles.tiny}>{a.daysLeft} days</Text>
+              <Text style={styles.alertTitle}>{a.cardName} {a.title}</Text>
+              <Text style={styles.alertBody}>
+                Resets in {a.daysLeft} days. Check your card&apos;s app to see if you&apos;ve used it — Kova doesn&apos;t track transactions.
+              </Text>
             </View>
-            <Text style={styles.alertTitle}>{a.cardName} {a.title}</Text>
-            <Text style={styles.alertBody}>
-              Resets in {a.daysLeft} days. Check your card&apos;s app to see if you&apos;ve used it — Kova doesn&apos;t track transactions.
-            </Text>
-          </View>
+          </SwipeToDelete>
         ))}
 
         {trackers.map((t) => {
           const pct = Math.min(100, (t.spendLogged / t.spendRequired) * 100);
           const daysLeft = daysUntil(t.deadline);
           return (
-            <View key={t.id} style={styles.card}>
-              <View style={styles.spread}>
-                <View style={styles.pillAcc}>
-                  <Text style={styles.pillAccText}>BONUS TRACKER</Text>
+            <SwipeToDelete key={t.id} onDelete={() => deleteTracker(t)}>
+              <View style={styles.card}>
+                <View style={styles.spread}>
+                  <View style={styles.pillAcc}>
+                    <Text style={styles.pillAccText}>BONUS TRACKER</Text>
+                  </View>
+                  <Text style={styles.mutedTiny}>manual · optional</Text>
                 </View>
-                <Text style={styles.mutedTiny}>manual · optional</Text>
-              </View>
-              <Text style={styles.alertTitle}>
-                {t.cardName} — {(t.bonusPoints / 1000).toFixed(0)}K {t.pointsType} bonus
-              </Text>
-              <View style={[styles.spread, { marginTop: 6, marginBottom: 4 }]}>
-                <Text style={styles.tiny}>${t.spendLogged.toFixed(0)} of ${t.spendRequired.toFixed(0)} spend</Text>
-                <Text style={styles.pctText}>{pct.toFixed(0)}% · {daysLeft} days left</Text>
-              </View>
-              <View style={styles.bar}>
-                <View style={[styles.barFill, { width: `${pct}%` }]} />
-              </View>
+                <Text style={styles.alertTitle}>
+                  {t.cardName} — {(t.bonusPoints / 1000).toFixed(0)}K {t.pointsType} bonus
+                </Text>
+                <View style={[styles.spread, { marginTop: 6, marginBottom: 4 }]}>
+                  <Text style={styles.tiny}>${t.spendLogged.toFixed(0)} of ${t.spendRequired.toFixed(0)} spend</Text>
+                  <Text style={styles.pctText}>{pct.toFixed(0)}% · {daysLeft} days left</Text>
+                </View>
+                <View style={styles.bar}>
+                  <View style={[styles.barFill, { width: `${pct}%` }]} />
+                </View>
 
-              {loggingId === t.id ? (
-                <View style={styles.logRow}>
-                  <TextInput
-                    value={logAmount}
-                    onChangeText={setLogAmount}
-                    keyboardType="decimal-pad"
-                    placeholder="$ amount"
-                    placeholderTextColor={dark.muted}
-                    style={styles.logInput}
-                    autoFocus
-                  />
-                  <TouchableOpacity style={styles.logAddBtn} onPress={() => submitLogSpend(t)}>
-                    <Text style={styles.logAddBtnText}>Add</Text>
+                {loggingId === t.id ? (
+                  <View style={styles.logRow}>
+                    <TextInput
+                      value={logAmount}
+                      onChangeText={setLogAmount}
+                      keyboardType="decimal-pad"
+                      placeholder="$ amount"
+                      placeholderTextColor={dark.muted}
+                      style={styles.logInput}
+                      autoFocus
+                    />
+                    <TouchableOpacity style={styles.logAddBtn} onPress={() => submitLogSpend(t)}>
+                      <Text style={styles.logAddBtnText}>Add</Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <TouchableOpacity onPress={() => { setLoggingId(t.id); setLogAmount(''); }}>
+                    <Text style={styles.logSpendLink}>＋ Log spend</Text>
                   </TouchableOpacity>
-                </View>
-              ) : (
-                <TouchableOpacity onPress={() => { setLoggingId(t.id); setLogAmount(''); }}>
-                  <Text style={styles.logSpendLink}>＋ Log spend</Text>
-                </TouchableOpacity>
-              )}
-            </View>
+                )}
+              </View>
+            </SwipeToDelete>
           );
         })}
 

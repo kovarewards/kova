@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { View } from 'react-native';
 import {
   useFonts, Inter_400Regular, Inter_600SemiBold,
@@ -13,11 +14,14 @@ import { RecommendationScreen, RecommendationTarget } from './src/screens/Recomm
 import { WalletScreen } from './src/screens/Wallet';
 import { AlertsScreen } from './src/screens/Alerts';
 import { LedgerScreen } from './src/screens/Ledger';
+import { ProfileScreen } from './src/screens/Profile';
 import { TabKey } from './src/components/TabBar';
 import { supabase } from './src/lib/supabase';
 import { dark } from './src/constants/theme';
 
-type Screen = 'loading' | 'auth' | 'onboarding' | 'home' | 'recommendation' | 'wallet' | 'alerts' | 'ledger';
+type Screen =
+  | 'loading' | 'auth' | 'onboarding' | 'home' | 'recommendation'
+  | 'wallet' | 'alerts' | 'ledger' | 'profile';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -42,7 +46,11 @@ export default function App() {
   }, []);
 
   if (!fontsLoaded) {
-    return <View style={{ flex: 1, backgroundColor: dark.bg }} />;
+    return (
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: dark.bg }} />
+      </GestureHandlerRootView>
+    );
   }
 
   function handleNavigateTab(tab: TabKey) {
@@ -58,36 +66,40 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider>
-      {screen === 'loading' && <View style={{ flex: 1, backgroundColor: dark.bg }} />}
-      {screen === 'auth' && <AuthScreen />}
-      {screen === 'onboarding' && (
-        <OnboardingScreen onContinue={() => setScreen(onboardingReturnTo)} />
-      )}
-      {screen === 'home' && (
-        <HomeScreen
-          onOpenRecommendation={(t) => {
-            setTarget(t);
-            setScreen('recommendation');
-          }}
-          onAddCard={() => handleAddCard('home')}
-          onNavigateTab={handleNavigateTab}
-        />
-      )}
-      {screen === 'recommendation' && target && (
-        <RecommendationScreen
-          key={`${target.name}-${target.category}`}
-          target={target}
-          onBack={() => setScreen('home')}
-          onNavigateTab={handleNavigateTab}
-        />
-      )}
-      {screen === 'wallet' && (
-        <WalletScreen onAddCard={() => handleAddCard('wallet')} onNavigateTab={handleNavigateTab} />
-      )}
-      {screen === 'alerts' && <AlertsScreen onNavigateTab={handleNavigateTab} />}
-      {screen === 'ledger' && <LedgerScreen onNavigateTab={handleNavigateTab} />}
-      <StatusBar style="light" />
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        {screen === 'loading' && <View style={{ flex: 1, backgroundColor: dark.bg }} />}
+        {screen === 'auth' && <AuthScreen />}
+        {screen === 'onboarding' && (
+          <OnboardingScreen onContinue={() => setScreen(onboardingReturnTo)} />
+        )}
+        {screen === 'home' && (
+          <HomeScreen
+            onOpenRecommendation={(t) => {
+              setTarget(t);
+              setScreen('recommendation');
+            }}
+            onAddCard={() => handleAddCard('home')}
+            onNavigateTab={handleNavigateTab}
+            onOpenProfile={() => setScreen('profile')}
+          />
+        )}
+        {screen === 'profile' && <ProfileScreen onBack={() => setScreen('home')} />}
+        {screen === 'recommendation' && target && (
+          <RecommendationScreen
+            key={`${target.name}-${target.category}`}
+            target={target}
+            onBack={() => setScreen('home')}
+            onNavigateTab={handleNavigateTab}
+          />
+        )}
+        {screen === 'wallet' && (
+          <WalletScreen onAddCard={() => handleAddCard('wallet')} onNavigateTab={handleNavigateTab} />
+        )}
+        {screen === 'alerts' && <AlertsScreen onNavigateTab={handleNavigateTab} />}
+        {screen === 'ledger' && <LedgerScreen onNavigateTab={handleNavigateTab} />}
+        <StatusBar style="light" />
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }

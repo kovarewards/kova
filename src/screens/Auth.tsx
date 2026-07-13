@@ -8,11 +8,14 @@ import { Text, TextInput } from '../components/AppText';
 import { KovaLogo } from '../components/KovaLogo';
 import { dark } from '../constants/theme';
 import { supabase } from '../lib/supabase';
+import { containsProfanity } from '../lib/profanity';
 
 export function AuthScreen() {
   const [mode, setMode] = useState<'signIn' | 'signUp'>('signIn');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
@@ -24,11 +27,23 @@ export function AuthScreen() {
       setError('Enter your email and password.');
       return;
     }
+    if (mode === 'signUp' && !firstName.trim()) {
+      setError('Enter your first name.');
+      return;
+    }
+    if (mode === 'signUp' && (containsProfanity(firstName) || containsProfanity(lastName))) {
+      setError('Please use an appropriate first and last name.');
+      return;
+    }
     setLoading(true);
     const { data, error: authError } =
       mode === 'signIn'
         ? await supabase.auth.signInWithPassword({ email: email.trim(), password })
-        : await supabase.auth.signUp({ email: email.trim(), password });
+        : await supabase.auth.signUp({
+            email: email.trim(),
+            password,
+            options: { data: { first_name: firstName.trim(), last_name: lastName.trim() } },
+          });
     setLoading(false);
 
     if (authError) {
@@ -55,6 +70,24 @@ export function AuthScreen() {
             {mode === 'signIn' ? 'Sign in to see your cards.' : 'Takes about 30 seconds.'}
           </Text>
 
+          {mode === 'signUp' && (
+            <View style={styles.nameRow}>
+              <TextInput
+                value={firstName}
+                onChangeText={setFirstName}
+                placeholder="First name"
+                placeholderTextColor={dark.muted}
+                style={[styles.input, styles.nameInput]}
+              />
+              <TextInput
+                value={lastName}
+                onChangeText={setLastName}
+                placeholder="Last name (optional)"
+                placeholderTextColor={dark.muted}
+                style={[styles.input, styles.nameInput]}
+              />
+            </View>
+          )}
           <TextInput
             value={email}
             onChangeText={setEmail}
@@ -107,6 +140,8 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   content: { flex: 1, justifyContent: 'center', padding: 24, gap: 13 },
   logoRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 8, gap: 14 },
+  nameRow: { flexDirection: 'row', gap: 10 },
+  nameInput: { flex: 1 },
   wordmark: { fontSize: 38, fontWeight: '900', color: dark.text, letterSpacing: -1.2 },
   h1: { fontSize: 26, fontWeight: '900', color: dark.text, letterSpacing: -0.9, textAlign: 'center' },
   sub: { fontSize: 14, color: dark.dim, textAlign: 'center', marginBottom: 8 },

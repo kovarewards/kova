@@ -33,9 +33,10 @@ type Props = {
   onOpenRecommendation: (target: RecommendationTarget) => void;
   onAddCard: () => void;
   onNavigateTab: (tab: TabKey) => void;
+  onOpenProfile: () => void;
 };
 
-export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab }: Props) {
+export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onOpenProfile }: Props) {
   const [userId, setUserId] = useState<string | null>(null);
   const [greetingName, setGreetingName] = useState('there');
   const [merchant, setMerchant] = useState<DetectedMerchant | null>(null);
@@ -47,7 +48,9 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab }: P
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       setUserId(data.user?.id ?? null);
-      if (data.user?.email) setGreetingName(data.user.email.split('@')[0]);
+      const firstName = data.user?.user_metadata?.first_name;
+      if (firstName) setGreetingName(firstName);
+      else if (data.user?.email) setGreetingName(data.user.email.split('@')[0]);
     });
   }, []);
 
@@ -123,7 +126,9 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab }: P
           <Text style={styles.tiny}>{dateLabel}</Text>
           <Text style={styles.greeting}>Hey, {displayName}</Text>
         </View>
-        <KovaLogo size={38} mode="dark" />
+        <TouchableOpacity onPress={onOpenProfile}>
+          <KovaLogo size={38} mode="dark" />
+        </TouchableOpacity>
       </View>
 
       {merchant && topRec && (
