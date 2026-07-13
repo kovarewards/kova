@@ -69,7 +69,7 @@ export async function logCapture(
     card_id: rec.cardId,
     category,
     spend_estimate: spendEstimate,
-    value_captured: rec.vsWorstSaving,
+    value_captured: rec.valuePerHundred,
   });
 }
 

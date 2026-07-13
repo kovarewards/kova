@@ -68,7 +68,7 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
     setLogging(false);
     if (!error) {
       setUsedCardId(rec.cardId);
-      track.recUsed(target.category, rec.vsWorstSaving);
+      track.recUsed(target.category, rec.valuePerHundred);
     }
   }
 
@@ -137,8 +137,8 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
             >
               <Text style={[styles.btnText, usedCardId === best.cardId && styles.btnTextUsed]}>
                 {usedCardId === best.cardId
-                  ? `✓ Logged $${best.vsWorstSaving.toFixed(2)} recovered`
-                  : `✓  Used it — log $${best.vsWorstSaving.toFixed(2)} recovered`}
+                  ? `✓ Logged $${best.valuePerHundred.toFixed(2)} recovered`
+                  : `✓  Used it — log $${best.valuePerHundred.toFixed(2)} recovered`}
               </Text>
             </TouchableOpacity>
           </View>
