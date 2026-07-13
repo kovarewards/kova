@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "kova",
+    "name": "Kova",
     "slug": "kova",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +22,14 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Kova uses your location only to detect the merchant you're at… never stored or shared."
+        }
+      ],
       "expo-secure-store",
+      "expo-notifications",
       "expo-font"
     ]
   }
