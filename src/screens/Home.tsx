@@ -9,6 +9,7 @@ import { supabase } from '../lib/supabase';
 import { detectNearbyMerchant, DetectedMerchant } from '../engine/gpsDetection';
 import { getRecommendations, getLedgerSummary, CardRecommendation } from '../engine/recommendations';
 import { track } from '../lib/analytics';
+import { formatDistance } from '../lib/format';
 import type { RecommendationTarget } from './Recommendation';
 
 const CATEGORY_LABEL: Record<string, string> = {
@@ -44,6 +45,7 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
   const [ledger, setLedger] = useState({ yearToDate: 0, captureCount: 0 });
   const [wallet, setWallet] = useState<WalletCard[]>([]);
   const [alert, setAlert] = useState<RotatingAlert | null>(null);
+  const [checkingLocation, setCheckingLocation] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -69,8 +71,15 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
       });
   }, [userId]);
 
+  async function checkLocation(force = false) {
+    setCheckingLocation(true);
+    const result = await detectNearbyMerchant(force);
+    setMerchant(result);
+    setCheckingLocation(false);
+  }
+
   useEffect(() => {
-    detectNearbyMerchant().then(setMerchant);
+    checkLocation();
   }, []);
 
   useEffect(() => {
@@ -131,6 +140,16 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
         </TouchableOpacity>
       </View>
 
+      <TouchableOpacity
+        onPress={() => checkLocation(true)}
+        disabled={checkingLocation}
+        style={styles.refreshRow}
+      >
+        <Text style={styles.refreshText}>
+          {checkingLocation ? 'Checking location…' : '↻  Refresh location'}
+        </Text>
+      </TouchableOpacity>
+
       {merchant && topRec && (
         <TouchableOpacity
           activeOpacity={0.8}
@@ -141,7 +160,7 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
               <View style={styles.pillAcc}>
                 <Text style={styles.pillAccText} numberOfLines={1}>📍 You&apos;re at {merchant.name}</Text>
               </View>
-              <Text style={styles.tiny}>{merchant.distanceM}m away</Text>
+              <Text style={styles.tiny}>{formatDistance(merchant.distanceM)} away</Text>
             </View>
             <View style={[styles.spread, { marginTop: 9 }]}>
               <View style={styles.recInfo}>
@@ -224,6 +243,8 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   content: { padding: 20, gap: 13, paddingBottom: 30 },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  refreshRow: { alignSelf: 'flex-start', marginTop: -6 },
+  refreshText: { fontSize: 12, fontWeight: '700', color: dark.accent },
   spread: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   rowline: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   bannerTopRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },

@@ -16,6 +16,7 @@ export type DetectedMerchant = {
 const CACHE_TTL_MS = 5 * 60 * 1000;
 const CACHE_RADIUS_M = 30;
 const MAX_CONFIDENT_DISTANCE_M = 60;
+const MAX_FIX_UNCERTAINTY_M = 50;
 
 let cache: {
   lat: number; lng: number; at: number; result: DetectedMerchant | null;
@@ -30,20 +31,28 @@ function haversineM(lat1: number, lng1: number, lat2: number, lng2: number) {
   return 2 * R * Math.asin(Math.sqrt(a));
 }
 
-export async function detectNearbyMerchant(): Promise<DetectedMerchant | null> {
+export async function detectNearbyMerchant(force = false): Promise<DetectedMerchant | null> {
   const { status } = await Location.requestForegroundPermissionsAsync();
   if (status !== 'granted') return null;
 
   const { coords } = await Location.getCurrentPositionAsync({
-    accuracy: Location.Accuracy.Balanced,
+    accuracy: Location.Accuracy.Highest,
   });
 
   if (
+    !force &&
     cache &&
     Date.now() - cache.at < CACHE_TTL_MS &&
     haversineM(coords.latitude, coords.longitude, cache.lat, cache.lng) < CACHE_RADIUS_M
   ) {
     return cache.result;
+  }
+
+  // A fix this uncertain can't reliably clear the 60m confidence gate below —
+  // stay silent rather than guess against a coordinate that might be 100m off.
+  if (coords.accuracy != null && coords.accuracy > MAX_FIX_UNCERTAINTY_M) {
+    cache = { lat: coords.latitude, lng: coords.longitude, at: Date.now(), result: null };
+    return null;
   }
 
   const { data: top, error } = await supabase.functions.invoke('places-lookup', {
