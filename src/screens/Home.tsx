@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../components/AppText';
 import { KovaLogo } from '../components/KovaLogo';
+import { TabBar, TabKey } from '../components/TabBar';
 import { dark } from '../constants/theme';
 import { supabase } from '../lib/supabase';
 import { detectNearbyMerchant, DetectedMerchant } from '../engine/gpsDetection';
@@ -28,9 +29,13 @@ type RotatingAlert = {
   cardName: string; category: string; multiplier: number; daysLeft: number;
 };
 
-type Props = { onOpenRecommendation: (target: RecommendationTarget) => void };
+type Props = {
+  onOpenRecommendation: (target: RecommendationTarget) => void;
+  onAddCard: () => void;
+  onNavigateTab: (tab: TabKey) => void;
+};
 
-export function HomeScreen({ onOpenRecommendation }: Props) {
+export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab }: Props) {
   const [userId, setUserId] = useState<string | null>(null);
   const [greetingName, setGreetingName] = useState('there');
   const [merchant, setMerchant] = useState<DetectedMerchant | null>(null);
@@ -182,9 +187,9 @@ export function HomeScreen({ onOpenRecommendation }: Props) {
           {wallet.map((w) => (
             <View key={w.id} style={[styles.walletCard, { backgroundColor: w.colorHex ?? dark.surf3 }]} />
           ))}
-          <View style={styles.addCard}>
+          <TouchableOpacity style={styles.addCard} onPress={onAddCard}>
             <Text style={{ color: dark.muted }}>＋</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -202,24 +207,7 @@ export function HomeScreen({ onOpenRecommendation }: Props) {
         </View>
       )}
     </ScrollView>
-      <View style={styles.tabbar}>
-        <View style={styles.tab}>
-          <Text style={[styles.tabIcon, styles.tabOn]}>◈</Text>
-          <Text style={[styles.tabLabel, styles.tabOn]}>HOME</Text>
-        </View>
-        <View style={styles.tab}>
-          <Text style={styles.tabIcon}>▤</Text>
-          <Text style={styles.tabLabel}>WALLET</Text>
-        </View>
-        <View style={styles.tab}>
-          <Text style={styles.tabIcon}>✓</Text>
-          <Text style={styles.tabLabel}>LEDGER</Text>
-        </View>
-        <View style={styles.tab}>
-          <Text style={styles.tabIcon}>◔</Text>
-          <Text style={styles.tabLabel}>ALERTS</Text>
-        </View>
-      </View>
+      <TabBar active="home" onNavigate={onNavigateTab} />
     </SafeAreaView>
   );
 }
@@ -264,13 +252,4 @@ const styles = StyleSheet.create({
     borderWidth: 1, borderRadius: 999, paddingVertical: 4, paddingHorizontal: 12,
   },
   pillGoldText: { fontSize: 11, fontWeight: '800', letterSpacing: 1.3, color: dark.gold },
-  tabbar: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', height: 68,
-    borderTopWidth: 1, borderTopColor: dark.border, backgroundColor: dark.surf,
-    marginTop: 10, paddingBottom: 10,
-  },
-  tab: { alignItems: 'center' },
-  tabIcon: { fontSize: 19, color: dark.muted, marginBottom: 3 },
-  tabLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 1.3, color: dark.muted },
-  tabOn: { color: dark.accent },
 });

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, TextInput } from '../components/AppText';
+import { TabBar, TabKey } from '../components/TabBar';
 import { dark } from '../constants/theme';
 import { supabase } from '../lib/supabase';
 import {
@@ -23,9 +24,9 @@ function daysAgo(dateStr?: string) {
 
 export type RecommendationTarget = { name: string; category: string };
 
-type Props = { target: RecommendationTarget; onBack: () => void };
+type Props = { target: RecommendationTarget; onBack: () => void; onNavigateTab: (tab: TabKey) => void };
 
-export function RecommendationScreen({ target, onBack }: Props) {
+export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
   const [userId, setUserId] = useState<string | null>(null);
   const [spendInput, setSpendInput] = useState('100');
   const [spendAmount, setSpendAmount] = useState(100);
@@ -184,24 +185,7 @@ export function RecommendationScreen({ target, onBack }: Props) {
         )}
       </ScrollView>
 
-      <View style={styles.tabbar}>
-        <View style={styles.tab}>
-          <Text style={[styles.tabIcon, styles.tabOn]}>◈</Text>
-          <Text style={[styles.tabLabel, styles.tabOn]}>HOME</Text>
-        </View>
-        <View style={styles.tab}>
-          <Text style={styles.tabIcon}>▤</Text>
-          <Text style={styles.tabLabel}>WALLET</Text>
-        </View>
-        <View style={styles.tab}>
-          <Text style={styles.tabIcon}>✓</Text>
-          <Text style={styles.tabLabel}>LEDGER</Text>
-        </View>
-        <View style={styles.tab}>
-          <Text style={styles.tabIcon}>◔</Text>
-          <Text style={styles.tabLabel}>ALERTS</Text>
-        </View>
-      </View>
+      <TabBar active="home" onNavigate={onNavigateTab} />
     </SafeAreaView>
   );
 }
@@ -249,13 +233,4 @@ const styles = StyleSheet.create({
   },
   gapText: { fontSize: 13, color: dark.dim, textAlign: 'center' },
   gapCta: { color: dark.accent, fontWeight: '700' },
-  tabbar: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', height: 68,
-    borderTopWidth: 1, borderTopColor: dark.border, backgroundColor: dark.surf,
-    marginTop: 10, paddingBottom: 10,
-  },
-  tab: { alignItems: 'center' },
-  tabIcon: { fontSize: 19, color: dark.muted, marginBottom: 3 },
-  tabLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 1.3, color: dark.muted },
-  tabOn: { color: dark.accent },
 });

@@ -10,10 +10,12 @@ import { HomeScreen } from './src/screens/Home';
 import { OnboardingScreen } from './src/screens/Onboarding';
 import { AuthScreen } from './src/screens/Auth';
 import { RecommendationScreen, RecommendationTarget } from './src/screens/Recommendation';
+import { WalletScreen } from './src/screens/Wallet';
+import { TabKey } from './src/components/TabBar';
 import { supabase } from './src/lib/supabase';
 import { dark } from './src/constants/theme';
 
-type Screen = 'loading' | 'auth' | 'onboarding' | 'home' | 'recommendation';
+type Screen = 'loading' | 'auth' | 'onboarding' | 'home' | 'recommendation' | 'wallet';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -21,6 +23,7 @@ export default function App() {
   });
   const [screen, setScreen] = useState<Screen>('loading');
   const [target, setTarget] = useState<RecommendationTarget | null>(null);
+  const [onboardingReturnTo, setOnboardingReturnTo] = useState<'home' | 'wallet'>('home');
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -40,17 +43,32 @@ export default function App() {
     return <View style={{ flex: 1, backgroundColor: dark.bg }} />;
   }
 
+  function handleNavigateTab(tab: TabKey) {
+    if (tab === 'home') setScreen('home');
+    else if (tab === 'wallet') setScreen('wallet');
+    // ledger/alerts not built yet
+  }
+
+  function handleAddCard(returnTo: 'home' | 'wallet') {
+    setOnboardingReturnTo(returnTo);
+    setScreen('onboarding');
+  }
+
   return (
     <SafeAreaProvider>
       {screen === 'loading' && <View style={{ flex: 1, backgroundColor: dark.bg }} />}
       {screen === 'auth' && <AuthScreen />}
-      {screen === 'onboarding' && <OnboardingScreen onContinue={() => setScreen('home')} />}
+      {screen === 'onboarding' && (
+        <OnboardingScreen onContinue={() => setScreen(onboardingReturnTo)} />
+      )}
       {screen === 'home' && (
         <HomeScreen
           onOpenRecommendation={(t) => {
             setTarget(t);
             setScreen('recommendation');
           }}
+          onAddCard={() => handleAddCard('home')}
+          onNavigateTab={handleNavigateTab}
         />
       )}
       {screen === 'recommendation' && target && (
@@ -58,7 +76,11 @@ export default function App() {
           key={`${target.name}-${target.category}`}
           target={target}
           onBack={() => setScreen('home')}
+          onNavigateTab={handleNavigateTab}
         />
+      )}
+      {screen === 'wallet' && (
+        <WalletScreen onAddCard={() => handleAddCard('wallet')} onNavigateTab={handleNavigateTab} />
       )}
       <StatusBar style="light" />
     </SafeAreaProvider>
