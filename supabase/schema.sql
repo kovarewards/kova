@@ -114,3 +114,23 @@ CREATE POLICY "users manage own bonus trackers"
   WITH CHECK (auth.uid() = user_id);
 
 CREATE INDEX ON user_bonus_trackers(user_id);
+
+-- v2: self-service account deletion (App Store Review Guideline 5.1.1(v)).
+-- Runs with elevated privileges internally but only ever touches the
+-- calling user's own rows (auth.uid()) — the app itself never holds the
+-- service_role key needed to delete an auth.users row directly.
+CREATE OR REPLACE FUNCTION delete_own_account()
+RETURNS void
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  DELETE FROM user_bonus_trackers WHERE user_id = auth.uid();
+  DELETE FROM user_captures       WHERE user_id = auth.uid();
+  DELETE FROM user_cards          WHERE user_id = auth.uid();
+  DELETE FROM auth.users          WHERE id = auth.uid();
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION delete_own_account() TO authenticated;

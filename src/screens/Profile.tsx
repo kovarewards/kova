@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, TextInput } from '../components/AppText';
 import { dark } from '../constants/theme';
@@ -21,6 +21,8 @@ export function ProfileScreen({ onBack }: Props) {
   const [savingName, setSavingName] = useState(false);
   const [savingEmail, setSavingEmail] = useState(false);
   const [savingPassword, setSavingPassword] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -87,6 +89,30 @@ export function ProfileScreen({ onBack }: Props) {
   }
 
   async function handleLogOut() {
+    await supabase.auth.signOut();
+    // Session going away routes back to Auth — handled by App.tsx.
+  }
+
+  function confirmDeleteAccount() {
+    Alert.alert(
+      'Delete your account?',
+      'This permanently deletes your account, your cards, and your reward history. This can’t be undone.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete', style: 'destructive', onPress: handleDeleteAccount },
+      ]
+    );
+  }
+
+  async function handleDeleteAccount() {
+    setDeleteError(null);
+    setDeleting(true);
+    const { error } = await supabase.rpc('delete_own_account');
+    if (error) {
+      setDeleting(false);
+      setDeleteError(error.message);
+      return;
+    }
     await supabase.auth.signOut();
     // Session going away routes back to Auth — handled by App.tsx.
   }
@@ -171,6 +197,11 @@ export function ProfileScreen({ onBack }: Props) {
         <TouchableOpacity style={styles.logOutBtn} onPress={handleLogOut}>
           <Text style={styles.logOutText}>Log out</Text>
         </TouchableOpacity>
+
+        {deleteError && <Text style={[styles.error, { textAlign: 'center' }]}>{deleteError}</Text>}
+        <TouchableOpacity onPress={confirmDeleteAccount} disabled={deleting}>
+          <Text style={styles.deleteText}>{deleting ? 'Deleting…' : 'Delete my account'}</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
@@ -200,4 +231,8 @@ const styles = StyleSheet.create({
     alignItems: 'center', paddingVertical: 13,
   },
   logOutText: { fontSize: 14, fontWeight: '800', color: dark.red },
+  deleteText: {
+    fontSize: 12, fontWeight: '700', color: dark.muted, textAlign: 'center',
+    marginTop: 2, textDecorationLine: 'underline',
+  },
 });
