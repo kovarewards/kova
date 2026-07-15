@@ -25,7 +25,7 @@ function withOpacity(hex: string, opacity: number) {
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 }
 
-type WalletCard = { id: string; colorHex: string | null };
+type WalletCard = { id: string; name: string; colorHex: string | null };
 type RotatingAlert = {
   cardName: string; category: string; multiplier: number; daysLeft: number;
 };
@@ -61,12 +61,16 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
     getLedgerSummary(userId).then(setLedger);
     supabase
       .from('user_cards')
-      .select('card_id, cards(color_hex)')
+      .select('card_id, cards(name, color_hex)')
       .eq('user_id', userId)
       .eq('is_active', true)
       .then(({ data }) => {
         setWallet(
-          (data ?? []).map((r: any) => ({ id: r.card_id, colorHex: r.cards?.color_hex ?? null }))
+          (data ?? []).map((r: any) => ({
+            id: r.card_id,
+            name: r.cards?.name ?? 'Card',
+            colorHex: r.cards?.color_hex ?? null,
+          }))
         );
       });
   }, [userId]);
@@ -209,14 +213,21 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
 
       <View>
         <Text style={[styles.tinyLabel, { marginBottom: 6 }]}>YOUR WALLET</Text>
-        <View style={styles.rowline}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.walletScroll}
+        >
           {wallet.map((w) => (
-            <View key={w.id} style={[styles.walletCard, { backgroundColor: w.colorHex ?? dark.surf3 }]} />
+            <View key={w.id} style={styles.walletItem}>
+              <View style={[styles.walletCard, { backgroundColor: w.colorHex ?? dark.surf3 }]} />
+              <Text style={styles.walletCardName} numberOfLines={1}>{w.name}</Text>
+            </View>
           ))}
           <TouchableOpacity style={styles.addCard} onPress={onAddCard}>
             <Text style={{ color: dark.muted }}>＋</Text>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
       </View>
 
       {alert && (
@@ -268,7 +279,10 @@ const styles = StyleSheet.create({
   bar: { height: 6, backgroundColor: dark.surf3, borderRadius: 99, overflow: 'hidden' },
   barFill: { height: '100%', backgroundColor: dark.accent, borderRadius: 99 },
   paceValue: { color: dark.text, fontWeight: '700' },
+  walletScroll: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, paddingRight: 4 },
+  walletItem: { width: 68 },
   walletCard: { width: 68, height: 44, borderRadius: 7 },
+  walletCardName: { fontSize: 10, color: dark.dim, marginTop: 4, textAlign: 'center' },
   addCard: {
     width: 68, height: 44, borderRadius: 7, borderWidth: 2, borderColor: dark.border2,
     borderStyle: 'dashed', alignItems: 'center', justifyContent: 'center',
