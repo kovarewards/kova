@@ -37,11 +37,11 @@
       "expo-notifications",
       "expo-font"
     ],
+    "owner": "getkovarewards",
     "extra": {
       "eas": {
-        "projectId": "0c9a3da3-d46e-46bb-83ed-ec909f507ded"
+        "projectId": "da3e1462-2965-45ca-841c-c5ed7119b679"
       }
-    },
-    "owner": "kovarewards"
+    }
   }
 }
