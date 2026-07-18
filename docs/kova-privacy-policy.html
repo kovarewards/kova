@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kova — Privacy Policy</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 720px; margin: 0 auto; padding: 40px 20px 80px; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-size: 28px; margin-bottom: 4px; }
+  .updated { color: #666; font-size: 14px; margin-bottom: 32px; }
+  h2 { font-size: 19px; margin-top: 36px; }
+  p, li { font-size: 15.5px; }
+  ul { padding-left: 22px; }
+  code { background: #f2f2f2; padding: 1px 5px; border-radius: 4px; font-size: 13.5px; }
+  .placeholder { background: #fff6d6; padding: 2px 6px; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<h1>Kova Privacy Policy</h1>
+<p class="updated">Last updated: <span class="placeholder">[effective date]</span></p>
+
+<p>Kova ("we," "us," "Kova") helps you decide which credit card to use for a purchase and tracks the rewards you've earned. This policy explains what information we collect, why, and how it's protected. Kova never accesses your bank accounts, never sees your transaction history, and never requires you to log in to your bank — there is no bank login, ever.</p>
+
+<h2>Information we collect</h2>
+
+<p><b>Account information.</b> When you create a Kova account, we collect your email address, your first and last name, and a password. Your password is managed by our authentication provider (Supabase Auth) and is never stored or visible to us in plain text.</p>
+
+<p><b>Cards you add.</b> You manually select which credit cards you own from Kova's catalog of card products. This is self-reported — Kova has no connection to your actual bank or card issuer account, and cannot verify or access your real card, balance, or credit line.</p>
+
+<p><b>Location (foreground only).</b> When you have the app open, Kova can use your device's location to detect which nearby merchant you're at, so it can recommend the best card for that specific business. This location check:</p>
+<ul>
+  <li>Only happens while the app is open and in use — Kova does not track your location in the background</li>
+  <li>Is sent to a Kova server function that queries Google Places for the nearest matching business, and returns only that business's name — your coordinates are not saved anywhere after that request completes</li>
+  <li>Is never stored, sold, or shared with anyone</li>
+</ul>
+
+<p><b>Rewards you log.</b> When you tap "Used it" to confirm you used a recommended card, we store the purchase category, an estimated spend amount, and the dollar value of the reward, tied to your account. This is what powers your personal rewards ledger. We never see the actual transaction — you're confirming an estimate, not connecting a real purchase record.</p>
+
+<p><b>Optional bonus tracking.</b> If you choose to track a card's sign-up bonus progress, the spend and deadline numbers you enter are manually typed in by you — not derived from any transaction data.</p>
+
+<p><b>Analytics.</b> We use PostHog to understand how people use the app, limited to four events: a recommendation being shown, a recommendation being marked "used," a free trial starting, and a card application being started. These events are tied to an anonymous device/analytics identifier, not your name or email.</p>
+
+<h2>Information we do <i>not</i> collect</h2>
+<ul>
+  <li>Bank login credentials, of any kind, ever</li>
+  <li>Bank account or routing numbers</li>
+  <li>Your actual credit card numbers</li>
+  <li>Real transaction history from any bank or card issuer</li>
+  <li>Background or continuous location — only a one-time check while the app is actively open</li>
+</ul>
+
+<h2>How we use your information</h2>
+<p>We use the information above to: show you which of your cards earns the most at a given merchant, calculate and display your total recovered rewards over time, detect nearby merchants to make that recommendation timely, and understand overall app usage so we can improve it. We do not sell your personal information to anyone.</p>
+
+<h2>Who we share information with</h2>
+<ul>
+  <li><b>Supabase</b> — our database, authentication, and backend provider. Your account data and card/reward records are stored in Supabase's infrastructure, protected by row-level security so only you can read or write your own records.</li>
+  <li><b>Google Places API</b> — receives your coordinates only at the moment you check for a nearby merchant, to identify that business. Google's own privacy policy governs that request.</li>
+  <li><b>PostHog</b> — receives the anonymized usage events described above.</li>
+</ul>
+<p>We do not share your information with credit card issuers or any third party for marketing purposes.</p>
+
+<h2>Data retention and deletion</h2>
+<p>You can permanently delete your account at any time from Profile → Delete my account inside the app. This immediately and permanently removes your added cards, your rewards ledger, and your bonus trackers. This action cannot be undone.</p>
+
+<h2>Children's privacy</h2>
+<p>Kova is not directed at children under 13, and we do not knowingly collect information from children under 13.</p>
+
+<h2>Changes to this policy</h2>
+<p>If we make material changes to this policy, we'll update the "last updated" date above and, where appropriate, notify you in the app.</p>
+
+<h2>Contact us</h2>
+<p>Questions about this policy or your data? Email us at <a href="mailto:kovarewards+support@gmail.com">kovarewards+support@gmail.com</a>.</p>
+
+</body>
+</html>
