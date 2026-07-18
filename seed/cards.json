@@ -274,7 +274,7 @@
     "annual_fee": 95,
     "color_hex": "#003087",
     "source_url": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/",
-    "notes": "Verified 2026-07-14 — founder confirmed directly on americanexpress.com (6% groceries, 6% streaming, 3% transit, 3% gas, 1% other), after automated fetches of this page kept returning empty/truncated content.",
+    "notes": "Verified 2026-07-14 — founder confirmed directly on americanexpress.com (6% groceries, 6% streaming, 3% transit, 3% gas, 1% other), after automated fetches of this page kept returning empty/truncated content. Confirmed 2026-07-18 via Scout/Auditor weekly check (3 independent sources, issuer page still blocking automated fetches): the $95 annual fee is waived for the first year ($0 intro, then $95 ongoing) — annual_fee stored as the steady-state $95 rate.",
     "categories": [
       { "category": "groceries", "multiplier": 6, "points_type": "CB", "cpp": 0.01, "notes": "U.S. supermarkets, capped at first $6,000/yr then 1%" },
       { "category": "streaming", "multiplier": 6, "points_type": "CB", "cpp": 0.01, "notes": "select U.S. streaming subscriptions, no stated cap, confirm which qualify" },
