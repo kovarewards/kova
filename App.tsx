@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { Session } from '@supabase/supabase-js';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -30,17 +31,35 @@ export default function App() {
   const [screen, setScreen] = useState<Screen>('loading');
   const [target, setTarget] = useState<RecommendationTarget | null>(null);
   const [onboardingReturnTo, setOnboardingReturnTo] = useState<'home' | 'wallet'>('home');
+  const screenRef = useRef<Screen>('loading');
+  useEffect(() => {
+    screenRef.current = screen;
+  }, [screen]);
 
   useEffect(() => {
+    // Existing users with cards already in their wallet land on Home;
+    // only someone with zero cards (a brand-new signup) needs Onboarding.
+    async function routeForSession(session: Session) {
+      const { count } = await supabase
+        .from('user_cards')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', session.user.id);
+      setScreen((count ?? 0) > 0 ? 'home' : 'onboarding');
+    }
+
     supabase.auth.getSession().then(({ data }) => {
-      setScreen((prev) => (prev === 'loading' ? (data.session ? 'onboarding' : 'auth') : prev));
+      if (screenRef.current !== 'loading') return;
+      if (data.session) routeForSession(data.session);
+      else setScreen('auth');
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      setScreen((prev) => {
-        if (!session) return 'auth';
-        if (prev === 'loading' || prev === 'auth') return 'onboarding';
-        return prev;
-      });
+      if (!session) {
+        setScreen('auth');
+        return;
+      }
+      if (screenRef.current === 'loading' || screenRef.current === 'auth') {
+        routeForSession(session);
+      }
     });
     return () => sub.subscription.unsubscribe();
   }, []);
