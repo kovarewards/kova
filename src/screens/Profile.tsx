@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Alert, Linking, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, TextInput } from '../components/AppText';
 import { dark } from '../constants/theme';
 import { supabase } from '../lib/supabase';
 import { containsProfanity } from '../lib/profanity';
+
+const SUPPORT_EMAIL = 'kovarewards+support@gmail.com';
 
 type Props = { onBack: () => void };
 
@@ -194,6 +196,13 @@ export function ProfileScreen({ onBack }: Props) {
           </TouchableOpacity>
         </View>
 
+        <TouchableOpacity
+          style={styles.supportBtn}
+          onPress={() => Linking.openURL(`mailto:${SUPPORT_EMAIL}`)}
+        >
+          <Text style={styles.supportText}>Contact support</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.logOutBtn} onPress={handleLogOut}>
           <Text style={styles.logOutText}>Log out</Text>
         </TouchableOpacity>
@@ -226,6 +235,11 @@ const styles = StyleSheet.create({
   message: { fontSize: 12, color: dark.green, marginTop: 8 },
   btn: { backgroundColor: dark.accent, borderRadius: 12, alignItems: 'center', paddingVertical: 12, marginTop: 10 },
   btnText: { fontSize: 14, fontWeight: '800', color: dark.bg },
+  supportBtn: {
+    borderWidth: 1, borderColor: dark.border2, borderRadius: 14,
+    alignItems: 'center', paddingVertical: 13,
+  },
+  supportText: { fontSize: 14, fontWeight: '800', color: dark.text },
   logOutBtn: {
     borderWidth: 1, borderColor: dark.red, borderRadius: 14,
     alignItems: 'center', paddingVertical: 13,
