@@ -27,7 +27,7 @@
       { "category": "dining",    "multiplier": 3, "points_type": "UR", "cpp": 0.0205 },
       { "category": "gas",       "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "gas stations and select vacation rentals at top brands earn 3x" },
       { "category": "ev_charging", "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "bundled with gas stations, confirm eligible networks" },
-      { "category": "streaming", "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "streaming services and online grocery both earn 3x, exclusions may apply" },
+      { "category": "streaming", "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "streaming services and online grocery both earn 3x; online grocery excludes Target, Walmart, and wholesale clubs (Costco, Sam's Club, BJ's)" },
       { "category": "other",     "multiplier": 1, "points_type": "UR", "cpp": 0.0205, "notes": "non-Chase-Travel travel earns 2x, not represented as a separate row" }
     ]
   },
@@ -767,11 +767,11 @@
     "annual_fee": 0,
     "color_hex": "#000000",
     "source_url": "https://www.bilt.com/card",
-    "notes": "Verified 2026-07-14 against bilt.com/card, name corrected 2026-07-17 to match Bilt's actual branding (was 'Bilt Mastercard'). points_type relabeled from UR to Bilt — this card earns Bilt Points, a separate currency from Chase Ultimate Rewards. Confirmed 'Bilt 2.0' update: no transaction minimum required to earn on rent anymore. Bilt is a 3-tier product; see also Bilt Obsidian Mastercard and Bilt Palladium Mastercard.",
+    "notes": "Verified 2026-07-14 against bilt.com/card, name corrected 2026-07-17 to match Bilt's actual branding (was 'Bilt Mastercard'). points_type relabeled from UR to Bilt — this card earns Bilt Points, a separate currency from Chase Ultimate Rewards. Confirmed 'Bilt 2.0' update: no transaction minimum required to earn on rent anymore. Bilt is a 3-tier product; see also Bilt Obsidian Mastercard and Bilt Palladium Mastercard. Rent multiplier note corrected 2026-07-18 — was overstated as a flat rate.",
     "categories": [
       { "category": "dining", "multiplier": 4, "points_type": "Bilt", "cpp": 0.0205, "notes": "up to 4x at Bilt dining partners" },
       { "category": "travel", "multiplier": 3, "points_type": "Bilt", "cpp": 0.0205, "notes": "hotels via Bilt Travel earn 3x; flights via Bilt Travel earn 2x — this row uses the hotel rate. Lyft (linked account) also earns 3x, not GPS-detectable as a distinct category" },
-      { "category": "other",  "multiplier": 1, "points_type": "Bilt", "cpp": 0.0205, "notes": "rent/mortgage payments earn up to 1.25x separately, not a GPS-detectable category" }
+      { "category": "other",  "multiplier": 1, "points_type": "Bilt", "cpp": 0.0205, "notes": "rent/mortgage payments are not a GPS-detectable category and use a separate, tiered multiplier depending on the selected rewards option — NOT a flat rate. With 'Housing-only rewards': 0.5x if you spend 25% of your housing payment on everyday purchases, 0.75x at 50%, 1x at 75%, up to 1.25x only at 100%+. With 'Flexible Bilt Cash': housing earns up to 1x (unlocked by redeeming Bilt Cash) but everyday purchases earn 4% Bilt Cash instead." }
     ]
   },
   {
