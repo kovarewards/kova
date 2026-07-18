@@ -106,7 +106,18 @@ export async function getLedgerSummary(userId: string) {
     .from('user_captures')
     .select('value_captured, captured_at')
     .eq('user_id', userId)
-    .gte('captured_at', yearStart);
+    .gte('captured_at', yearStart)
+    .order('captured_at', { ascending: true });
   const total = (data ?? []).reduce((s, r) => s + Number(r.value_captured), 0);
-  return { yearToDate: +total.toFixed(2), captureCount: data?.length ?? 0 };
+
+  // Run rate since the first capture this year, not since Jan 1 — otherwise a
+  // brand-new user's pace looks far too low (a $1.70 capture today shouldn't
+  // read as "on pace for $3" just because 7 calendar months have passed).
+  let projectedYearEnd = 0;
+  if (data && data.length > 0) {
+    const daysSinceFirst = Math.max(1, (Date.now() - new Date(data[0].captured_at).getTime()) / 86400000);
+    projectedYearEnd = (total / daysSinceFirst) * 365;
+  }
+
+  return { yearToDate: +total.toFixed(2), captureCount: data?.length ?? 0, projectedYearEnd: +projectedYearEnd.toFixed(2) };
 }

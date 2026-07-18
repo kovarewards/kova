@@ -78,7 +78,19 @@ export function LedgerScreen({ onNavigateTab }: Props) {
   const total = captures.reduce((s, c) => s + c.valueCaptured, 0);
   const isCurrentYear = year === new Date().getFullYear();
   const monthsElapsed = isCurrentYear ? new Date().getMonth() + 1 : 12;
-  const projectedYearEnd = isCurrentYear && total > 0 ? (total * 12) / monthsElapsed : 0;
+
+  // Run rate since the first capture this year, not since Jan 1 — otherwise a
+  // brand-new user's pace looks far too low (a $1.70 capture today shouldn't
+  // read as "on pace for $3" just because 7 calendar months have passed).
+  let projectedYearEnd = 0;
+  if (isCurrentYear && captures.length > 0) {
+    const firstCapturedAt = captures.reduce(
+      (earliest, c) => (c.capturedAt < earliest ? c.capturedAt : earliest),
+      captures[0].capturedAt
+    );
+    const daysSinceFirst = Math.max(1, (Date.now() - new Date(firstCapturedAt).getTime()) / 86400000);
+    projectedYearEnd = (total / daysSinceFirst) * 365;
+  }
 
   const monthlyTotals = Array.from({ length: monthsElapsed }, (_, i) =>
     captures

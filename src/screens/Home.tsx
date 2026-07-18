@@ -42,7 +42,7 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
   const [greetingName, setGreetingName] = useState('there');
   const [merchant, setMerchant] = useState<DetectedMerchant | null>(null);
   const [topRec, setTopRec] = useState<CardRecommendation | null>(null);
-  const [ledger, setLedger] = useState({ yearToDate: 0, captureCount: 0 });
+  const [ledger, setLedger] = useState({ yearToDate: 0, captureCount: 0, projectedYearEnd: 0 });
   const [wallet, setWallet] = useState<WalletCard[]>([]);
   const [alert, setAlert] = useState<RotatingAlert | null>(null);
   const [checkingLocation, setCheckingLocation] = useState(false);
@@ -128,8 +128,7 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
     .toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })
     .toUpperCase();
   const displayName = greetingName.charAt(0).toUpperCase() + greetingName.slice(1);
-  const monthsElapsed = today.getMonth() + 1;
-  const projectedYearEnd = ledger.yearToDate > 0 ? (ledger.yearToDate * 12) / monthsElapsed : 0;
+  const projectedYearEnd = ledger.projectedYearEnd;
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
