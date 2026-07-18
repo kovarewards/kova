@@ -761,13 +761,13 @@
     ]
   },
   {
-    "name": "Bilt Mastercard",
+    "name": "Bilt Blue Card",
     "issuer": "Bilt",
     "network": "Mastercard",
     "annual_fee": 0,
     "color_hex": "#000000",
     "source_url": "https://www.bilt.com/card",
-    "notes": "Verified 2026-07-14 against bilt.com/card. points_type relabeled from UR to Bilt — this card earns Bilt Points, a separate currency from Chase Ultimate Rewards. Confirmed 'Bilt 2.0' update: no transaction minimum required to earn on rent anymore. Bilt's own site calls this the 'Blue Card' vs. 'Bilt Mastercard'; kept the current display name for consistent issuer+product naming against the Obsidian/Palladium entries — revisit if you'd rather match their branding exactly. Bilt is a 3-tier product; see also Bilt Obsidian Mastercard and Bilt Palladium Mastercard.",
+    "notes": "Verified 2026-07-14 against bilt.com/card, name corrected 2026-07-17 to match Bilt's actual branding (was 'Bilt Mastercard'). points_type relabeled from UR to Bilt — this card earns Bilt Points, a separate currency from Chase Ultimate Rewards. Confirmed 'Bilt 2.0' update: no transaction minimum required to earn on rent anymore. Bilt is a 3-tier product; see also Bilt Obsidian Mastercard and Bilt Palladium Mastercard.",
     "categories": [
       { "category": "dining", "multiplier": 4, "points_type": "Bilt", "cpp": 0.0205, "notes": "up to 4x at Bilt dining partners" },
       { "category": "travel", "multiplier": 3, "points_type": "Bilt", "cpp": 0.0205, "notes": "hotels via Bilt Travel earn 3x; flights via Bilt Travel earn 2x — this row uses the hotel rate. Lyft (linked account) also earns 3x, not GPS-detectable as a distinct category" },
