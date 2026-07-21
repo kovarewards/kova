@@ -6,7 +6,7 @@ import { dark } from '../constants/theme';
 import { supabase } from '../lib/supabase';
 import { containsProfanity } from '../lib/profanity';
 
-const SUPPORT_EMAIL = 'kovarewards+support@gmail.com';
+const SUPPORT_EMAIL = 'support@kovarewards.com';
 
 type Props = { onBack: () => void };
 
