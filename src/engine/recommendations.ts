@@ -5,7 +5,7 @@ export type CardRecommendation = {
   multiplier: number; pointsType: string;
   valuePerHundred: number; vsWorstSaving: number;
   isRotating: boolean; expiresAt?: string;
-  verifiedAt?: string;
+  verifiedAt?: string; annualFee: number;
 };
 
 export async function getRecommendations(
@@ -15,7 +15,7 @@ export async function getRecommendations(
 ): Promise<CardRecommendation[]> {
   const { data: userCards } = await supabase
     .from('user_cards')
-    .select(`card_id, cards(id, name, color_hex,
+    .select(`card_id, cards(id, name, color_hex, annual_fee,
       reward_categories(category, multiplier, points_type,
       cpp, start_date, end_date, verified_at))`)
     .eq('user_id', userId)
@@ -47,10 +47,13 @@ export async function getRecommendations(
       isRotating: !!(match.start_date && match.end_date),
       expiresAt: match.end_date ?? undefined,
       verifiedAt: match.verified_at ?? undefined,
+      annualFee: card.annual_fee ?? 0,
     }];
   });
 
-  scored.sort((a, b) => b.valuePerHundred - a.valuePerHundred);
+  // On an exact tie, prefer the card with the higher annual fee — nudges
+  // customers toward using the card whose fee most needs offsetting.
+  scored.sort((a, b) => b.valuePerHundred - a.valuePerHundred || b.annualFee - a.annualFee);
   const worst = scored.at(-1)?.valuePerHundred ?? 0;
   scored.forEach((r) => {
     r.vsWorstSaving = +(r.valuePerHundred - worst).toFixed(2);

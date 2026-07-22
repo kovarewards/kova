@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../components/AppText';
 import { KovaLogo } from '../components/KovaLogo';
@@ -16,6 +16,12 @@ const CATEGORY_LABEL: Record<string, string> = {
   dining: 'Dining', groceries: 'Groceries', gas: 'Gas', ev_charging: 'EV Charging',
   travel: 'Travel', transit: 'Transit', pharmacy: 'Pharmacy', entertainment: 'Entertainment',
   streaming: 'Streaming', shopping: 'Shopping', other: 'Other',
+};
+
+const CATEGORY_EMOJI: Record<string, string> = {
+  dining: '🍜', groceries: '🛒', gas: '⛽', ev_charging: '🔌',
+  travel: '✈️', transit: '🚇', pharmacy: '💊', entertainment: '🎬',
+  streaming: '📺', shopping: '🛍️', other: '💳',
 };
 
 function withOpacity(hex: string, opacity: number) {
@@ -46,6 +52,7 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
   const [wallet, setWallet] = useState<WalletCard[]>([]);
   const [alert, setAlert] = useState<RotatingAlert | null>(null);
   const [checkingLocation, setCheckingLocation] = useState(false);
+  const [showCategoryPicker, setShowCategoryPicker] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -143,15 +150,18 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        onPress={() => checkLocation(true)}
-        disabled={checkingLocation}
-        style={styles.refreshRow}
-      >
-        <Text style={styles.refreshText}>
-          {checkingLocation ? 'Checking location…' : '↻  Refresh location'}
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.refreshRow}>
+        <TouchableOpacity onPress={() => checkLocation(true)} disabled={checkingLocation}>
+          <Text style={styles.refreshText}>
+            {checkingLocation ? 'Checking location…' : '↻  Refresh location'}
+          </Text>
+        </TouchableOpacity>
+        {!merchant && (
+          <TouchableOpacity onPress={() => setShowCategoryPicker(true)}>
+            <Text style={styles.pickCategoryText}>Can&apos;t find your merchant? Pick a category</Text>
+          </TouchableOpacity>
+        )}
+      </View>
 
       {merchant && topRec && (
         <TouchableOpacity
@@ -244,6 +254,42 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
       )}
     </ScrollView>
       <TabBar active="home" onNavigate={onNavigateTab} />
+
+      <Modal
+        visible={showCategoryPicker}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setShowCategoryPicker(false)}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={() => setShowCategoryPicker(false)}
+        >
+          <TouchableOpacity activeOpacity={1} style={styles.sheet}>
+            <View style={styles.sheetHandle} />
+            <Text style={styles.sheetTitle}>What are you buying?</Text>
+            <Text style={[styles.tiny, { marginBottom: 14 }]}>
+              We&apos;ll show your best card for this category, wherever you are.
+            </Text>
+            <View style={styles.categoryGrid}>
+              {Object.entries(CATEGORY_LABEL).map(([key, label]) => (
+                <TouchableOpacity
+                  key={key}
+                  style={styles.categoryTile}
+                  onPress={() => {
+                    setShowCategoryPicker(false);
+                    onOpenRecommendation({ name: label, category: key });
+                  }}
+                >
+                  <Text style={styles.categoryEmoji}>{CATEGORY_EMOJI[key]}</Text>
+                  <Text style={styles.categoryTileText}>{label}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -253,8 +299,9 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   content: { padding: 20, gap: 13, paddingBottom: 30 },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  refreshRow: { alignSelf: 'flex-start', marginTop: -6 },
+  refreshRow: { alignSelf: 'flex-start', marginTop: -6, gap: 6 },
   refreshText: { fontSize: 12, fontWeight: '700', color: dark.accent },
+  pickCategoryText: { fontSize: 12, fontWeight: '600', color: dark.dim, textDecorationLine: 'underline' },
   spread: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   rowline: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   bannerTopRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
@@ -288,6 +335,23 @@ const styles = StyleSheet.create({
   },
   alertCard: { borderLeftWidth: 4, borderLeftColor: dark.gold },
   alertTitle: { fontSize: 14, fontWeight: '700', color: dark.text },
+  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.55)', justifyContent: 'flex-end' },
+  sheet: {
+    backgroundColor: dark.surf, borderTopLeftRadius: 24, borderTopRightRadius: 24,
+    padding: 20, paddingBottom: 36, borderWidth: 1, borderColor: dark.border, borderBottomWidth: 0,
+  },
+  sheetHandle: {
+    width: 36, height: 4, borderRadius: 99, backgroundColor: dark.border2,
+    alignSelf: 'center', marginBottom: 16,
+  },
+  sheetTitle: { fontSize: 18, fontWeight: '900', color: dark.text, letterSpacing: -0.4 },
+  categoryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+  categoryTile: {
+    width: '31%', backgroundColor: dark.surf2, borderWidth: 1, borderColor: dark.border,
+    borderRadius: 14, paddingVertical: 14, alignItems: 'center', gap: 6,
+  },
+  categoryEmoji: { fontSize: 20 },
+  categoryTileText: { fontSize: 11.5, fontWeight: '700', color: dark.text, textAlign: 'center' },
   pillGold: {
     backgroundColor: withOpacity(dark.gold, 0.1), borderColor: withOpacity(dark.gold, 0.3),
     borderWidth: 1, borderRadius: 999, paddingVertical: 4, paddingHorizontal: 12,
