@@ -98,7 +98,6 @@ export default function App() {
               setTarget(t);
               setScreen('recommendation');
             }}
-            onAddCard={() => handleAddCard('home')}
             onNavigateTab={handleNavigateTab}
             onOpenProfile={() => setScreen('profile')}
           />

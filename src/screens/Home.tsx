@@ -38,12 +38,11 @@ type RotatingAlert = {
 
 type Props = {
   onOpenRecommendation: (target: RecommendationTarget) => void;
-  onAddCard: () => void;
   onNavigateTab: (tab: TabKey) => void;
   onOpenProfile: () => void;
 };
 
-export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onOpenProfile }: Props) {
+export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile }: Props) {
   const [userId, setUserId] = useState<string | null>(null);
   const [greetingName, setGreetingName] = useState('there');
   const [merchant, setMerchant] = useState<DetectedMerchant | null>(null);
@@ -194,7 +193,7 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
         </TouchableOpacity>
       )}
 
-      <View style={styles.card}>
+      <View style={styles.ledgerCard}>
         <View style={styles.spread}>
           <Text style={styles.tinyLabel}>RECOVERED THIS YEAR</Text>
           <TouchableOpacity onPress={() => onNavigateTab('ledger')}>
@@ -210,7 +209,7 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
             ]}
           />
         </View>
-        <Text style={[styles.tiny, { marginTop: 5 }]}>
+        <Text style={[styles.tiny, { marginTop: 7 }]}>
           {ledger.captureCount} captures
           {projectedYearEnd > 0 && (
             <>
@@ -218,25 +217,6 @@ export function HomeScreen({ onOpenRecommendation, onAddCard, onNavigateTab, onO
             </>
           )}
         </Text>
-      </View>
-
-      <View>
-        <Text style={[styles.tinyLabel, { marginBottom: 6 }]}>YOUR WALLET</Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.walletScroll}
-        >
-          {wallet.map((w) => (
-            <View key={w.id} style={styles.walletItem}>
-              <View style={[styles.walletCard, { backgroundColor: w.colorHex ?? dark.surf3 }]} />
-              <Text style={styles.walletCardName} numberOfLines={1}>{w.name}</Text>
-            </View>
-          ))}
-          <TouchableOpacity style={styles.addCard} onPress={onAddCard}>
-            <Text style={{ color: dark.muted }}>＋</Text>
-          </TouchableOpacity>
-        </ScrollView>
       </View>
 
       {alert && (
@@ -313,6 +293,10 @@ const styles = StyleSheet.create({
   greeting: { fontSize: 22, fontWeight: '900', color: dark.text, letterSpacing: -0.6 },
   card: { backgroundColor: dark.surf, borderWidth: 1, borderColor: dark.border, borderRadius: 18, padding: 16 },
   cardHighlight: { borderColor: dark.accentBorder, backgroundColor: dark.accentSoft },
+  ledgerCard: {
+    backgroundColor: dark.surf, borderWidth: 1, borderColor: dark.border, borderRadius: 22,
+    padding: 22, marginTop: 2,
+  },
   pillAcc: {
     backgroundColor: dark.accentSoft, borderColor: dark.accentBorder, borderWidth: 1,
     borderRadius: 999, paddingVertical: 4, paddingHorizontal: 12, flexShrink: 1,
@@ -321,18 +305,10 @@ const styles = StyleSheet.create({
   minicard: { width: 58, height: 38, borderRadius: 7 },
   recCardName: { fontSize: 16, fontWeight: '800', color: dark.text },
   recValue: { fontSize: 20, fontWeight: '900', color: dark.green },
-  ledgerTotal: { fontSize: 32, fontWeight: '900', color: dark.text, letterSpacing: -1.3, marginVertical: 3 },
-  bar: { height: 6, backgroundColor: dark.surf3, borderRadius: 99, overflow: 'hidden' },
+  ledgerTotal: { fontSize: 46, fontWeight: '900', color: dark.text, letterSpacing: -1.8, marginVertical: 6 },
+  bar: { height: 9, backgroundColor: dark.surf3, borderRadius: 99, overflow: 'hidden' },
   barFill: { height: '100%', backgroundColor: dark.accent, borderRadius: 99 },
   paceValue: { color: dark.text, fontWeight: '700' },
-  walletScroll: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, paddingRight: 4 },
-  walletItem: { width: 68 },
-  walletCard: { width: 68, height: 44, borderRadius: 7 },
-  walletCardName: { fontSize: 10, color: dark.dim, marginTop: 4, textAlign: 'center' },
-  addCard: {
-    width: 68, height: 44, borderRadius: 7, borderWidth: 2, borderColor: dark.border2,
-    borderStyle: 'dashed', alignItems: 'center', justifyContent: 'center',
-  },
   alertCard: { borderLeftWidth: 4, borderLeftColor: dark.gold },
   alertTitle: { fontSize: 14, fontWeight: '700', color: dark.text },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.55)', justifyContent: 'flex-end' },

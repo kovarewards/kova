@@ -124,20 +124,11 @@ h1{font-size:clamp(26px,4vw,42px);font-weight:900;letter-spacing:-1.5px;color:va
           <div style="text-align:right"><div style="font-size:15px;font-weight:900;color:var(--green)">$8.00</div><div class="tiny">per $100</div></div>
         </div>
       </div>
-      <div class="card">
+      <div class="card" style="padding:19px">
         <div class="spread"><div class="tiny" style="letter-spacing:1.5px">RECOVERED THIS YEAR</div><span class="tiny" style="color:var(--acc)">View ledger →</span></div>
-        <div style="font-size:25px;font-weight:900;color:var(--text);letter-spacing:-1px;margin:2px 0">$212.40</div>
-        <div class="bar"><div style="width:62%;background:linear-gradient(90deg,var(--acc2),var(--acc))"></div></div>
-        <div class="tiny" style="margin-top:5px">47 captures · on pace for <b style="color:var(--text)">$340</b> by December</div>
-      </div>
-      <div>
-        <div class="tiny" style="letter-spacing:1.5px;margin-bottom:6px">YOUR WALLET</div>
-        <div class="rowline">
-          <div class="minicard" style="background:#D4AF37;width:52px;height:34px"></div>
-          <div class="minicard" style="background:#1A3C6E;width:52px;height:34px"></div>
-          <div class="minicard" style="background:#3B6CB7;width:52px;height:34px"></div>
-          <div class="minicard" style="width:52px;height:34px;border:1.5px dashed var(--border2);display:flex;align-items:center;justify-content:center;color:var(--muted)">＋</div>
-        </div>
+        <div style="font-size:36px;font-weight:900;color:var(--text);letter-spacing:-1.4px;margin:5px 0">$212.40</div>
+        <div class="bar" style="height:8px"><div style="width:62%;background:linear-gradient(90deg,var(--acc2),var(--acc))"></div></div>
+        <div class="tiny" style="margin-top:6px">47 captures · on pace for <b style="color:var(--text)">$340</b> by December</div>
       </div>
       <div class="card spread" style="border-left:3px solid var(--gold)">
         <div><div style="font-size:11px;font-weight:700;color:var(--text)">Freedom Q3 · 5% gas ⛽</div><div class="tiny">Activation required — ends in 21 days</div></div>
@@ -155,7 +146,7 @@ h1{font-size:clamp(26px,4vw,42px);font-weight:900;letter-spacing:-1.5px;color:va
   <div class="cap">
     <div class="n">Screen 2</div>
     <div class="t">Home</div>
-    <div class="w">GPS banner renders only when <code>detectNearbyMerchant()</code> returns a confident match (≤60m) — otherwise it simply isn't there, no "searching…" state. Ledger card = <code>getLedgerSummary()</code>. Banner render fires <code>track.recViewed('groceries','gps')</code>.</div>
+    <div class="w">GPS banner renders only when <code>detectNearbyMerchant()</code> returns a confident match (≤60m) — otherwise it simply isn't there, no "searching…" state. Ledger card = <code>getLedgerSummary()</code>, enlarged and given the top non-banner spot since it's Kova's real differentiator (a dollar ledger, not just a multiplier list). Wallet strip removed — card management is Wallet's job alone, not duplicated on Home. Banner render fires <code>track.recViewed('groceries','gps')</code>.</div>
   </div>
 </div>
 
