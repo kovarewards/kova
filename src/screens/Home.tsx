@@ -9,27 +9,9 @@ import { supabase } from '../lib/supabase';
 import { detectNearbyMerchant, DetectedMerchant } from '../engine/gpsDetection';
 import { getRecommendations, getLedgerSummary, CardRecommendation } from '../engine/recommendations';
 import { track } from '../lib/analytics';
-import { formatDistance } from '../lib/format';
+import { formatDistance, withOpacity } from '../lib/format';
+import { CATEGORY_LABEL, CATEGORY_EMOJI } from '../constants/categories';
 import type { RecommendationTarget } from './Recommendation';
-
-const CATEGORY_LABEL: Record<string, string> = {
-  dining: 'Dining', groceries: 'Groceries', gas: 'Gas', ev_charging: 'EV Charging',
-  travel: 'Travel', transit: 'Transit', pharmacy: 'Pharmacy', entertainment: 'Entertainment',
-  streaming: 'Streaming', shopping: 'Shopping', other: 'Other',
-};
-
-const CATEGORY_EMOJI: Record<string, string> = {
-  dining: '🍜', groceries: '🛒', gas: '⛽', ev_charging: '🔌',
-  travel: '✈️', transit: '🚇', pharmacy: '💊', entertainment: '🎬',
-  streaming: '📺', shopping: '🛍️', other: '💳',
-};
-
-function withOpacity(hex: string, opacity: number) {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-}
 
 type WalletCard = { id: string; name: string; colorHex: string | null };
 type RotatingAlert = {

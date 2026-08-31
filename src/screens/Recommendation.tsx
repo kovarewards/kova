@@ -10,12 +10,7 @@ import {
   CardRecommendation, WalletGapCard,
 } from '../engine/recommendations';
 import { track } from '../lib/analytics';
-
-const CATEGORY_LABEL: Record<string, string> = {
-  dining: 'Dining', groceries: 'Groceries', gas: 'Gas', ev_charging: 'EV Charging',
-  travel: 'Travel', transit: 'Transit', pharmacy: 'Pharmacy', entertainment: 'Entertainment',
-  streaming: 'Streaming', shopping: 'Shopping', other: 'Other',
-};
+import { CATEGORY_LABEL } from '../constants/categories';
 
 function daysAgo(dateStr?: string) {
   if (!dateStr) return null;

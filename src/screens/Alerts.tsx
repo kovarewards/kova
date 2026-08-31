@@ -6,22 +6,11 @@ import { Text, TextInput } from '../components/AppText';
 import { TabBar, TabKey } from '../components/TabBar';
 import { SwipeToDelete } from '../components/SwipeToDelete';
 import { dark } from '../constants/theme';
+import { CATEGORY_LABEL } from '../constants/categories';
+import { withOpacity } from '../lib/format';
 import { supabase } from '../lib/supabase';
 
 const DISMISSED_KEY = 'kova_dismissed_alerts';
-
-const CATEGORY_LABEL: Record<string, string> = {
-  dining: 'Dining', groceries: 'Groceries', gas: 'Gas', ev_charging: 'EV Charging',
-  travel: 'Travel', transit: 'Transit', pharmacy: 'Pharmacy', entertainment: 'Entertainment',
-  streaming: 'Streaming', shopping: 'Shopping', other: 'Other',
-};
-
-function withOpacity(hex: string, opacity: number) {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-}
 
 function daysUntil(dateStr: string) {
   return Math.ceil((new Date(dateStr).getTime() - Date.now()) / 86400000);
@@ -372,15 +361,16 @@ export function AlertsScreen({ onNavigateTab }: Props) {
             <Text style={styles.tinyLabel}>WHICH CARD</Text>
             <View style={[styles.rowline, { marginTop: 8, marginBottom: 12, flexWrap: 'wrap' }]}>
               {walletOptions.map((c) => (
-                <TouchableOpacity
-                  key={c.id}
-                  onPress={() => setNewCardId(c.id)}
-                  style={[
-                    styles.cardChip,
-                    { backgroundColor: c.colorHex ?? dark.surf3 },
-                    newCardId === c.id && styles.cardChipSelected,
-                  ]}
-                />
+                <TouchableOpacity key={c.id} onPress={() => setNewCardId(c.id)} style={styles.cardChipWrap}>
+                  <View
+                    style={[
+                      styles.cardChip,
+                      { backgroundColor: c.colorHex ?? dark.surf3 },
+                      newCardId === c.id && styles.cardChipSelected,
+                    ]}
+                  />
+                  <Text style={styles.cardChipLabel} numberOfLines={1}>{c.name}</Text>
+                </TouchableOpacity>
               ))}
             </View>
             <TextInput
@@ -475,8 +465,10 @@ const styles = StyleSheet.create({
     padding: 16, alignItems: 'center',
   },
   dashedText: { fontSize: 13, fontWeight: '700', color: dark.accent },
-  cardChip: { width: 44, height: 29, borderRadius: 6, borderWidth: 2, borderColor: 'transparent' },
+  cardChipWrap: { width: 60, alignItems: 'center', gap: 3 },
+  cardChip: { width: 52, height: 34, borderRadius: 6, borderWidth: 2, borderColor: 'transparent' },
   cardChipSelected: { borderColor: dark.accent },
+  cardChipLabel: { fontSize: 9.5, color: dark.dim, textAlign: 'center' },
   formInput: {
     fontSize: 14, color: dark.text, backgroundColor: dark.surf2,
     borderWidth: 1, borderColor: dark.border2, borderRadius: 11,

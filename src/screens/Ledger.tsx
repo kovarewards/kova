@@ -6,19 +6,8 @@ import * as Sharing from 'expo-sharing';
 import { Text } from '../components/AppText';
 import { TabBar, TabKey } from '../components/TabBar';
 import { dark } from '../constants/theme';
+import { CATEGORY_LABEL, CATEGORY_EMOJI } from '../constants/categories';
 import { supabase } from '../lib/supabase';
-
-const CATEGORY_LABEL: Record<string, string> = {
-  dining: 'Dining', groceries: 'Groceries', gas: 'Gas', ev_charging: 'EV Charging',
-  travel: 'Travel', transit: 'Transit', pharmacy: 'Pharmacy', entertainment: 'Entertainment',
-  streaming: 'Streaming', shopping: 'Shopping', other: 'Other',
-};
-
-const CATEGORY_EMOJI: Record<string, string> = {
-  dining: '🍜', groceries: '🛒', gas: '⛽', ev_charging: '🔌',
-  travel: '✈️', transit: '🚇', pharmacy: '💊', entertainment: '🎬',
-  streaming: '📺', shopping: '🛍️', other: '💳',
-};
 
 const MONTH_LETTERS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
 

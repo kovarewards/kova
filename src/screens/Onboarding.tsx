@@ -4,14 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, TextInput } from '../components/AppText';
 import { KovaLogo } from '../components/KovaLogo';
 import { dark } from '../constants/theme';
+import { withOpacity } from '../lib/format';
 import { supabase } from '../lib/supabase';
-
-function withOpacity(hex: string, opacity: number) {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-}
 
 type CardOption = { id: string; name: string; issuer: string; colorHex: string | null };
 

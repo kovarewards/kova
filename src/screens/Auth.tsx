@@ -20,6 +20,23 @@ export function AuthScreen() {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
+  async function forgotPassword() {
+    setError(null);
+    setMessage(null);
+    if (!email.trim()) {
+      setError('Enter your email above first, then tap "Forgot password?"');
+      return;
+    }
+    setLoading(true);
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim());
+    setLoading(false);
+    if (resetError) {
+      setError(resetError.message);
+      return;
+    }
+    setMessage('Check your email for a link to reset your password.');
+  }
+
   async function submit() {
     setError(null);
     setMessage(null);
@@ -107,6 +124,12 @@ export function AuthScreen() {
             style={styles.input}
           />
 
+          {mode === 'signIn' && (
+            <TouchableOpacity onPress={forgotPassword} disabled={loading}>
+              <Text style={styles.forgot}>Forgot password?</Text>
+            </TouchableOpacity>
+          )}
+
           {error && <Text style={styles.error}>{error}</Text>}
           {message && <Text style={styles.message}>{message}</Text>}
 
@@ -150,6 +173,7 @@ const styles = StyleSheet.create({
     borderRadius: 14, paddingHorizontal: 16, paddingVertical: 12,
     fontSize: 16, color: dark.text,
   },
+  forgot: { fontSize: 13, color: dark.accent, textAlign: 'right', marginTop: -6 },
   error: { fontSize: 13, color: dark.red, textAlign: 'center' },
   message: { fontSize: 13, color: dark.green, textAlign: 'center' },
   btn: {

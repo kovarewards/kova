@@ -4,13 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../components/AppText';
 import { TabBar, TabKey } from '../components/TabBar';
 import { dark } from '../constants/theme';
+import { CATEGORY_LABEL } from '../constants/categories';
 import { supabase } from '../lib/supabase';
-
-const CATEGORY_LABEL: Record<string, string> = {
-  dining: 'Dining', groceries: 'Groceries', gas: 'Gas', ev_charging: 'EV Charging',
-  travel: 'Travel', transit: 'Transit', pharmacy: 'Pharmacy', entertainment: 'Entertainment',
-  streaming: 'Streaming', shopping: 'Shopping', other: 'Other',
-};
 
 function daysAgo(dateStr?: string | null) {
   if (!dateStr) return null;
