@@ -15,6 +15,15 @@ function withOpacity(hex: string, opacity: number) {
 
 type CardOption = { id: string; name: string; issuer: string; colorHex: string | null };
 
+// Shown by default so onboarding stays fast — full catalog (50+ cards) is one
+// search away. Static for now; worth swapping for a real "most added" query
+// once there's enough user_cards volume for that to mean anything.
+const POPULAR_CARD_NAMES = new Set([
+  'Chase Sapphire Preferred', 'Chase Freedom Unlimited', 'Amex Gold', 'Amex Platinum',
+  'Chase Sapphire Reserve', 'Capital One Venture', 'Citi Double Cash',
+  'Discover it Cash Back', 'Wells Fargo Active Cash',
+]);
+
 type Props = { onContinue: () => void };
 
 export function OnboardingScreen({ onContinue }: Props) {
@@ -66,7 +75,7 @@ export function OnboardingScreen({ onContinue }: Props) {
   const q = query.trim().toLowerCase();
   const visibleCards = q
     ? cards.filter((c) => c.name.toLowerCase().includes(q) || c.issuer.toLowerCase().includes(q))
-    : cards;
+    : cards.filter((c) => POPULAR_CARD_NAMES.has(c.name) || addedIds.has(c.id));
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
@@ -96,6 +105,12 @@ export function OnboardingScreen({ onContinue }: Props) {
             style={styles.inputText}
           />
         </View>
+
+        {!q && (
+          <Text style={styles.tinyLabel}>
+            POPULAR CARDS · search above for any of our 50+
+          </Text>
+        )}
 
         {visibleCards.map((c) => {
           const added = addedIds.has(c.id);
@@ -169,6 +184,7 @@ const styles = StyleSheet.create({
   minicard: { width: 58, height: 38, borderRadius: 7 },
   cardName: { fontSize: 15, fontWeight: '700', color: dark.text },
   tiny: { fontSize: 12, color: dark.muted },
+  tinyLabel: { fontSize: 12, color: dark.dim, letterSpacing: 1.3, marginTop: 2 },
   pillAcc: {
     backgroundColor: dark.accentSoft, borderColor: dark.accentBorder, borderWidth: 1,
     borderRadius: 999, paddingVertical: 4, paddingHorizontal: 12,

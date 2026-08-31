@@ -259,6 +259,9 @@ export function AlertsScreen({ onNavigateTab }: Props) {
           </View>
         </View>
 
+        {visibleActivation.length > 0 && (
+          <Text style={styles.tinyLabel}>ACTIVATION NEEDED</Text>
+        )}
         {visibleActivation.map((a) => (
           <SwipeToDelete key={a.key} onDelete={() => dismissAlert(a.key)}>
             <View style={[styles.card, styles.goldBorder]}>
@@ -281,6 +284,9 @@ export function AlertsScreen({ onNavigateTab }: Props) {
           </SwipeToDelete>
         ))}
 
+        {visibleExpiring.length > 0 && (
+          <Text style={styles.tinyLabel}>EXPIRING SOON</Text>
+        )}
         {visibleExpiring.map((a) => (
           <SwipeToDelete key={a.key} onDelete={() => dismissAlert(a.key)}>
             <View style={[styles.card, styles.redBorder]}>
@@ -298,6 +304,9 @@ export function AlertsScreen({ onNavigateTab }: Props) {
           </SwipeToDelete>
         ))}
 
+        {trackers.length > 0 && (
+          <Text style={styles.tinyLabel}>BONUS TRACKERS</Text>
+        )}
         {trackers.map((t) => {
           const pct = Math.min(100, (t.spendLogged / t.spendRequired) * 100);
           const daysLeft = daysUntil(t.deadline);

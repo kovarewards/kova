@@ -104,7 +104,7 @@ h1{font-size:clamp(26px,4vw,42px);font-weight:900;letter-spacing:-1.5px;color:va
   <div class="cap">
     <div class="n">Screen 1</div>
     <div class="t">Onboarding</div>
-    <div class="w">Search hits the public <code>cards</code> table; each add inserts into <code>user_cards</code>. The privacy pill is the acquisition promise — it stays above the fold. 30-second target measured install → first card added.</div>
+    <div class="w">Search hits the public <code>cards</code> table; each add inserts into <code>user_cards</code>. The privacy pill is the acquisition promise — it stays above the fold. Below the search box, the list defaults to a curated "Popular cards" subset (~9 cards) rather than the full 50+ catalog, so the 30-second target survives browsing, not just searching — full catalog is one keystroke away.</div>
   </div>
 </div>
 
@@ -248,7 +248,7 @@ h1{font-size:clamp(26px,4vw,42px);font-weight:900;letter-spacing:-1.5px;color:va
   <div class="cap">
     <div class="n">Screen 4</div>
     <div class="t">Wallet</div>
-    <div class="w">Cards from <code>user_cards</code> joined to <code>cards</code> / <code>annual_benefits</code>. Fee-vs-value bars come from the ledger's per-card captures — the honest "is this fee worth it" answer no issuer will give. Every card wears its <code>verified_at</code> badge: the accuracy SLA, worn in public.</div>
+    <div class="w">Cards from <code>user_cards</code> joined to <code>cards</code> / <code>annual_benefits</code>. Fee-vs-value bars come from the ledger's per-card captures — the honest "is this fee worth it" answer no issuer will give. Every card wears its <code>verified_at</code> badge: the accuracy SLA, worn in public. Wallet is now the app's only add-card entry point (Home's redundant strip was removed) — the empty state is a large dashed "Add your first card" button, not just text pointing at the header pill.</div>
   </div>
 </div>
 
@@ -261,17 +261,20 @@ h1{font-size:clamp(26px,4vw,42px);font-weight:900;letter-spacing:-1.5px;color:va
         <div style="font-size:17px;font-weight:900;color:var(--text);letter-spacing:-.5px">Alerts</div>
         <span class="pill acc">3 ACTIVE</span>
       </div>
+      <div class="tiny" style="letter-spacing:1.5px">ACTIVATION NEEDED</div>
       <div class="card" style="border-left:3px solid var(--gold)">
         <div class="spread"><span class="pill gold">ACTION NEEDED</span><span class="tiny">21 days</span></div>
         <div style="font-size:12.5px;font-weight:800;color:var(--text);margin-top:6px">Activate Freedom Q3 — 5% gas</div>
         <div class="tiny" style="margin:3px 0 8px">Unactivated quarters earn 1%. Two taps on Chase's site.</div>
         <div class="btn s" style="padding:8px;font-size:11px">Open activation page →</div>
       </div>
+      <div class="tiny" style="letter-spacing:1.5px">EXPIRING SOON</div>
       <div class="card" style="border-left:3px solid var(--red)">
         <div class="spread"><span class="pill" style="background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.3)">EXPIRING</span><span class="tiny">6 days</span></div>
         <div style="font-size:12.5px;font-weight:800;color:var(--text);margin-top:6px">Amex Gold $10 dining credit</div>
         <div class="tiny" style="margin-top:3px">Unused this month. Grubhub, Cheesecake Factory, Five Guys qualify.</div>
       </div>
+      <div class="tiny" style="letter-spacing:1.5px">BONUS TRACKERS</div>
       <div class="card">
         <div class="spread"><span class="pill acc">BONUS TRACKER</span><span class="tiny" style="color:var(--muted)">manual · optional</span></div>
         <div style="font-size:12.5px;font-weight:800;color:var(--text);margin-top:6px">Sapphire Preferred — 60K bonus</div>
@@ -292,7 +295,7 @@ h1{font-size:clamp(26px,4vw,42px);font-weight:900;letter-spacing:-1.5px;color:va
   <div class="cap">
     <div class="n">Screen 5</div>
     <div class="t">Alerts</div>
-    <div class="w">Rotating activations and expiring credits computed from <code>reward_categories.end_date</code> and <code>annual_benefits.period</code> against the user's wallet — zero transaction data. The bonus tracker is honestly labeled <b>manual · optional</b>, resolving v1's contradiction. Push scheduling via <code>expo-notifications</code>.</div>
+    <div class="w">Rotating activations and expiring credits computed from <code>reward_categories.end_date</code> and <code>annual_benefits.period</code> against the user's wallet — zero transaction data. Section labels (ACTIVATION NEEDED / EXPIRING SOON / BONUS TRACKERS) separate the three alert types, matching the label pattern used on Ledger — each only renders when that section has content. The bonus tracker is honestly labeled <b>manual · optional</b>, resolving v1's contradiction. Push scheduling via <code>expo-notifications</code>.</div>
   </div>
 </div>
 

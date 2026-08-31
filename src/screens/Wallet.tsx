@@ -167,9 +167,13 @@ export function WalletScreen({ onAddCard, onNavigateTab }: Props) {
         })}
 
         {cards.length === 0 && (
-          <View style={styles.card}>
-            <Text style={styles.tiny}>No cards yet — tap &quot;＋ ADD CARD&quot; to build your wallet.</Text>
-          </View>
+          <TouchableOpacity style={styles.emptyCard} onPress={onAddCard} activeOpacity={0.7}>
+            <Text style={styles.emptyPlus}>＋</Text>
+            <Text style={styles.emptyTitle}>Add your first card</Text>
+            <Text style={[styles.tiny, { textAlign: 'center' }]}>
+              Takes about 30 seconds — no bank login, ever.
+            </Text>
+          </TouchableOpacity>
         )}
       </ScrollView>
 
@@ -194,9 +198,15 @@ const styles = StyleSheet.create({
   vbadgeBold: { color: dark.green, fontWeight: '700' },
   pillAcc: {
     backgroundColor: dark.accentSoft, borderColor: dark.accentBorder, borderWidth: 1,
-    borderRadius: 999, paddingVertical: 4, paddingHorizontal: 12,
+    borderRadius: 999, paddingVertical: 8, paddingHorizontal: 15,
   },
-  pillAccText: { fontSize: 11, fontWeight: '800', letterSpacing: 1.3, color: dark.accent },
+  pillAccText: { fontSize: 12, fontWeight: '800', letterSpacing: 1.3, color: dark.accent },
+  emptyCard: {
+    borderWidth: 1.5, borderColor: dark.border2, borderStyle: 'dashed', borderRadius: 18,
+    paddingVertical: 30, alignItems: 'center', gap: 6,
+  },
+  emptyPlus: { fontSize: 26, color: dark.accent, marginBottom: 2 },
+  emptyTitle: { fontSize: 16, fontWeight: '800', color: dark.text },
   feeValueText: { fontSize: 12, fontWeight: '700', color: dark.gold },
   feeValueGood: { color: dark.green },
   bar: { height: 6, backgroundColor: dark.surf3, borderRadius: 99, overflow: 'hidden' },
