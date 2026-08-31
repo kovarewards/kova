@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kova — Business Plan v3 · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D1117;--surf:#161E2C;--surf2:#1A2438;--surf3:#1E2A40;
+  --border:#1E2433;--border2:#263354;
+  --acc:#7C8FFF;--acc2:#5A6ADA;--as:rgba(124,143,255,.10);--ab:rgba(124,143,255,.28);
+  --text:#E8EEFF;--dim:#5A6A9A;--muted:#3A4A7A;
+  --red:#F87171;--green:#4ADE80;--gold:#FBBF24;--purple:#C084FC;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dim);font-family:'Inter',sans-serif;min-height:100vh;font-size:14px;line-height:1.65}
+::selection{background:var(--as);color:var(--acc)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+.eyebrow{font-size:10px;color:var(--acc);letter-spacing:2.5px;font-weight:700;text-transform:uppercase;margin-bottom:8px}
+.h1{font-size:clamp(28px,4.5vw,50px);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:18px;color:var(--text)}
+.h2{font-size:clamp(18px,2.5vw,26px);font-weight:800;letter-spacing:-1px;margin-bottom:8px;color:var(--text)}
+.h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px}
+.lead{color:var(--dim);font-size:14px;line-height:1.85;max-width:640px;margin-bottom:22px}
+p{margin-bottom:12px}
+section{padding:56px 0;border-bottom:1px solid var(--border)}
+#nav{position:sticky;top:0;z-index:200;background:rgba(13,17,23,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.nav-brand{display:flex;align-items:center;gap:11px}
+.nav-name{font-size:18px;font-weight:900;color:var(--text);letter-spacing:-1px}
+.nav-sub{font-size:9px;color:var(--muted);letter-spacing:2px}
+.nav-tabs{display:flex;gap:3px;flex-wrap:wrap}
+.nt{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 11px;font-size:11px;font-weight:600;font-family:inherit;cursor:pointer;text-decoration:none}
+.nt:hover{color:var(--acc);border-color:var(--ab)}
+.logo{width:34px;height:24px;border:2px solid var(--text);border-radius:5px;background:var(--surf);position:relative;display:inline-block}
+.logo::after{content:"✦";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:11px}
+.badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--ab);color:var(--acc);background:var(--as);border-radius:999px;padding:4px 12px;margin-bottom:16px}
+.badge.gold{border-color:rgba(251,191,36,.35);color:var(--gold);background:rgba(251,191,36,.08)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.card{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:20px}
+.card.acc{border-color:var(--ab);background:linear-gradient(180deg,var(--as),var(--surf))}
+.card.warn{border-color:rgba(251,191,36,.3);background:linear-gradient(180deg,rgba(251,191,36,.06),var(--surf))}
+.stat{font-size:26px;font-weight:900;color:var(--text);letter-spacing:-1px;line-height:1.1}
+.stat.green{color:var(--green)}.stat.red{color:var(--red)}.stat.gold{color:var(--gold)}
+.stat-l{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:5px}
+.stat-s{font-size:11px;color:var(--dim);margin-top:3px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700;text-align:left;padding:10px 12px;border-bottom:1px solid var(--border2)}
+td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--dim);vertical-align:top}
+td:first-child{color:var(--text);font-weight:600}
+tr.hl td{background:var(--as)}
+.tnum{font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:10px;font-weight:700;border-radius:5px;padding:2px 8px;letter-spacing:.5px}
+.tag.cut{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.tag.new{background:rgba(74,222,128,.10);color:var(--green);border:1px solid rgba(74,222,128,.3)}
+.tag.keep{background:var(--as);color:var(--acc);border:1px solid var(--ab)}
+.diff{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:10px}
+.diff>div{padding:14px 16px;font-size:12.5px}
+.diff .v2{background:rgba(248,113,113,.05);border-right:1px solid var(--border)}
+.diff .v3{background:rgba(74,222,128,.05)}
+.dl{font-size:9.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.tw{overflow-x:auto;border:1px solid var(--border);border-radius:12px}
+.tw table{min-width:560px}
+.src{font-size:11px;color:var(--muted);margin-top:4px}
+.src a{color:var(--acc);text-decoration:none}
+.src a:hover{text-decoration:underline}
+.competitor-row{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--border)}
+.competitor-row:last-child{border-bottom:none}
+.clogo{width:38px;height:38px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:var(--bg)}
+ul.plain{list-style:none}
+ul.plain li{padding-left:16px;position:relative;margin-bottom:8px;font-size:13px}
+ul.plain li::before{content:"—";position:absolute;left:0;color:var(--muted)}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pill{font-size:11px;font-weight:700;padding:5px 11px;border-radius:999px;background:var(--surf2);border:1px solid var(--border2);color:var(--dim)}
+footer{padding:40px 24px;text-align:center;color:var(--muted);font-size:11px}
+@media(max-width:640px){.diff{grid-template-columns:1fr}.diff .v2{border-right:none;border-bottom:1px solid var(--border)}}
+</style>
+</head>
+<body>
+
+<div id="nav">
+  <div class="nav-brand">
+    <span class="logo"></span>
+    <div><div class="nav-name">KOVA</div><div class="nav-sub">BUSINESS PLAN v3 · AUG 2026</div></div>
+  </div>
+  <div class="nav-tabs">
+    <a class="nt" href="#reality">Reality check</a>
+    <a class="nt" href="#revenue">Revenue v3</a>
+    <a class="nt" href="#projections">Projections</a>
+    <a class="nt" href="#affiliate">Affiliate path</a>
+    <a class="nt" href="#gtm">Go-to-market</a>
+    <a class="nt" href="#gate">Decision</a>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <span class="badge gold">Written before the LLC filing — read this first</span>
+    <h1 class="h1">The competitor you thought didn't exist, actually does.<br>That's the good news.</h1>
+    <p class="lead">This plan exists because one affiliate rejection was enough to make you ask a real question: does this business work without it? Short answer — yes, but not the way v2 modeled it. v3 corrects one wrong assumption, reweights revenue toward the engine that doesn't need anyone's approval, and replaces "creator rev-share" with an actual, costed outreach plan.</p>
+    <div class="grid g4">
+      <div class="card"><div class="stat">1</div><div class="stat-l">Direct competitor found</div><div class="stat-s">CardPointers — same model, years in market, real revenue</div></div>
+      <div class="card gold"><div class="stat gold">$90–196</div><div class="stat-l">What it charges, proven</div><div class="stat-s">Annual or lifetime, no bank login, still operating in 2026</div></div>
+      <div class="card"><div class="stat">Sub-first</div><div class="stat-l">v3's revenue order</div><div class="stat-s">Doesn't wait on affiliate approval to exist</div></div>
+      <div class="card"><div class="stat green">3 more</div><div class="stat-l">Affiliate networks to try</div><div class="stat-s">Beyond the one rejection</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="reality">
+  <div class="wrap">
+    <span class="eyebrow">Reality check</span>
+    <h2 class="h2">The competitive landscape, corrected</h2>
+    <p class="lead">v2 positioned "no bank login, ever" as close to unique in the market. It's a real and defensible stance — but it's not undiscovered territory. Here's who's actually already there.</p>
+
+    <div class="card">
+      <div class="competitor-row">
+        <div class="clogo" style="background:#16A34A">CP</div>
+        <div>
+          <div class="h3">CardPointers — the one that matters most</div>
+          <p style="margin-bottom:6px">Manual card entry, no bank connection, reward-category tracking and recommendations. Free tier (1 card). CardPointers+ is $7.50/mo or $90/yr, often discounted; a $196 lifetime option also exists. Reviewed across a dozen finance sites in 2026 — this is an established, still-operating product, not an abandoned one.</p>
+          <div class="pill-row"><span class="pill">Same core model as Kova</span><span class="pill">Subscription-primary</span><span class="pill">Years in market</span></div>
+        </div>
+      </div>
+      <div class="competitor-row">
+        <div class="clogo" style="background:#7C8FFF">MR</div>
+        <div>
+          <div class="h3">MaxRewards — the connected alternative</div>
+          <p style="margin-bottom:6px">MaxRewards Gold is $108/yr, but the features that actually differentiate it — account sync, auto-activation of rotating categories — require Plaid bank linking. This is the segment Kova's "no bank login, ever" stance is explicitly built to not compete with, and shouldn't try to.</p>
+          <div class="pill-row"><span class="pill">Requires bank linking</span><span class="pill">Higher price point</span></div>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:18px"><b style="color:var(--text)">What this actually means:</b> the "zero competitors doing this without a bank login" claim was wrong. The corrected claim is narrower and still true: <i>Kova is a credit-based, no-login alternative to CardPointers</i> — same category, different bet on data model and (per Step 10 of the build) freshness/verification rigor as the differentiator, not privacy alone. That's a real, ownable wedge. It's a harder pitch than "nobody else does this," but it's an honest one, and CardPointers surviving for years on subscription revenue for this exact feature set is direct evidence people pay for it.</p>
+
+    <div class="src">Sources: <a href="https://wallethacks.com/cardpointers-app-review/" target="_blank" rel="noopener">WalletHacks — CardPointers review 2026</a> · <a href="https://www.stackeasy.ai/blog/maxrewards-vs-cardpointers" target="_blank" rel="noopener">StackEasy — MaxRewards vs CardPointers 2026</a></div>
+  </div>
+</section>
+
+<section id="revenue">
+  <div class="wrap">
+    <span class="eyebrow">Revenue model</span>
+    <h2 class="h2">What changed from v2 to v3 — and why</h2>
+    <p class="lead">v1 → v2 flipped from subscription-primary to affiliate-primary because affiliate has zero marginal cost and a great trigger moment. That reasoning was sound in theory. v3 flips back toward subscription for a different, evidence-based reason: <b style="color:var(--text)">one real affiliate application has now actually been rejected</b>, and research confirms this is the normal first outcome for small, pre-launch apps — not a fluke. Affiliate isn't gone. It's demoted from "primary engine" to "upside layer," because it depends on approvals you don't control yet.</p>
+
+    <div class="diff">
+      <div class="v2"><div class="dl">v2 modeled</div>Affiliate CPA as the primary engine, funding the business from Month 5–9. Subscription as the secondary engine.</div>
+      <div class="v3"><div class="dl">v3 uses</div>Subscription (Kova Pro, annual + a lifetime option) as the near-term primary engine — provably works (CardPointers), doesn't require anyone's approval. Affiliate stays as upside that compounds once multiple network relationships land.</div>
+    </div>
+    <div class="diff">
+      <div class="v2"><div class="dl">v2 modeled</div>$49.99/yr, single subscription tier, no one-time option.</div>
+      <div class="v3"><div class="dl">v3 uses</div>Keep $49.99/yr as the value-priced entry tier — cheaper than both CardPointers ($90) and MaxRewards ($108) — but add a one-time lifetime purchase (~$129–149) for subscription-averse, privacy-conscious users who'd otherwise never convert. CardPointers' own $196 lifetime tier proves this segment exists and pays.</div>
+    </div>
+    <div class="diff">
+      <div class="v2"><div class="dl">v2 modeled</div>Affiliate access via a single network relationship (Impact, one attempt).</div>
+      <div class="v3"><div class="dl">v3 uses</div>Apply to CardRatings, Fintel Connect, and CommissionSoup in addition to the FlexOffers/Bankrate/Impact attempts already made. CardRatings in particular exists specifically for smaller finance publishers who don't qualify for direct issuer relationships yet.</div>
+    </div>
+    <div class="diff">
+      <div class="v2"><div class="dl">v2 modeled</div>"Creator rev-share" as a channel — real but undefined, no pricing, no first-10 plan.</div>
+      <div class="v3"><div class="dl">v3 uses</div>A costed nano/micro creator sponsorship plan (see Go-to-market below) with real 2026 rate benchmarks, so this is a budget line, not an aspiration.</div>
+    </div>
+
+    <div class="src">Sources: <a href="https://refgrow.com/blog/credit-card-affiliate-program" target="_blank" rel="noopener">RefGrow — credit card affiliate programs 2026</a> · <a href="https://www.fintelconnect.com/publishers/" target="_blank" rel="noopener">Fintel Connect — publisher network</a></div>
+  </div>
+</section>
+
+<section id="projections">
+  <div class="wrap">
+    <span class="eyebrow">Projections</span>
+    <h2 class="h2">Realistic numbers, reweighted</h2>
+    <p class="lead">v2's install→paid conversion rate (2.5% base, 4% upside) was already grounded in real benchmarks — that part doesn't change. What changes is which engine carries Year 1, and the addition of the lifetime tier as its own line.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Assumption</th><th>Base</th><th>Upside</th><th>Source / reasoning</th></tr></thead>
+        <tbody>
+          <tr><td>Install → paid (annual sub)</td><td class="tnum">2.5%</td><td class="tnum">4.0%</td><td>Freemium finance-app benchmark range is 2.6–5.8%; unchanged from v2, independently confirmed</td></tr>
+          <tr><td>Install → lifetime purchase</td><td class="tnum">0.5%</td><td class="tnum">1.2%</td><td>New in v3 — smaller than annual-sub conversion, but pure upfront cash with no churn risk</td></tr>
+          <tr><td>Affiliate revenue / download (lifetime)</td><td class="tnum">$1.50</td><td class="tnum">$4.00</td><td>Cut from v2's $3–5 base case — reflects real approval friction observed, not assumed</td></tr>
+          <tr class="hl"><td>Monthly churn (annual sub)</td><td class="tnum">5%</td><td class="tnum">3.5%</td><td>Unchanged from v2</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid g3" style="margin-top:18px">
+      <div class="card">
+        <div class="h3">Year 1</div>
+        <table>
+          <tr><td>Subscription (annual)</td><td class="tnum">$14K</td></tr>
+          <tr><td>Lifetime purchases</td><td class="tnum">$8K</td></tr>
+          <tr><td>Affiliate</td><td class="tnum">$18K</td></tr>
+          <tr class="hl"><td>Total</td><td class="tnum">$40K</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <div class="h3">Year 2</div>
+        <table>
+          <tr><td>Subscription (annual)</td><td class="tnum">$85K</td></tr>
+          <tr><td>Lifetime purchases</td><td class="tnum">$35K</td></tr>
+          <tr><td>Affiliate</td><td class="tnum">$95K</td></tr>
+          <tr class="hl"><td>Total</td><td class="tnum">$215K</td></tr>
+        </table>
+      </div>
+      <div class="card acc">
+        <div class="h3">Year 3 (base)</div>
+        <table>
+          <tr><td>Subscription (annual)</td><td class="tnum">$240K</td></tr>
+          <tr><td>Lifetime purchases</td><td class="tnum">$70K</td></tr>
+          <tr><td>Affiliate</td><td class="tnum">$310K</td></tr>
+          <tr class="hl"><td>Total</td><td class="tnum">$620K</td></tr>
+        </table>
+      </div>
+    </div>
+    <p style="margin-top:14px;font-size:12px">v2's Year 3 base was $750K, weighted 80% toward affiliate. v3's Year 3 base is $620K — lower, but the composition is healthier: subscription + lifetime together (~$310K) now roughly match affiliate (~$310K) instead of affiliate carrying the business alone. A lower number you can actually build without anyone's approval beats a higher number that depends on it.</p>
+  </div>
+</section>
+
+<section id="affiliate">
+  <div class="wrap">
+    <span class="eyebrow">Affiliate — the real state</span>
+    <h2 class="h2">One rejection isn't a verdict. Here's the fuller path.</h2>
+    <div class="grid g2">
+      <div class="card">
+        <div class="h3">What's already in motion</div>
+        <ul class="plain">
+          <li>FlexOffers — submitted, pending review</li>
+          <li>Bankrate / RVMediaNetwork — submitted, pending review</li>
+          <li>Impact.com — blocked until a public App Store URL exists (their mobile-app channel requires <code>apps.apple.com</code>, not a TestFlight link)</li>
+        </ul>
+      </div>
+      <div class="card warn">
+        <div class="h3">Three more worth applying to</div>
+        <ul class="plain">
+          <li><b style="color:var(--text)">CardRatings</b> — built specifically for smaller finance publishers who can't get direct issuer relationships; single partnership gives access to a broad range of card offers</li>
+          <li><b style="color:var(--text)">Fintel Connect</b> — dedicated financial-services affiliate network, 5,000+ vetted publisher network including apps and podcasters, not just blogs</li>
+          <li><b style="color:var(--text)">CommissionSoup</b> — finance-focused network for publishers with an audience interested in personal finance</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:16px">The honest planning assumption for v3: expect approval timelines measured in months, not weeks, and expect more rejections before an acceptance — that's the normal shape of this process for a pre-launch app, per the same research that flagged CardRatings as the network built for exactly this situation. Don't gate any other roadmap decision on affiliate approval landing on any particular date.</p>
+    <div class="src">Source: <a href="https://refgrow.com/blog/credit-card-affiliate-program" target="_blank" rel="noopener">RefGrow — 2026 credit card affiliate program guide</a></div>
+  </div>
+</section>
+
+<section id="gtm">
+  <div class="wrap">
+    <span class="eyebrow">Go-to-market</span>
+    <h2 class="h2">A costed creator plan, not a hope</h2>
+    <p class="lead">"Creator rev-share" in v2 was directionally right but had no numbers attached. Here's what it actually costs to run, using real 2026 rate data — finance-niche creators charge 2–3x normal rates because their audiences convert at genuinely higher intent, but the nano tier is still cheap enough to bootstrap.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Tier</th><th>Followers</th><th>Typical cost / post</th><th>Why it fits Kova</th></tr></thead>
+        <tbody>
+          <tr><td>Nano</td><td class="tnum">1K–10K</td><td class="tnum">$25–250</td><td>Cheapest entry point; credit-card-niche nano creators often already post organically about rewards optimization</td></tr>
+          <tr><td>Micro</td><td class="tnum">10K–100K</td><td class="tnum">$200–2,000</td><td>Best ROI tier once early traction/testimonials exist to show them</td></tr>
+          <tr><td>Official influencer programs</td><td class="tnum">100K–2.5M+</td><td class="tnum">—</td><td>Follower minimums this high are out of reach pre-revenue; skip for now, revisit post-Series-A-or-not</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card">
+        <div class="h3">The first-10 outreach plan</div>
+        <ul class="plain">
+          <li>Identify 20–30 nano/micro creators already posting organic credit-card-rewards content on TikTok and Instagram Reels (search "credit card hacks," "rewards optimization," "no bank login")</li>
+          <li>Offer flat-fee sponsorship (not pure rev-share) for the first 10 — rev-share alone under-motivates creators with no track record of your conversion rate yet</li>
+          <li>Give each a unique promo mention ("use code [creator] for early access") tracked via a simple referral param, not a full attribution platform — no need to over-build this before it's proven</li>
+          <li>Budget: 10 creators × $150 avg (nano-tier) = ~$1,500 to test the channel before scaling to micro-tier spend</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="h3">Where the audience already is</div>
+        <ul class="plain">
+          <li>Personal-finance and credit-card subreddits — organic presence (answering questions, not promotional posts) builds credibility before any paid push</li>
+          <li>TikTok and Instagram Reels over YouTube long-form — finance/investing content on TikTok specifically commands a CPV premium (3–5x entertainment content), signaling real audience purchase intent, not just views</li>
+          <li>Gen Z awareness of card products skews toward Instagram/TikTok discovery over traditional channels — aligns with where Kova's actual target user (multi-card holder, rewards-motivated) already spends attention</li>
+        </ul>
+      </div>
+    </div>
+    <div class="src">Sources: <a href="https://influencermarketinghub.com/influencer-rates/nano-influencer-rates/" target="_blank" rel="noopener">Influencer Marketing Hub — nano rates 2026</a> · <a href="https://influencerfee.com/blog/tiktok-influencer-pricing/" target="_blank" rel="noopener">InfluencerFee — TikTok pricing 2026</a> · <a href="https://www.digitalapplied.com/blog/influencer-marketing-2026-micro-nano-strategy" target="_blank" rel="noopener">Digital Applied — micro/nano strategy 2026</a></div>
+  </div>
+</section>
+
+<section id="gate" style="border-bottom:none">
+  <div class="wrap">
+    <span class="eyebrow">Decision</span>
+    <h2 class="h2">Is this still worth filing an LLC for?</h2>
+    <div class="grid g2">
+      <div class="card acc">
+        <div class="h3">The case for yes</div>
+        <ul class="plain">
+          <li>A real competitor (CardPointers) has sustained subscription revenue on this exact model for years — that's market validation, not a warning sign</li>
+          <li>Kova's actual differentiation narrows to "verification-rigor + freshness" (your weekly Scout/Auditor process is a real, hard-to-copy moat) rather than "privacy" alone — still a legitimate wedge</li>
+          <li>Subscription no longer depends on any external approval — you control that timeline entirely</li>
+          <li>One rejection is normal, expected, and doesn't close the affiliate door; three more networks remain untried</li>
+        </ul>
+      </div>
+      <div class="card warn">
+        <div class="h3">What to watch honestly</div>
+        <ul class="plain">
+          <li>You're now entering a market with an established, well-reviewed incumbent — differentiation on data quality has to be real and visible in the product, not just claimed in marketing copy</li>
+          <li>v3's Year 3 base case ($620K) is intentionally lower than v2's ($750K) — this is the honest number, not a sales pitch to yourself</li>
+          <li>Gate 2 from v2 still applies and is worth keeping: if subscription alone can't hit meaningful install→paid conversion by Month 9, that's the real signal to reassess, not any single affiliate rejection</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:18px;font-size:13px;color:var(--text)"><b>Bottom line:</b> the business model survives the correction. What doesn't survive is the assumption that affiliate revenue was ever going to be fast or guaranteed — it wasn't, and now there's real evidence instead of a hopeful projection. Subscription-first, with a lifetime tier and a costed (not aspirational) creator channel, is a plan you can execute without waiting on anyone's approval. That's a fundable, buildable business — smaller than v2 promised, but real.</p>
+  </div>
+</section>
+
+<footer>Kova — Business Plan v3 · Written in response to a founder's direct question about model viability, prior to LLC filing.</footer>
+
+</body>
+</html>
