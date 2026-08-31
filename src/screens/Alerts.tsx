@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
 import { Text, TextInput } from '../components/AppText';
 import { TabBar, TabKey } from '../components/TabBar';
+import { ScreenLoader } from '../components/ScreenLoader';
 import { SwipeToDelete } from '../components/SwipeToDelete';
 import { dark } from '../constants/theme';
 import { CATEGORY_LABEL } from '../constants/categories';
@@ -46,6 +47,8 @@ export function AlertsScreen({ onNavigateTab }: Props) {
   const [userId, setUserId] = useState<string | null>(null);
   const [walletCardIds, setWalletCardIds] = useState<string[]>([]);
   const [walletOptions, setWalletOptions] = useState<WalletCardOption[]>([]);
+  const [cardsLoaded, setCardsLoaded] = useState(false);
+  const [trackersLoaded, setTrackersLoaded] = useState(false);
   const [activationAlerts, setActivationAlerts] = useState<ActivationAlert[]>([]);
   const [expiringAlerts, setExpiringAlerts] = useState<ExpiringAlert[]>([]);
   const [trackers, setTrackers] = useState<BonusTracker[]>([]);
@@ -99,6 +102,7 @@ export function AlertsScreen({ onNavigateTab }: Props) {
             pointsType: r.cards.reward_categories?.[0]?.points_type ?? 'points',
           }))
         );
+        setCardsLoaded(true);
       });
   }, [userId]);
 
@@ -169,6 +173,7 @@ export function AlertsScreen({ onNavigateTab }: Props) {
             deadline: r.deadline,
           }))
         );
+        setTrackersLoaded(true);
       });
   }
 
@@ -237,6 +242,15 @@ export function AlertsScreen({ onNavigateTab }: Props) {
   const visibleActivation = activationAlerts.filter((a) => !dismissedKeys.has(a.key));
   const visibleExpiring = expiringAlerts.filter((a) => !dismissedKeys.has(a.key));
   const activeCount = visibleActivation.length + visibleExpiring.length + trackers.length;
+
+  if (!cardsLoaded || !trackersLoaded) {
+    return (
+      <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
+        <ScreenLoader />
+        <TabBar active="alerts" onNavigate={onNavigateTab} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>

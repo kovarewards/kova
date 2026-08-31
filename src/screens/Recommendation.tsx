@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, TextInput } from '../components/AppText';
 import { TabBar, TabKey } from '../components/TabBar';
+import { ScreenLoader } from '../components/ScreenLoader';
 import { dark } from '../constants/theme';
 import { supabase } from '../lib/supabase';
 import {
@@ -26,6 +27,7 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
   const [spendInput, setSpendInput] = useState('100');
   const [spendAmount, setSpendAmount] = useState(100);
   const [recs, setRecs] = useState<CardRecommendation[]>([]);
+  const [recsLoaded, setRecsLoaded] = useState(false);
   const [gapCard, setGapCard] = useState<WalletGapCard | null>(null);
   const [usedCardId, setUsedCardId] = useState<string | null>(null);
   const [logging, setLogging] = useState(false);
@@ -43,7 +45,10 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
 
   useEffect(() => {
     if (!userId) return;
-    getRecommendations(userId, target.category, spendAmount).then(setRecs);
+    getRecommendations(userId, target.category, spendAmount).then((r) => {
+      setRecs(r);
+      setRecsLoaded(true);
+    });
   }, [userId, target.category, spendAmount]);
 
   useEffect(() => {
@@ -69,6 +74,15 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
 
   const best = recs[0];
   const rest = recs.slice(1);
+
+  if (!recsLoaded) {
+    return (
+      <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
+        <ScreenLoader />
+        <TabBar active="home" onNavigate={onNavigateTab} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>

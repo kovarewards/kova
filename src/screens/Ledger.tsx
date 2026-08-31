@@ -5,6 +5,7 @@ import ViewShot from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import { Text } from '../components/AppText';
 import { TabBar, TabKey } from '../components/TabBar';
+import { ScreenLoader } from '../components/ScreenLoader';
 import { dark } from '../constants/theme';
 import { CATEGORY_LABEL, CATEGORY_EMOJI } from '../constants/categories';
 import { supabase } from '../lib/supabase';
@@ -32,6 +33,7 @@ export function LedgerScreen({ onNavigateTab }: Props) {
   const [userId, setUserId] = useState<string | null>(null);
   const year = new Date().getFullYear();
   const [captures, setCaptures] = useState<Capture[]>([]);
+  const [capturesLoaded, setCapturesLoaded] = useState(false);
   const shotRef = useRef<ViewShot>(null);
   const [sharing, setSharing] = useState(false);
 
@@ -61,6 +63,7 @@ export function LedgerScreen({ onNavigateTab }: Props) {
             capturedAt: r.captured_at,
           }))
         );
+        setCapturesLoaded(true);
       });
   }, [userId, year]);
 
@@ -114,6 +117,15 @@ export function LedgerScreen({ onNavigateTab }: Props) {
     } finally {
       setSharing(false);
     }
+  }
+
+  if (!capturesLoaded) {
+    return (
+      <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
+        <ScreenLoader />
+        <TabBar active="ledger" onNavigate={onNavigateTab} />
+      </SafeAreaView>
+    );
   }
 
   return (

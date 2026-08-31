@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../components/AppText';
 import { KovaLogo } from '../components/KovaLogo';
 import { TabBar, TabKey } from '../components/TabBar';
+import { ScreenLoader } from '../components/ScreenLoader';
 import { dark } from '../constants/theme';
 import { supabase } from '../lib/supabase';
 import { detectNearbyMerchant, DetectedMerchant } from '../engine/gpsDetection';
@@ -30,6 +31,7 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
   const [merchant, setMerchant] = useState<DetectedMerchant | null>(null);
   const [topRec, setTopRec] = useState<CardRecommendation | null>(null);
   const [ledger, setLedger] = useState({ yearToDate: 0, captureCount: 0, projectedYearEnd: 0 });
+  const [ledgerLoaded, setLedgerLoaded] = useState(false);
   const [wallet, setWallet] = useState<WalletCard[]>([]);
   const [alert, setAlert] = useState<RotatingAlert | null>(null);
   const [checkingLocation, setCheckingLocation] = useState(false);
@@ -46,7 +48,10 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
 
   useEffect(() => {
     if (!userId) return;
-    getLedgerSummary(userId).then(setLedger);
+    getLedgerSummary(userId).then((l) => {
+      setLedger(l);
+      setLedgerLoaded(true);
+    });
     supabase
       .from('user_cards')
       .select('card_id, cards(name, color_hex)')
@@ -117,6 +122,15 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
     .toUpperCase();
   const displayName = greetingName.charAt(0).toUpperCase() + greetingName.slice(1);
   const projectedYearEnd = ledger.projectedYearEnd;
+
+  if (!ledgerLoaded) {
+    return (
+      <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
+        <ScreenLoader />
+        <TabBar active="home" onNavigate={onNavigateTab} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>

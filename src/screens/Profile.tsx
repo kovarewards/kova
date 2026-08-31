@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Alert, Linking, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, TextInput } from '../components/AppText';
+import { ScreenLoader } from '../components/ScreenLoader';
 import { dark } from '../constants/theme';
 import { supabase } from '../lib/supabase';
 import { containsProfanity } from '../lib/profanity';
@@ -25,12 +26,14 @@ export function ProfileScreen({ onBack }: Props) {
   const [savingPassword, setSavingPassword] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [profileLoaded, setProfileLoaded] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       setFirstName(data.user?.user_metadata?.first_name ?? '');
       setLastName(data.user?.user_metadata?.last_name ?? '');
       setEmail(data.user?.email ?? '');
+      setProfileLoaded(true);
     });
   }, []);
 
@@ -117,6 +120,14 @@ export function ProfileScreen({ onBack }: Props) {
     }
     await supabase.auth.signOut();
     // Session going away routes back to Auth — handled by App.tsx.
+  }
+
+  if (!profileLoaded) {
+    return (
+      <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
+        <ScreenLoader />
+      </SafeAreaView>
+    );
   }
 
   return (

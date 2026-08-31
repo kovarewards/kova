@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, TextInput } from '../components/AppText';
 import { KovaLogo } from '../components/KovaLogo';
+import { ScreenLoader } from '../components/ScreenLoader';
 import { dark } from '../constants/theme';
 import { withOpacity } from '../lib/format';
 import { supabase } from '../lib/supabase';
@@ -24,6 +25,7 @@ export function OnboardingScreen({ onContinue }: Props) {
   const [userId, setUserId] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [cards, setCards] = useState<CardOption[]>([]);
+  const [cardsLoaded, setCardsLoaded] = useState(false);
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
@@ -36,6 +38,7 @@ export function OnboardingScreen({ onContinue }: Props) {
         setCards(
           (data ?? []).map((c: any) => ({ id: c.id, name: c.name, issuer: c.issuer, colorHex: c.color_hex }))
         );
+        setCardsLoaded(true);
       });
   }, []);
 
@@ -70,6 +73,17 @@ export function OnboardingScreen({ onContinue }: Props) {
   const visibleCards = q
     ? cards.filter((c) => c.name.toLowerCase().includes(q) || c.issuer.toLowerCase().includes(q))
     : cards.filter((c) => POPULAR_CARD_NAMES.has(c.name) || addedIds.has(c.id));
+
+  if (!cardsLoaded) {
+    return (
+      <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
+        <View style={styles.logoRow}>
+          <KovaLogo size={72} mode="dark" />
+        </View>
+        <ScreenLoader />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>

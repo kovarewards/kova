@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../components/AppText';
 import { TabBar, TabKey } from '../components/TabBar';
+import { ScreenLoader } from '../components/ScreenLoader';
 import { dark } from '../constants/theme';
 import { CATEGORY_LABEL } from '../constants/categories';
 import { supabase } from '../lib/supabase';
@@ -23,6 +24,7 @@ type Props = { onAddCard: () => void; onNavigateTab: (tab: TabKey) => void };
 export function WalletScreen({ onAddCard, onNavigateTab }: Props) {
   const [userId, setUserId] = useState<string | null>(null);
   const [cards, setCards] = useState<WalletCard[]>([]);
+  const [cardsLoaded, setCardsLoaded] = useState(false);
   const [capturedByCard, setCapturedByCard] = useState<Record<string, number>>({});
   const [rotatingByCard, setRotatingByCard] = useState<Record<string, RotatingInfo | null>>({});
 
@@ -47,6 +49,7 @@ export function WalletScreen({ onAddCard, onNavigateTab }: Props) {
             verifiedAt: r.cards.verified_at,
           }))
         );
+        setCardsLoaded(true);
       });
   }, [userId]);
 
@@ -93,6 +96,15 @@ export function WalletScreen({ onAddCard, onNavigateTab }: Props) {
       }
     });
   }, [userId, cards]);
+
+  if (!cardsLoaded) {
+    return (
+      <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
+        <ScreenLoader />
+        <TabBar active="wallet" onNavigate={onNavigateTab} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
