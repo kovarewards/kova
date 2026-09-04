@@ -5,8 +5,18 @@ export type CardRecommendation = {
   multiplier: number; pointsType: string;
   valuePerHundred: number; vsWorstSaving: number;
   isRotating: boolean; expiresAt?: string;
-  verifiedAt?: string; annualFee: number;
+  verifiedAt?: string; annualFee: number; pooledVia?: string;
 };
+
+// Chase Ultimate Rewards: these three cards unlock full transfer-partner value for
+// UR points pooled in from ANY other Chase UR-earning card in the same wallet — e.g.
+// Freedom Unlimited's own points are worth 1 cent (cash-out only) UNTIL combined
+// into an owned Sapphire Preferred/Reserve or Ink Business Preferred account, at
+// which point the pooled points are worth that card's transfer rate instead.
+// Verified against chase.com's combine-points policy, 2026-09-03.
+const CHASE_UR_PREMIUM_UNLOCKERS = new Set([
+  'Chase Sapphire Preferred', 'Chase Sapphire Reserve', 'Chase Ink Business Preferred',
+]);
 
 export async function getRecommendations(
   userId: string,
@@ -24,6 +34,16 @@ export async function getRecommendations(
   if (!userCards?.length) return [];
   const today = new Date().toISOString().split('T')[0];
 
+  // Highest cpp among owned premium UR unlockers, if any — this is what pooled-in
+  // UR points from other owned Chase cards would actually redeem for.
+  const ownedPremiumUrCpp = Math.max(
+    0,
+    ...userCards
+      .map((uc) => uc.cards as any)
+      .filter((card) => CHASE_UR_PREMIUM_UNLOCKERS.has(card.name))
+      .flatMap((card) => (card.reward_categories || []).map((c: any) => c.cpp ?? 0))
+  );
+
   const scored: CardRecommendation[] = userCards.flatMap((uc) => {
     const card = uc.cards as any;
     const cats: any[] = card.reward_categories || [];
@@ -35,7 +55,18 @@ export async function getRecommendations(
           (!c.end_date || c.end_date >= today)
       ) || cats.find((c) => c.category === 'other');
     if (!match) return [];
-    const cpp = match.cpp ?? 0.01;
+    let cpp = match.cpp ?? 0.01;
+    let pooledVia: string | undefined;
+    if (
+      match.points_type === 'UR' &&
+      !CHASE_UR_PREMIUM_UNLOCKERS.has(card.name) &&
+      ownedPremiumUrCpp > cpp
+    ) {
+      cpp = ownedPremiumUrCpp;
+      pooledVia = [...CHASE_UR_PREMIUM_UNLOCKERS].find((name) =>
+        userCards.some((uc2) => (uc2.cards as any).name === name)
+      );
+    }
     return [{
       cardId: card.id,
       cardName: card.name,
@@ -48,6 +79,7 @@ export async function getRecommendations(
       expiresAt: match.end_date ?? undefined,
       verifiedAt: match.verified_at ?? undefined,
       annualFee: card.annual_fee ?? 0,
+      pooledVia,
     }];
   });
 

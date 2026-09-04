@@ -128,7 +128,12 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
                 <View style={[styles.minicard, { backgroundColor: best.colorHex ?? dark.surf3 }]} />
                 <View style={styles.recTextCol}>
                   <Text style={styles.bestCardName} numberOfLines={1}>{best.cardName}</Text>
-                  <Text style={styles.tiny} numberOfLines={1}>{best.multiplier}× {best.pointsType}</Text>
+                  <Text style={styles.tiny} numberOfLines={1}>
+                    {best.multiplier}× {best.pointsType}
+                    {best.pooledVia && (
+                      <Text style={styles.pooledText}> · pooled via {best.pooledVia}</Text>
+                    )}
+                  </Text>
                 </View>
               </View>
               <View style={styles.recValueCol}>
@@ -162,6 +167,9 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
                 <Text style={styles.tiny} numberOfLines={1}>
                   {r.multiplier}× {r.pointsType}
                   {daysAgo(r.verifiedAt) !== null ? ` · ✓ verified ${daysAgo(r.verifiedAt)}d` : ''}
+                  {r.pooledVia && (
+                    <Text style={styles.pooledText}> · pooled via {r.pooledVia}</Text>
+                  )}
                 </Text>
               </View>
             </View>
@@ -222,6 +230,7 @@ const styles = StyleSheet.create({
   },
   pillAccText: { fontSize: 11, fontWeight: '800', letterSpacing: 1.3, color: dark.accent },
   vbadge: { fontSize: 12, color: dark.muted },
+  pooledText: { color: dark.accent, fontWeight: '700' },
   vbadgeBold: { color: dark.green, fontWeight: '700' },
   recInfo: { flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1, minWidth: 0 },
   recTextCol: { flex: 1, minWidth: 0 },
