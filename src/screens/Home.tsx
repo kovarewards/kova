@@ -140,7 +140,11 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
           <Text style={styles.tiny}>{dateLabel}</Text>
           <Text style={styles.greeting}>Hey, {displayName}</Text>
         </View>
-        <TouchableOpacity onPress={onOpenProfile}>
+        <TouchableOpacity
+          onPress={onOpenProfile}
+          accessibilityRole="button"
+          accessibilityLabel="Open profile"
+        >
           <KovaLogo size={38} mode="dark" />
         </TouchableOpacity>
       </View>

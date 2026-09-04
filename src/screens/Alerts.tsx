@@ -482,7 +482,7 @@ const styles = StyleSheet.create({
   cardChipWrap: { width: 60, alignItems: 'center', gap: 3 },
   cardChip: { width: 52, height: 34, borderRadius: 6, borderWidth: 2, borderColor: 'transparent' },
   cardChipSelected: { borderColor: dark.accent },
-  cardChipLabel: { fontSize: 9.5, color: dark.dim, textAlign: 'center' },
+  cardChipLabel: { fontSize: 11, color: dark.dim, textAlign: 'center' },
   formInput: {
     fontSize: 14, color: dark.text, backgroundColor: dark.surf2,
     borderWidth: 1, borderColor: dark.border2, borderRadius: 11,

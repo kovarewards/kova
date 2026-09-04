@@ -11,8 +11,8 @@ export const dark = {
   accentSoft:   'rgba(124,143,255,0.10)',
   accentBorder: 'rgba(124,143,255,0.28)',
   text:         '#E8EEFF',
-  dim:          '#5A6A9A',
-  muted:        '#3A4A7A',
+  dim:          '#6E7DAA',   // lightened from #5A6A9A — was 3.57:1 on bg, WCAG AA needs 4.5:1 at this text size
+  muted:        '#4F64A5',   // lightened from #3A4A7A — was 2.20:1 on bg, failed contrast outright
   red:          '#F87171',
   green:        '#4ADE80',
   gold:         '#FBBF24',
