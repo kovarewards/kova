@@ -131,17 +131,17 @@ export function OnboardingScreen({ onContinue }: Props) {
             >
               <View style={styles.rowline}>
                 <View style={[styles.minicard, { backgroundColor: c.colorHex ?? dark.surf3 }]} />
-                <View>
-                  <Text style={styles.cardName}>{c.name}</Text>
-                  <Text style={styles.tiny}>{c.issuer}</Text>
+                <View style={styles.nameCol}>
+                  <Text style={styles.cardName} numberOfLines={1}>{c.name}</Text>
+                  <Text style={styles.tiny} numberOfLines={1}>{c.issuer}</Text>
                 </View>
               </View>
               {added ? (
-                <View style={styles.pillAcc}>
+                <View style={[styles.pillAcc, styles.noShrink]}>
                   <Text style={styles.pillAccText}>＋ ADDED</Text>
                 </View>
               ) : (
-                <Text style={styles.plus}>＋</Text>
+                <Text style={[styles.plus, styles.noShrink]}>＋</Text>
               )}
             </TouchableOpacity>
           );
@@ -186,10 +186,12 @@ const styles = StyleSheet.create({
   },
   inputText: { fontSize: 16, color: dark.text, paddingVertical: 10 },
   spread: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  rowline: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  rowline: { flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1, minWidth: 0 },
+  nameCol: { flex: 1, minWidth: 0 },
+  noShrink: { flexShrink: 0 },
   card: { backgroundColor: dark.surf, borderWidth: 1, borderColor: dark.border, borderRadius: 18, padding: 16 },
   cardDim: { opacity: 0.65 },
-  minicard: { width: 58, height: 38, borderRadius: 7 },
+  minicard: { width: 58, height: 38, borderRadius: 7, flexShrink: 0 },
   cardName: { fontSize: 15, fontWeight: '700', color: dark.text },
   tiny: { fontSize: 12, color: dark.muted },
   tinyLabel: { fontSize: 12, color: dark.dim, letterSpacing: 1.3, marginTop: 2 },

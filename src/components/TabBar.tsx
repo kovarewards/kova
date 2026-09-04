@@ -86,11 +86,13 @@ export function TabBar({ active, onNavigate }: Props) {
 
 const styles = StyleSheet.create({
   tabbar: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', height: 68,
+    flexDirection: 'row', alignItems: 'stretch', height: 68,
     borderTopWidth: 1, borderTopColor: dark.border, backgroundColor: dark.surf,
     marginTop: 10, paddingBottom: 10,
   },
-  tab: { alignItems: 'center' },
+  // flex:1 + stretch gives each tab a ~58×~100pt touch target (well past the 44pt
+  // iOS minimum) instead of shrink-wrapping tightly around the icon+label content.
+  tab: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   iconWrap: { height: 19, justifyContent: 'center', marginBottom: 3 },
   tabLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 1.3, color: dark.muted },
   tabOn: { color: dark.accent },

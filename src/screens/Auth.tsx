@@ -125,7 +125,11 @@ export function AuthScreen() {
           />
 
           {mode === 'signIn' && (
-            <TouchableOpacity onPress={forgotPassword} disabled={loading}>
+            <TouchableOpacity
+              onPress={forgotPassword}
+              disabled={loading}
+              hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}
+            >
               <Text style={styles.forgot}>Forgot password?</Text>
             </TouchableOpacity>
           )}
@@ -147,6 +151,7 @@ export function AuthScreen() {
               setError(null);
               setMessage(null);
             }}
+            hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}
           >
             <Text style={styles.toggle}>
               {mode === 'signIn' ? 'New here? Create account' : 'Already have an account? Sign in'}

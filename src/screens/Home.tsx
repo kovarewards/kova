@@ -150,13 +150,20 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
       </View>
 
       <View style={styles.refreshRow}>
-        <TouchableOpacity onPress={() => checkLocation(true)} disabled={checkingLocation}>
+        <TouchableOpacity
+          onPress={() => checkLocation(true)}
+          disabled={checkingLocation}
+          hitSlop={{ top: 10, bottom: 3, left: 14, right: 14 }}
+        >
           <Text style={styles.refreshText}>
             {checkingLocation ? 'Checking location…' : '↻  Refresh location'}
           </Text>
         </TouchableOpacity>
         {!merchant && (
-          <TouchableOpacity onPress={() => setShowCategoryPicker(true)}>
+          <TouchableOpacity
+            onPress={() => setShowCategoryPicker(true)}
+            hitSlop={{ top: 3, bottom: 10, left: 14, right: 14 }}
+          >
             <Text style={styles.pickCategoryText}>Can&apos;t find your merchant? Pick a category</Text>
           </TouchableOpacity>
         )}
@@ -196,7 +203,10 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
       <View style={styles.ledgerCard}>
         <View style={styles.spread}>
           <Text style={styles.tinyLabel}>RECOVERED THIS YEAR</Text>
-          <TouchableOpacity onPress={() => onNavigateTab('ledger')}>
+          <TouchableOpacity
+            onPress={() => onNavigateTab('ledger')}
+            hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}
+          >
             <Text style={[styles.tiny, { color: dark.accent }]}>View ledger →</Text>
           </TouchableOpacity>
         </View>

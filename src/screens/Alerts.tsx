@@ -349,7 +349,10 @@ export function AlertsScreen({ onNavigateTab }: Props) {
                     </TouchableOpacity>
                   </View>
                 ) : (
-                  <TouchableOpacity onPress={() => { setLoggingId(t.id); setLogAmount(''); }}>
+                  <TouchableOpacity
+                    onPress={() => { setLoggingId(t.id); setLogAmount(''); }}
+                    hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}
+                  >
                     <Text style={styles.logSpendLink}>＋ Log spend</Text>
                   </TouchableOpacity>
                 )}

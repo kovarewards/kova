@@ -133,7 +133,7 @@ export function ProfileScreen({ onBack }: Props) {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-        <TouchableOpacity onPress={onBack}>
+        <TouchableOpacity onPress={onBack} hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}>
           <Text style={styles.tiny}>← BACK</Text>
         </TouchableOpacity>
         <Text style={styles.h1}>Profile</Text>
