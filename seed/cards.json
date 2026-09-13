@@ -682,7 +682,7 @@
     "source_url": "https://www.bankofamerica.com/credit-cards/products/premium-rewards-credit-card/",
     "notes": "Verified 2026-07-14 against bankofamerica.com. Base rates only — doesn't assume a Preferred Rewards banking relationship bonus, which Kova has no way to know about.",
     "categories": [
-      { "category": "travel", "multiplier": 2,   "points_type": "CB", "cpp": 0.01 },
+      { "category": "travel", "multiplier": 2,   "points_type": "CB", "cpp": 0.01, "notes": "Confirmed 2026-09-13 via Scout/Auditor weekly check (2 independent sources: WalletHub and NerdWallet/Bankrate/The Points Guy): BoA defines 'travel' broadly for this rate, including airlines, hotels, car rentals, plus museums, amusement parks, zoos, aquariums, passenger trains, buses, taxis, and parking/tolls (subject to merchant category coding)." },
       { "category": "dining", "multiplier": 2,   "points_type": "CB", "cpp": 0.01 },
       { "category": "other",  "multiplier": 1.5, "points_type": "CB", "cpp": 0.01 }
     ]
@@ -696,7 +696,7 @@
     "source_url": "https://www.bankofamerica.com/credit-cards/products/travel-rewards-credit-card/",
     "notes": "Verified 2026-07-14 against bankofamerica.com/credit-cards/products/travel-rewards-credit-card/.",
     "categories": [
-      { "category": "other", "multiplier": 1.5, "points_type": "CB", "cpp": 0.01, "notes": "flat rate, no bonus categories" }
+      { "category": "other", "multiplier": 1.5, "points_type": "CB", "cpp": 0.01, "notes": "flat rate, no bonus categories. Confirmed 2026-09-13 via Scout/Auditor weekly check (2 independent sources: NerdWallet and Bankrate/The Points Guy): card also earns 3x when booked through the BofA Travel Center portal (not modeled here — not merchant-category detectable), and BofA Rewards program tier bonuses (10%-75% more, based on banking relationship balances) are not assumed here, consistent with how Kova treats other issuer relationship bonuses." }
     ]
   },
   {
