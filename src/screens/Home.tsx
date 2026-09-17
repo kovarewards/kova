@@ -162,16 +162,16 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
             {checkingLocation ? 'Checking location…' : '↻  Refresh location'}
           </Text>
         </TouchableOpacity>
-        {!merchant && (
-          <TouchableOpacity
-            onPress={() => setShowCategoryPicker(true)}
-            hitSlop={{ top: 3, bottom: 10, left: 14, right: 14 }}
-            accessibilityRole="button"
-            accessibilityLabel="Can't find your merchant? Pick a category"
-          >
-            <Text style={styles.pickCategoryText}>Can&apos;t find your merchant? Pick a category</Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          onPress={() => setShowCategoryPicker(true)}
+          hitSlop={{ top: 3, bottom: 10, left: 14, right: 14 }}
+          accessibilityRole="button"
+          accessibilityLabel={merchant ? 'Pick a category instead' : "Can't find your merchant? Pick a category"}
+        >
+          <Text style={styles.pickCategoryText}>
+            {merchant ? 'Pick a category instead' : "Can't find your merchant? Pick a category"}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {merchant && topRec && (
