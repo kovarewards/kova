@@ -128,6 +128,9 @@ export function OnboardingScreen({ onContinue }: Props) {
               style={[styles.card, styles.spread, !added && addedIds.size > 0 && styles.cardDim]}
               onPress={() => toggleCard(c.id)}
               activeOpacity={0.7}
+              accessibilityRole="checkbox"
+              accessibilityLabel={`${c.name}, ${c.issuer}`}
+              accessibilityState={{ checked: added }}
             >
               <View style={styles.rowline}>
                 <View style={[styles.minicard, { backgroundColor: c.colorHex ?? dark.surf3 }]} />
@@ -155,6 +158,9 @@ export function OnboardingScreen({ onContinue }: Props) {
           style={[styles.btn, addedIds.size === 0 && styles.btnDisabled]}
           disabled={addedIds.size === 0}
           onPress={onContinue}
+          accessibilityRole="button"
+          accessibilityLabel="See my best cards"
+          accessibilityState={{ disabled: addedIds.size === 0 }}
         >
           <Text style={styles.btnText}>See my best cards →</Text>
         </TouchableOpacity>

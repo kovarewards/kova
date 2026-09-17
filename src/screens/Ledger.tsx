@@ -239,7 +239,14 @@ export function LedgerScreen({ onNavigateTab }: Props) {
           </View>
         )}
 
-        <TouchableOpacity style={styles.btnSecondary} onPress={handleShare} disabled={sharing || total === 0}>
+        <TouchableOpacity
+          style={styles.btnSecondary}
+          onPress={handleShare}
+          disabled={sharing || total === 0}
+          accessibilityRole="button"
+          accessibilityLabel={`Share my ${year} recap`}
+          accessibilityState={{ disabled: sharing || total === 0, busy: sharing }}
+        >
           <Text style={styles.btnSecondaryText}>
             {sharing ? 'Preparing…' : `↗  Share my ${year} recap`}
           </Text>

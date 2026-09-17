@@ -87,7 +87,12 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-        <TouchableOpacity onPress={onBack} hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}>
+        <TouchableOpacity
+          onPress={onBack}
+          hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}
+          accessibilityRole="button"
+          accessibilityLabel="Back"
+        >
           <Text style={styles.tiny}>← BACK</Text>
         </TouchableOpacity>
 
@@ -148,6 +153,13 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
               style={[styles.btn, usedCardId === best.cardId && styles.btnUsed]}
               onPress={() => handleUsedIt(best)}
               disabled={logging || usedCardId === best.cardId}
+              accessibilityRole="button"
+              accessibilityLabel={
+                usedCardId === best.cardId
+                  ? `Logged $${best.valuePerHundred.toFixed(2)} recovered`
+                  : `Used it — log $${best.valuePerHundred.toFixed(2)} recovered`
+              }
+              accessibilityState={{ disabled: logging || usedCardId === best.cardId, busy: logging }}
             >
               <Text style={[styles.btnText, usedCardId === best.cardId && styles.btnTextUsed]}>
                 {usedCardId === best.cardId
@@ -192,6 +204,8 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
           <TouchableOpacity
             style={styles.gapCard}
             onPress={() => track.cardApplicationStarted(gapCard.cardName)}
+            accessibilityRole="button"
+            accessibilityLabel={`Missing $${(gapCard.valuePerHundred - (best?.valuePerHundred ?? 0)).toFixed(2)} on $${spendAmount} spend in ${CATEGORY_LABEL[target.category] ?? target.category}. ${gapCard.cardName} fills this gap.`}
           >
             <Text style={styles.gapText}>
               Missing ${(gapCard.valuePerHundred - (best?.valuePerHundred ?? 0)).toFixed(2)} on ${spendAmount} spend in{' '}

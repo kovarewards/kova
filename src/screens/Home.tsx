@@ -154,6 +154,9 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
           onPress={() => checkLocation(true)}
           disabled={checkingLocation}
           hitSlop={{ top: 10, bottom: 3, left: 14, right: 14 }}
+          accessibilityRole="button"
+          accessibilityLabel="Refresh location"
+          accessibilityState={{ disabled: checkingLocation, busy: checkingLocation }}
         >
           <Text style={styles.refreshText}>
             {checkingLocation ? 'Checking location…' : '↻  Refresh location'}
@@ -163,6 +166,8 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
           <TouchableOpacity
             onPress={() => setShowCategoryPicker(true)}
             hitSlop={{ top: 3, bottom: 10, left: 14, right: 14 }}
+            accessibilityRole="button"
+            accessibilityLabel="Can't find your merchant? Pick a category"
           >
             <Text style={styles.pickCategoryText}>Can&apos;t find your merchant? Pick a category</Text>
           </TouchableOpacity>
@@ -173,6 +178,8 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => onOpenRecommendation({ name: merchant.name, category: merchant.category })}
+          accessibilityRole="button"
+          accessibilityLabel={`You're at ${merchant.name}. Use ${topRec.cardName} — $${topRec.valuePerHundred.toFixed(2)} per $100`}
         >
           <View style={[styles.card, styles.cardHighlight]}>
             <View style={styles.bannerTopRow}>
@@ -206,6 +213,8 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
           <TouchableOpacity
             onPress={() => onNavigateTab('ledger')}
             hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}
+            accessibilityRole="button"
+            accessibilityLabel="View ledger"
           >
             <Text style={[styles.tiny, { color: dark.accent }]}>View ledger →</Text>
           </TouchableOpacity>
@@ -255,8 +264,10 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
           style={styles.modalOverlay}
           activeOpacity={1}
           onPress={() => setShowCategoryPicker(false)}
+          accessibilityRole="button"
+          accessibilityLabel="Close"
         >
-          <TouchableOpacity activeOpacity={1} style={styles.sheet}>
+          <TouchableOpacity activeOpacity={1} style={styles.sheet} accessible={false}>
             <View style={styles.sheetHandle} />
             <Text style={styles.sheetTitle}>What are you buying?</Text>
             <Text style={[styles.tiny, { marginBottom: 14 }]}>
@@ -271,6 +282,8 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
                     setShowCategoryPicker(false);
                     onOpenRecommendation({ name: label, category: key });
                   }}
+                  accessibilityRole="button"
+                  accessibilityLabel={label}
                 >
                   <Text style={styles.categoryEmoji}>{CATEGORY_EMOJI[key]}</Text>
                   <Text style={styles.categoryTileText}>{label}</Text>

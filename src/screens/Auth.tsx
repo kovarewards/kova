@@ -129,6 +129,8 @@ export function AuthScreen() {
               onPress={forgotPassword}
               disabled={loading}
               hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}
+              accessibilityRole="button"
+              accessibilityLabel="Forgot password?"
             >
               <Text style={styles.forgot}>Forgot password?</Text>
             </TouchableOpacity>
@@ -137,7 +139,14 @@ export function AuthScreen() {
           {error && <Text style={styles.error}>{error}</Text>}
           {message && <Text style={styles.message}>{message}</Text>}
 
-          <TouchableOpacity style={styles.btn} onPress={submit} disabled={loading}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={submit}
+            disabled={loading}
+            accessibilityRole="button"
+            accessibilityLabel={mode === 'signIn' ? 'Sign in' : 'Sign up'}
+            accessibilityState={{ disabled: loading, busy: loading }}
+          >
             {loading ? (
               <ActivityIndicator color={dark.bg} />
             ) : (
@@ -152,6 +161,10 @@ export function AuthScreen() {
               setMessage(null);
             }}
             hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}
+            accessibilityRole="button"
+            accessibilityLabel={
+              mode === 'signIn' ? 'New here? Create account' : 'Already have an account? Sign in'
+            }
           >
             <Text style={styles.toggle}>
               {mode === 'signIn' ? 'New here? Create account' : 'Already have an account? Sign in'}

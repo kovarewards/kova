@@ -133,7 +133,12 @@ export function ProfileScreen({ onBack }: Props) {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-        <TouchableOpacity onPress={onBack} hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}>
+        <TouchableOpacity
+          onPress={onBack}
+          hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}
+          accessibilityRole="button"
+          accessibilityLabel="Back"
+        >
           <Text style={styles.tiny}>← BACK</Text>
         </TouchableOpacity>
         <Text style={styles.h1}>Profile</Text>
@@ -158,7 +163,14 @@ export function ProfileScreen({ onBack }: Props) {
           </View>
           {nameStatus.error && <Text style={styles.error}>{nameStatus.error}</Text>}
           {nameStatus.message && <Text style={styles.message}>{nameStatus.message}</Text>}
-          <TouchableOpacity style={styles.btn} onPress={saveName} disabled={savingName}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={saveName}
+            disabled={savingName}
+            accessibilityRole="button"
+            accessibilityLabel="Save name"
+            accessibilityState={{ disabled: savingName, busy: savingName }}
+          >
             <Text style={styles.btnText}>{savingName ? 'Saving…' : 'Save name'}</Text>
           </TouchableOpacity>
         </View>
@@ -177,7 +189,14 @@ export function ProfileScreen({ onBack }: Props) {
           />
           {emailStatus.error && <Text style={styles.error}>{emailStatus.error}</Text>}
           {emailStatus.message && <Text style={styles.message}>{emailStatus.message}</Text>}
-          <TouchableOpacity style={styles.btn} onPress={saveEmail} disabled={savingEmail}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={saveEmail}
+            disabled={savingEmail}
+            accessibilityRole="button"
+            accessibilityLabel="Update email"
+            accessibilityState={{ disabled: savingEmail, busy: savingEmail }}
+          >
             <Text style={styles.btnText}>{savingEmail ? 'Saving…' : 'Update email'}</Text>
           </TouchableOpacity>
         </View>
@@ -202,7 +221,14 @@ export function ProfileScreen({ onBack }: Props) {
           />
           {passwordStatus.error && <Text style={styles.error}>{passwordStatus.error}</Text>}
           {passwordStatus.message && <Text style={styles.message}>{passwordStatus.message}</Text>}
-          <TouchableOpacity style={styles.btn} onPress={savePassword} disabled={savingPassword}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={savePassword}
+            disabled={savingPassword}
+            accessibilityRole="button"
+            accessibilityLabel="Update password"
+            accessibilityState={{ disabled: savingPassword, busy: savingPassword }}
+          >
             <Text style={styles.btnText}>{savingPassword ? 'Saving…' : 'Update password'}</Text>
           </TouchableOpacity>
         </View>
@@ -210,16 +236,29 @@ export function ProfileScreen({ onBack }: Props) {
         <TouchableOpacity
           style={styles.supportBtn}
           onPress={() => Linking.openURL(`mailto:${SUPPORT_EMAIL}`)}
+          accessibilityRole="link"
+          accessibilityLabel="Contact support"
         >
           <Text style={styles.supportText}>Contact support</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.logOutBtn} onPress={handleLogOut}>
+        <TouchableOpacity
+          style={styles.logOutBtn}
+          onPress={handleLogOut}
+          accessibilityRole="button"
+          accessibilityLabel="Log out"
+        >
           <Text style={styles.logOutText}>Log out</Text>
         </TouchableOpacity>
 
         {deleteError && <Text style={[styles.error, { textAlign: 'center' }]}>{deleteError}</Text>}
-        <TouchableOpacity onPress={confirmDeleteAccount} disabled={deleting}>
+        <TouchableOpacity
+          onPress={confirmDeleteAccount}
+          disabled={deleting}
+          accessibilityRole="button"
+          accessibilityLabel="Delete my account"
+          accessibilityState={{ disabled: deleting, busy: deleting }}
+        >
           <Text style={styles.deleteText}>{deleting ? 'Deleting…' : 'Delete my account'}</Text>
         </TouchableOpacity>
       </ScrollView>

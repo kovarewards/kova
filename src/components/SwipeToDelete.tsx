@@ -1,22 +1,38 @@
 import { ReactNode } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { Text } from './AppText';
 import { dark } from '../constants/theme';
 
 type Props = { onDelete: () => void; children: ReactNode };
 
+// The swipe-to-reveal gesture is invisible to VoiceOver/TalkBack — those tools
+// use swipe gestures for their own navigation, so the reveal never fires.
+// accessibilityActions gives screen-reader users the same "Delete" action
+// through the standard actions rotor instead.
 export function SwipeToDelete({ onDelete, children }: Props) {
   return (
     <Swipeable
       overshootRight={false}
       renderRightActions={() => (
-        <TouchableOpacity style={styles.action} onPress={onDelete}>
+        <TouchableOpacity
+          style={styles.action}
+          onPress={onDelete}
+          accessibilityRole="button"
+          accessibilityLabel="Delete"
+        >
           <Text style={styles.actionText}>Delete</Text>
         </TouchableOpacity>
       )}
     >
-      {children}
+      <View
+        accessibilityActions={[{ name: 'delete', label: 'Delete' }]}
+        onAccessibilityAction={(e) => {
+          if (e.nativeEvent.actionName === 'delete') onDelete();
+        }}
+      >
+        {children}
+      </View>
     </Swipeable>
   );
 }

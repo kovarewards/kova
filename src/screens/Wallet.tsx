@@ -111,7 +111,12 @@ export function WalletScreen({ onAddCard, onNavigateTab }: Props) {
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
         <View style={styles.spread}>
           <Text style={styles.h1}>Wallet</Text>
-          <TouchableOpacity style={styles.pillAcc} onPress={onAddCard}>
+          <TouchableOpacity
+            style={styles.pillAcc}
+            onPress={onAddCard}
+            accessibilityRole="button"
+            accessibilityLabel="Add card"
+          >
             <Text style={styles.pillAccText}>＋ ADD CARD</Text>
           </TouchableOpacity>
         </View>
@@ -174,7 +179,13 @@ export function WalletScreen({ onAddCard, onNavigateTab }: Props) {
         })}
 
         {cards.length === 0 && (
-          <TouchableOpacity style={styles.emptyCard} onPress={onAddCard} activeOpacity={0.7}>
+          <TouchableOpacity
+            style={styles.emptyCard}
+            onPress={onAddCard}
+            activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel="Add your first card"
+          >
             <Text style={styles.emptyPlus}>＋</Text>
             <Text style={styles.emptyTitle}>Add your first card</Text>
             <Text style={[styles.tiny, { textAlign: 'center' }]}>

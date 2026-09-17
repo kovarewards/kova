@@ -26,7 +26,12 @@ export class ErrorBoundary extends Component<Props, State> {
             Kova hit an unexpected error. Try again below — if it keeps happening, email{' '}
             support@kovarewards.com and we'll take a look.
           </Text>
-          <TouchableOpacity style={styles.btn} onPress={() => this.setState({ error: null })}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => this.setState({ error: null })}
+            accessibilityRole="button"
+            accessibilityLabel="Try again"
+          >
             <Text style={styles.btnText}>Try again</Text>
           </TouchableOpacity>
         </View>

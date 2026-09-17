@@ -72,7 +72,14 @@ export function TabBar({ active, onNavigate }: Props) {
         const on = t.key === active;
         const color = on ? dark.accent : dark.muted;
         return (
-          <TouchableOpacity key={t.key} style={styles.tab} onPress={() => onNavigate(t.key)}>
+          <TouchableOpacity
+            key={t.key}
+            style={styles.tab}
+            onPress={() => onNavigate(t.key)}
+            accessibilityRole="tab"
+            accessibilityLabel={t.label.charAt(0) + t.label.slice(1).toLowerCase()}
+            accessibilityState={{ selected: on }}
+          >
             <View style={styles.iconWrap}>
               <t.Icon color={color} size={19} />
             </View>

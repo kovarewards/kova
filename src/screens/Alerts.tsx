@@ -279,7 +279,12 @@ export function AlertsScreen({ onNavigateTab }: Props) {
               </Text>
               <Text style={styles.alertBody}>Rotating categories must be activated to earn the bonus rate.</Text>
               {a.sourceUrl && (
-                <TouchableOpacity style={styles.btnSecondary} onPress={() => Linking.openURL(a.sourceUrl!)}>
+                <TouchableOpacity
+                  style={styles.btnSecondary}
+                  onPress={() => Linking.openURL(a.sourceUrl!)}
+                  accessibilityRole="link"
+                  accessibilityLabel="Open activation page"
+                >
                   <Text style={styles.btnSecondaryText}>Open activation page →</Text>
                 </TouchableOpacity>
               )}
@@ -344,7 +349,12 @@ export function AlertsScreen({ onNavigateTab }: Props) {
                       style={styles.logInput}
                       autoFocus
                     />
-                    <TouchableOpacity style={styles.logAddBtn} onPress={() => submitLogSpend(t)}>
+                    <TouchableOpacity
+                      style={styles.logAddBtn}
+                      onPress={() => submitLogSpend(t)}
+                      accessibilityRole="button"
+                      accessibilityLabel="Add"
+                    >
                       <Text style={styles.logAddBtnText}>Add</Text>
                     </TouchableOpacity>
                   </View>
@@ -352,6 +362,8 @@ export function AlertsScreen({ onNavigateTab }: Props) {
                   <TouchableOpacity
                     onPress={() => { setLoggingId(t.id); setLogAmount(''); }}
                     hitSlop={{ top: 14, bottom: 14, left: 14, right: 14 }}
+                    accessibilityRole="button"
+                    accessibilityLabel="Log spend"
                   >
                     <Text style={styles.logSpendLink}>＋ Log spend</Text>
                   </TouchableOpacity>
@@ -367,6 +379,8 @@ export function AlertsScreen({ onNavigateTab }: Props) {
             setShowCreate((v) => !v);
             setCreateError(null);
           }}
+          accessibilityRole="button"
+          accessibilityLabel={showCreate ? 'Cancel' : 'Track a new bonus'}
         >
           <Text style={styles.dashedText}>
             {showCreate ? 'Cancel' : '＋ Track a new bonus'}
@@ -378,7 +392,14 @@ export function AlertsScreen({ onNavigateTab }: Props) {
             <Text style={styles.tinyLabel}>WHICH CARD</Text>
             <View style={[styles.rowline, { marginTop: 8, marginBottom: 12, flexWrap: 'wrap' }]}>
               {walletOptions.map((c) => (
-                <TouchableOpacity key={c.id} onPress={() => setNewCardId(c.id)} style={styles.cardChipWrap}>
+                <TouchableOpacity
+                  key={c.id}
+                  onPress={() => setNewCardId(c.id)}
+                  style={styles.cardChipWrap}
+                  accessibilityRole="radio"
+                  accessibilityLabel={c.name}
+                  accessibilityState={{ checked: newCardId === c.id }}
+                >
                   <View
                     style={[
                       styles.cardChip,
@@ -415,7 +436,14 @@ export function AlertsScreen({ onNavigateTab }: Props) {
               style={styles.formInput}
             />
             {createError && <Text style={styles.errorText}>{createError}</Text>}
-            <TouchableOpacity style={styles.btn} onPress={submitNewTracker} disabled={creating}>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={submitNewTracker}
+              disabled={creating}
+              accessibilityRole="button"
+              accessibilityLabel="Start tracking"
+              accessibilityState={{ disabled: creating, busy: creating }}
+            >
               <Text style={styles.btnText}>{creating ? 'Starting…' : 'Start tracking'}</Text>
             </TouchableOpacity>
           </View>
