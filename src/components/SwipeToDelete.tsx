@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { Text } from './AppText';
-import { dark } from '../constants/theme';
+import { useTheme, type ThemeTokens } from '../lib/theme';
 
 type Props = { onDelete: () => void; children: ReactNode };
 
@@ -11,6 +11,8 @@ type Props = { onDelete: () => void; children: ReactNode };
 // accessibilityActions gives screen-reader users the same "Delete" action
 // through the standard actions rotor instead.
 export function SwipeToDelete({ onDelete, children }: Props) {
+  const { theme } = useTheme();
+  const styles = useMemo(() => makeStyles(theme), [theme]);
   return (
     <Swipeable
       overshootRight={false}
@@ -37,7 +39,7 @@ export function SwipeToDelete({ onDelete, children }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const makeStyles = (dark: ThemeTokens) => StyleSheet.create({
   action: {
     backgroundColor: dark.red, justifyContent: 'center', alignItems: 'center',
     width: 84, borderRadius: 18, height: '100%',

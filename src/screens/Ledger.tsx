@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ViewShot from 'react-native-view-shot';
@@ -6,7 +6,7 @@ import * as Sharing from 'expo-sharing';
 import { Text } from '../components/AppText';
 import { TabBar, TabKey } from '../components/TabBar';
 import { ScreenLoader } from '../components/ScreenLoader';
-import { dark } from '../constants/theme';
+import { useTheme, type ThemeTokens } from '../lib/theme';
 import { CATEGORY_LABEL, CATEGORY_EMOJI } from '../constants/categories';
 import { supabase } from '../lib/supabase';
 
@@ -30,6 +30,8 @@ function formatRecentDate(iso: string) {
 type Props = { onNavigateTab: (tab: TabKey) => void };
 
 export function LedgerScreen({ onNavigateTab }: Props) {
+  const { theme } = useTheme();
+  const styles = useMemo(() => makeStyles(theme), [theme]);
   const [userId, setUserId] = useState<string | null>(null);
   const year = new Date().getFullYear();
   const [captures, setCaptures] = useState<Capture[]>([]);
@@ -156,9 +158,9 @@ export function LedgerScreen({ onNavigateTab }: Props) {
                 const isCurrent = isCurrentYear && i === monthlyTotals.length - 1;
                 const frac = v / maxMonth;
                 const height = Math.max(4, frac * 48);
-                let color: string = dark.surf3;
-                if (i >= monthlyTotals.length * 0.7) color = dark.accent;
-                else if (i >= monthlyTotals.length * 0.4) color = dark.accent2;
+                let color: string = theme.surf3;
+                if (i >= monthlyTotals.length * 0.7) color = theme.accent;
+                else if (i >= monthlyTotals.length * 0.4) color = theme.accent2;
                 return (
                   <View
                     key={i}
@@ -200,7 +202,7 @@ export function LedgerScreen({ onNavigateTab }: Props) {
                       styles.categoryBarFill,
                       {
                         width: `${Math.max(6, (c.value / maxCategory) * 100)}%`,
-                        backgroundColor: i === 0 ? dark.accent : i === 1 ? dark.accent2 : dark.muted,
+                        backgroundColor: i === 0 ? theme.accent : i === 1 ? theme.accent2 : theme.muted,
                       },
                     ]}
                   />
@@ -217,7 +219,7 @@ export function LedgerScreen({ onNavigateTab }: Props) {
             {recent.map((c) => (
               <View key={c.id} style={[styles.card, styles.spread, styles.recentRow]}>
                 <View style={styles.rowline}>
-                  <View style={[styles.minicard, { backgroundColor: c.colorHex ?? dark.surf3 }]} />
+                  <View style={[styles.minicard, { backgroundColor: c.colorHex ?? theme.surf3 }]} />
                   <View>
                     <Text style={styles.recentTitle}>
                       {CATEGORY_EMOJI[c.category] ?? '💳'} {CATEGORY_LABEL[c.category] ?? c.category}
@@ -258,7 +260,7 @@ export function LedgerScreen({ onNavigateTab }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const makeStyles = (dark: ThemeTokens) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: dark.bg },
   screen: { flex: 1 },
   content: { padding: 20, gap: 13, paddingBottom: 30 },

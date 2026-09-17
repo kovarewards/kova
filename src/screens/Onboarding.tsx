@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, TextInput } from '../components/AppText';
 import { KovaLogo } from '../components/KovaLogo';
 import { ScreenLoader } from '../components/ScreenLoader';
-import { dark } from '../constants/theme';
+import { useTheme, type ThemeTokens } from '../lib/theme';
 import { withOpacity } from '../lib/format';
 import { supabase } from '../lib/supabase';
 
@@ -22,6 +22,8 @@ const POPULAR_CARD_NAMES = new Set([
 type Props = { onContinue: () => void };
 
 export function OnboardingScreen({ onContinue }: Props) {
+  const { theme, scheme } = useTheme();
+  const styles = useMemo(() => makeStyles(theme), [theme]);
   const [userId, setUserId] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [cards, setCards] = useState<CardOption[]>([]);
@@ -78,7 +80,7 @@ export function OnboardingScreen({ onContinue }: Props) {
     return (
       <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
         <View style={styles.logoRow}>
-          <KovaLogo size={72} mode="dark" />
+          <KovaLogo size={72} mode={scheme} />
         </View>
         <ScreenLoader />
       </SafeAreaView>
@@ -89,7 +91,7 @@ export function OnboardingScreen({ onContinue }: Props) {
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
         <View style={styles.logoRow}>
-          <KovaLogo size={72} mode="dark" />
+          <KovaLogo size={72} mode={scheme} />
         </View>
 
         <View style={styles.headline}>
@@ -109,7 +111,7 @@ export function OnboardingScreen({ onContinue }: Props) {
             value={query}
             onChangeText={setQuery}
             placeholder={'🔍  Search your cards — "Amex Gold"…'}
-            placeholderTextColor={dark.muted}
+            placeholderTextColor={theme.muted}
             style={styles.inputText}
           />
         </View>
@@ -133,7 +135,7 @@ export function OnboardingScreen({ onContinue }: Props) {
               accessibilityState={{ checked: added }}
             >
               <View style={styles.rowline}>
-                <View style={[styles.minicard, { backgroundColor: c.colorHex ?? dark.surf3 }]} />
+                <View style={[styles.minicard, { backgroundColor: c.colorHex ?? theme.surf3 }]} />
                 <View style={styles.nameCol}>
                   <Text style={styles.cardName} numberOfLines={1}>{c.name}</Text>
                   <Text style={styles.tiny} numberOfLines={1}>{c.issuer}</Text>
@@ -169,7 +171,7 @@ export function OnboardingScreen({ onContinue }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const makeStyles = (dark: ThemeTokens) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: dark.bg },
   screen: { flex: 1 },
   content: { padding: 20, gap: 13, paddingBottom: 30 },

@@ -1,8 +1,9 @@
 import type { ReactElement } from 'react';
+import { useMemo } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { Text } from './AppText';
-import { dark } from '../constants/theme';
+import { useTheme, type ThemeTokens } from '../lib/theme';
 
 export type TabKey = 'home' | 'wallet' | 'ledger' | 'alerts';
 
@@ -66,11 +67,13 @@ const TABS: { key: TabKey; Icon: (p: IconProps) => ReactElement; label: string }
 type Props = { active: TabKey; onNavigate: (tab: TabKey) => void };
 
 export function TabBar({ active, onNavigate }: Props) {
+  const { theme } = useTheme();
+  const styles = useMemo(() => makeStyles(theme), [theme]);
   return (
     <View style={styles.tabbar}>
       {TABS.map((t) => {
         const on = t.key === active;
-        const color = on ? dark.accent : dark.muted;
+        const color = on ? theme.accent : theme.muted;
         return (
           <TouchableOpacity
             key={t.key}
@@ -91,7 +94,7 @@ export function TabBar({ active, onNavigate }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const makeStyles = (dark: ThemeTokens) => StyleSheet.create({
   tabbar: {
     flexDirection: 'row', alignItems: 'stretch', height: 68,
     borderTopWidth: 1, borderTopColor: dark.border, backgroundColor: dark.surf,

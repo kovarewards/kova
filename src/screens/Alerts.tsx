@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Linking, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
@@ -6,7 +6,7 @@ import { Text, TextInput } from '../components/AppText';
 import { TabBar, TabKey } from '../components/TabBar';
 import { ScreenLoader } from '../components/ScreenLoader';
 import { SwipeToDelete } from '../components/SwipeToDelete';
-import { dark } from '../constants/theme';
+import { useTheme, type ThemeTokens } from '../lib/theme';
 import { CATEGORY_LABEL } from '../constants/categories';
 import { withOpacity } from '../lib/format';
 import { supabase } from '../lib/supabase';
@@ -44,6 +44,8 @@ type WalletCardOption = { id: string; name: string; colorHex: string | null; poi
 type Props = { onNavigateTab: (tab: TabKey) => void };
 
 export function AlertsScreen({ onNavigateTab }: Props) {
+  const { theme } = useTheme();
+  const styles = useMemo(() => makeStyles(theme), [theme]);
   const [userId, setUserId] = useState<string | null>(null);
   const [walletCardIds, setWalletCardIds] = useState<string[]>([]);
   const [walletOptions, setWalletOptions] = useState<WalletCardOption[]>([]);
@@ -345,7 +347,7 @@ export function AlertsScreen({ onNavigateTab }: Props) {
                       onChangeText={setLogAmount}
                       keyboardType="decimal-pad"
                       placeholder="$ amount"
-                      placeholderTextColor={dark.muted}
+                      placeholderTextColor={theme.muted}
                       style={styles.logInput}
                       autoFocus
                     />
@@ -403,7 +405,7 @@ export function AlertsScreen({ onNavigateTab }: Props) {
                   <View
                     style={[
                       styles.cardChip,
-                      { backgroundColor: c.colorHex ?? dark.surf3 },
+                      { backgroundColor: c.colorHex ?? theme.surf3 },
                       newCardId === c.id && styles.cardChipSelected,
                     ]}
                   />
@@ -416,7 +418,7 @@ export function AlertsScreen({ onNavigateTab }: Props) {
               onChangeText={setNewBonusPoints}
               keyboardType="number-pad"
               placeholder="Bonus points (e.g. 60000)"
-              placeholderTextColor={dark.muted}
+              placeholderTextColor={theme.muted}
               style={styles.formInput}
             />
             <TextInput
@@ -424,7 +426,7 @@ export function AlertsScreen({ onNavigateTab }: Props) {
               onChangeText={setNewSpendRequired}
               keyboardType="decimal-pad"
               placeholder="Spend required ($)"
-              placeholderTextColor={dark.muted}
+              placeholderTextColor={theme.muted}
               style={styles.formInput}
             />
             <TextInput
@@ -432,7 +434,7 @@ export function AlertsScreen({ onNavigateTab }: Props) {
               onChangeText={setNewDays}
               keyboardType="number-pad"
               placeholder="Days to complete"
-              placeholderTextColor={dark.muted}
+              placeholderTextColor={theme.muted}
               style={styles.formInput}
             />
             {createError && <Text style={styles.errorText}>{createError}</Text>}
@@ -459,7 +461,7 @@ export function AlertsScreen({ onNavigateTab }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const makeStyles = (dark: ThemeTokens) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: dark.bg },
   screen: { flex: 1 },
   content: { padding: 20, gap: 13, paddingBottom: 30 },

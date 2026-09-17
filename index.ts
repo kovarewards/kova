@@ -3,9 +3,10 @@ import { registerRootComponent } from 'expo';
 
 import App from './App';
 import { ErrorBoundary } from './src/components/ErrorBoundary';
+import { ThemeProvider } from './src/lib/theme';
 
 function Root() {
-  return createElement(ErrorBoundary, null, createElement(App));
+  return createElement(ThemeProvider, null, createElement(ErrorBoundary, null, createElement(App)));
 }
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);

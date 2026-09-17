@@ -1,12 +1,15 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from './AppText';
-import { dark } from '../constants/theme';
+import { ThemeContext, ThemeContextValue, ThemeTokens } from '../lib/theme';
+import { dark as fallbackTheme } from '../constants/theme';
 
 type Props = { children: ReactNode };
 type State = { error: Error | null };
 
 export class ErrorBoundary extends Component<Props, State> {
+  static contextType = ThemeContext;
+
   state: State = { error: null };
 
   static getDerivedStateFromError(error: Error) {
@@ -19,6 +22,9 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.error) {
+      const ctx = this.context as ThemeContextValue | null;
+      const theme = ctx?.theme ?? fallbackTheme;
+      const styles = makeStyles(theme);
       return (
         <View style={styles.safe}>
           <Text style={styles.title}>Something went wrong</Text>
@@ -41,7 +47,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-const styles = StyleSheet.create({
+const makeStyles = (dark: ThemeTokens) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: dark.bg, alignItems: 'center', justifyContent: 'center', padding: 28, gap: 14 },
   title: { fontSize: 20, fontWeight: '900', color: dark.text, textAlign: 'center' },
   body: { fontSize: 14, color: dark.dim, textAlign: 'center', lineHeight: 20 },

@@ -18,13 +18,14 @@ import { LedgerScreen } from './src/screens/Ledger';
 import { ProfileScreen } from './src/screens/Profile';
 import { TabKey } from './src/components/TabBar';
 import { supabase } from './src/lib/supabase';
-import { dark } from './src/constants/theme';
+import { useTheme } from './src/lib/theme';
 
 type Screen =
   | 'loading' | 'auth' | 'onboarding' | 'home' | 'recommendation'
   | 'wallet' | 'alerts' | 'ledger' | 'profile';
 
 export default function App() {
+  const { theme, scheme } = useTheme();
   const [fontsLoaded] = useFonts({
     Inter_400Regular, Inter_600SemiBold, Inter_700Bold, Inter_800ExtraBold, Inter_900Black,
   });
@@ -67,7 +68,7 @@ export default function App() {
   if (!fontsLoaded) {
     return (
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <View style={{ flex: 1, backgroundColor: dark.bg }} />
+        <View style={{ flex: 1, backgroundColor: theme.bg }} />
       </GestureHandlerRootView>
     );
   }
@@ -87,7 +88,7 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        {screen === 'loading' && <View style={{ flex: 1, backgroundColor: dark.bg }} />}
+        {screen === 'loading' && <View style={{ flex: 1, backgroundColor: theme.bg }} />}
         {screen === 'auth' && <AuthScreen />}
         {screen === 'onboarding' && (
           <OnboardingScreen onContinue={() => setScreen(onboardingReturnTo)} />
@@ -116,7 +117,7 @@ export default function App() {
         )}
         {screen === 'alerts' && <AlertsScreen onNavigateTab={handleNavigateTab} />}
         {screen === 'ledger' && <LedgerScreen onNavigateTab={handleNavigateTab} />}
-        <StatusBar style="light" />
+        <StatusBar style={scheme === 'light' ? 'dark' : 'light'} />
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

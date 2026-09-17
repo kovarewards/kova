@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Alert, Linking, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, TextInput } from '../components/AppText';
 import { ScreenLoader } from '../components/ScreenLoader';
-import { dark } from '../constants/theme';
+import { useTheme, type ThemeTokens } from '../lib/theme';
 import { supabase } from '../lib/supabase';
 import { containsProfanity } from '../lib/profanity';
 
@@ -12,6 +12,8 @@ const SUPPORT_EMAIL = 'support@kovarewards.com';
 type Props = { onBack: () => void };
 
 export function ProfileScreen({ onBack }: Props) {
+  const { theme, mode, setMode } = useTheme();
+  const styles = useMemo(() => makeStyles(theme), [theme]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -150,14 +152,14 @@ export function ProfileScreen({ onBack }: Props) {
               value={firstName}
               onChangeText={setFirstName}
               placeholder="First name"
-              placeholderTextColor={dark.muted}
+              placeholderTextColor={theme.muted}
               style={[styles.input, styles.nameInput]}
             />
             <TextInput
               value={lastName}
               onChangeText={setLastName}
               placeholder="Last name (optional)"
-              placeholderTextColor={dark.muted}
+              placeholderTextColor={theme.muted}
               style={[styles.input, styles.nameInput]}
             />
           </View>
@@ -181,7 +183,7 @@ export function ProfileScreen({ onBack }: Props) {
             value={email}
             onChangeText={setEmail}
             placeholder="Email"
-            placeholderTextColor={dark.muted}
+            placeholderTextColor={theme.muted}
             autoCapitalize="none"
             autoCorrect={false}
             keyboardType="email-address"
@@ -207,7 +209,7 @@ export function ProfileScreen({ onBack }: Props) {
             value={newPassword}
             onChangeText={setNewPassword}
             placeholder="New password"
-            placeholderTextColor={dark.muted}
+            placeholderTextColor={theme.muted}
             secureTextEntry
             style={[styles.input, { marginTop: 8 }]}
           />
@@ -215,7 +217,7 @@ export function ProfileScreen({ onBack }: Props) {
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             placeholder="Confirm new password"
-            placeholderTextColor={dark.muted}
+            placeholderTextColor={theme.muted}
             secureTextEntry
             style={[styles.input, { marginTop: 8 }]}
           />
@@ -231,6 +233,30 @@ export function ProfileScreen({ onBack }: Props) {
           >
             <Text style={styles.btnText}>{savingPassword ? 'Saving…' : 'Update password'}</Text>
           </TouchableOpacity>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.tinyLabel}>APPEARANCE</Text>
+          <View style={styles.appearanceRow}>
+            {(['system', 'light', 'dark'] as const).map((m) => {
+              const on = mode === m;
+              const label = m === 'system' ? 'System' : m === 'light' ? 'Light' : 'Dark';
+              return (
+                <TouchableOpacity
+                  key={m}
+                  style={[styles.appearanceChip, on && styles.appearanceChipOn]}
+                  onPress={() => setMode(m)}
+                  accessibilityRole="radio"
+                  accessibilityLabel={label}
+                  accessibilityState={{ checked: on }}
+                >
+                  <Text style={[styles.appearanceChipText, on && styles.appearanceChipTextOn]}>
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
         </View>
 
         <TouchableOpacity
@@ -266,7 +292,7 @@ export function ProfileScreen({ onBack }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const makeStyles = (dark: ThemeTokens) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: dark.bg },
   screen: { flex: 1 },
   content: { padding: 20, gap: 13, paddingBottom: 30 },
@@ -274,6 +300,14 @@ const styles = StyleSheet.create({
   tinyLabel: { fontSize: 12, color: dark.dim, letterSpacing: 1.3 },
   h1: { fontSize: 22, fontWeight: '900', color: dark.text, letterSpacing: -0.6, marginTop: 5 },
   card: { backgroundColor: dark.surf, borderWidth: 1, borderColor: dark.border, borderRadius: 18, padding: 16 },
+  appearanceRow: { flexDirection: 'row', gap: 8, marginTop: 10 },
+  appearanceChip: {
+    flex: 1, alignItems: 'center', paddingVertical: 11, borderRadius: 12,
+    borderWidth: 1, borderColor: dark.border2, backgroundColor: dark.surf2,
+  },
+  appearanceChipOn: { backgroundColor: dark.accentSoft, borderColor: dark.accentBorder },
+  appearanceChipText: { fontSize: 13, fontWeight: '700', color: dark.dim },
+  appearanceChipTextOn: { color: dark.accent },
   nameRow: { flexDirection: 'row', gap: 10, marginTop: 8 },
   nameInput: { flex: 1 },
   input: {

@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../components/AppText';
 import { KovaLogo } from '../components/KovaLogo';
 import { TabBar, TabKey } from '../components/TabBar';
 import { ScreenLoader } from '../components/ScreenLoader';
-import { dark } from '../constants/theme';
+import { useTheme, type ThemeTokens } from '../lib/theme';
 import { supabase } from '../lib/supabase';
 import { detectNearbyMerchant, DetectedMerchant } from '../engine/gpsDetection';
 import { getRecommendations, getLedgerSummary, CardRecommendation } from '../engine/recommendations';
@@ -26,6 +26,8 @@ type Props = {
 };
 
 export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile }: Props) {
+  const { theme, scheme } = useTheme();
+  const styles = useMemo(() => makeStyles(theme), [theme]);
   const [userId, setUserId] = useState<string | null>(null);
   const [greetingName, setGreetingName] = useState('there');
   const [merchant, setMerchant] = useState<DetectedMerchant | null>(null);
@@ -145,7 +147,7 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
           accessibilityRole="button"
           accessibilityLabel="Open profile"
         >
-          <KovaLogo size={38} mode="dark" />
+          <KovaLogo size={38} mode={scheme} />
         </TouchableOpacity>
       </View>
 
@@ -190,7 +192,7 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
             </View>
             <View style={[styles.spread, { marginTop: 9 }]}>
               <View style={styles.recInfo}>
-                <View style={[styles.minicard, { backgroundColor: topRec.colorHex ?? dark.surf3 }]} />
+                <View style={[styles.minicard, { backgroundColor: topRec.colorHex ?? theme.surf3 }]} />
                 <View style={styles.recTextCol}>
                   <Text style={styles.recCardName} numberOfLines={1}>Use {topRec.cardName}</Text>
                   <Text style={styles.tiny} numberOfLines={1}>
@@ -216,7 +218,7 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
             accessibilityRole="button"
             accessibilityLabel="View ledger"
           >
-            <Text style={[styles.tiny, { color: dark.accent }]}>View ledger →</Text>
+            <Text style={[styles.tiny, { color: theme.accent }]}>View ledger →</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.ledgerTotal}>${ledger.yearToDate.toFixed(2)}</Text>
@@ -297,7 +299,7 @@ export function HomeScreen({ onOpenRecommendation, onNavigateTab, onOpenProfile 
   );
 }
 
-const styles = StyleSheet.create({
+const makeStyles = (dark: ThemeTokens) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: dark.bg },
   screen: { flex: 1 },
   content: { padding: 20, gap: 13, paddingBottom: 30 },

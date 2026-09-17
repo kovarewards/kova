@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../components/AppText';
 import { TabBar, TabKey } from '../components/TabBar';
 import { ScreenLoader } from '../components/ScreenLoader';
-import { dark } from '../constants/theme';
+import { useTheme, type ThemeTokens } from '../lib/theme';
 import { CATEGORY_LABEL } from '../constants/categories';
 import { supabase } from '../lib/supabase';
 
@@ -22,6 +22,8 @@ type RotatingInfo = { category: string; multiplier: number; pointsType: string; 
 type Props = { onAddCard: () => void; onNavigateTab: (tab: TabKey) => void };
 
 export function WalletScreen({ onAddCard, onNavigateTab }: Props) {
+  const { theme } = useTheme();
+  const styles = useMemo(() => makeStyles(theme), [theme]);
   const [userId, setUserId] = useState<string | null>(null);
   const [cards, setCards] = useState<WalletCard[]>([]);
   const [cardsLoaded, setCardsLoaded] = useState(false);
@@ -133,7 +135,7 @@ export function WalletScreen({ onAddCard, onNavigateTab }: Props) {
             <View key={card.id} style={styles.card}>
               <View style={styles.spread}>
                 <View style={styles.rowline}>
-                  <View style={[styles.minicard, { backgroundColor: card.colorHex ?? dark.surf3 }]} />
+                  <View style={[styles.minicard, { backgroundColor: card.colorHex ?? theme.surf3 }]} />
                   <View>
                     <Text style={styles.cardName}>{card.name}</Text>
                     <Text style={styles.tiny}>{hasFee ? `$${card.annualFee} annual fee` : 'No annual fee'}</Text>
@@ -159,7 +161,7 @@ export function WalletScreen({ onAddCard, onNavigateTab }: Props) {
                     <View
                       style={[
                         styles.barFill,
-                        { width: `${pct}%`, backgroundColor: payingForItself ? dark.green : dark.gold },
+                        { width: `${pct}%`, backgroundColor: payingForItself ? theme.green : theme.gold },
                       ]}
                     />
                   </View>
@@ -200,7 +202,7 @@ export function WalletScreen({ onAddCard, onNavigateTab }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const makeStyles = (dark: ThemeTokens) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: dark.bg },
   screen: { flex: 1 },
   content: { padding: 20, gap: 13, paddingBottom: 30 },

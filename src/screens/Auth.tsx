@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   ActivityIndicator, KeyboardAvoidingView, Platform, StyleSheet,
   TouchableOpacity, View,
@@ -6,11 +6,13 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, TextInput } from '../components/AppText';
 import { KovaLogo } from '../components/KovaLogo';
-import { dark } from '../constants/theme';
+import { useTheme, type ThemeTokens } from '../lib/theme';
 import { supabase } from '../lib/supabase';
 import { containsProfanity } from '../lib/profanity';
 
 export function AuthScreen() {
+  const { theme, scheme } = useTheme();
+  const styles = useMemo(() => makeStyles(theme), [theme]);
   const [mode, setMode] = useState<'signIn' | 'signUp'>('signIn');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -79,7 +81,7 @@ export function AuthScreen() {
       <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View style={styles.content}>
           <View style={styles.logoRow}>
-            <KovaLogo size={72} mode="dark" />
+            <KovaLogo size={72} mode={scheme} />
             <Text style={styles.wordmark}>Kova</Text>
           </View>
           <Text style={styles.h1}>{mode === 'signIn' ? 'Welcome back' : 'Create your account'}</Text>
@@ -93,14 +95,14 @@ export function AuthScreen() {
                 value={firstName}
                 onChangeText={setFirstName}
                 placeholder="First name"
-                placeholderTextColor={dark.muted}
+                placeholderTextColor={theme.muted}
                 style={[styles.input, styles.nameInput]}
               />
               <TextInput
                 value={lastName}
                 onChangeText={setLastName}
                 placeholder="Last name (optional)"
-                placeholderTextColor={dark.muted}
+                placeholderTextColor={theme.muted}
                 style={[styles.input, styles.nameInput]}
               />
             </View>
@@ -109,7 +111,7 @@ export function AuthScreen() {
             value={email}
             onChangeText={setEmail}
             placeholder="Email"
-            placeholderTextColor={dark.muted}
+            placeholderTextColor={theme.muted}
             autoCapitalize="none"
             autoCorrect={false}
             keyboardType="email-address"
@@ -119,7 +121,7 @@ export function AuthScreen() {
             value={password}
             onChangeText={setPassword}
             placeholder="Password"
-            placeholderTextColor={dark.muted}
+            placeholderTextColor={theme.muted}
             secureTextEntry
             style={styles.input}
           />
@@ -148,7 +150,7 @@ export function AuthScreen() {
             accessibilityState={{ disabled: loading, busy: loading }}
           >
             {loading ? (
-              <ActivityIndicator color={dark.bg} />
+              <ActivityIndicator color={theme.bg} />
             ) : (
               <Text style={styles.btnText}>{mode === 'signIn' ? 'Sign in' : 'Sign up'}</Text>
             )}
@@ -176,7 +178,7 @@ export function AuthScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const makeStyles = (dark: ThemeTokens) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: dark.bg },
   flex: { flex: 1 },
   content: { flex: 1, justifyContent: 'center', padding: 24, gap: 13 },

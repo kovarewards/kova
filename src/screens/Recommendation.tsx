@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, TextInput } from '../components/AppText';
 import { TabBar, TabKey } from '../components/TabBar';
 import { ScreenLoader } from '../components/ScreenLoader';
-import { dark } from '../constants/theme';
+import { useTheme, type ThemeTokens } from '../lib/theme';
 import { supabase } from '../lib/supabase';
 import {
   getRecommendations, logCapture, getWalletGapCard,
@@ -23,6 +23,8 @@ export type RecommendationTarget = { name: string; category: string };
 type Props = { target: RecommendationTarget; onBack: () => void; onNavigateTab: (tab: TabKey) => void };
 
 export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
+  const { theme } = useTheme();
+  const styles = useMemo(() => makeStyles(theme), [theme]);
   const [userId, setUserId] = useState<string | null>(null);
   const [spendInput, setSpendInput] = useState('100');
   const [spendAmount, setSpendAmount] = useState(100);
@@ -130,7 +132,7 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
             </View>
             <View style={[styles.spread, { marginTop: 8 }]}>
               <View style={styles.recInfo}>
-                <View style={[styles.minicard, { backgroundColor: best.colorHex ?? dark.surf3 }]} />
+                <View style={[styles.minicard, { backgroundColor: best.colorHex ?? theme.surf3 }]} />
                 <View style={styles.recTextCol}>
                   <Text style={styles.bestCardName} numberOfLines={1}>{best.cardName}</Text>
                   <Text style={styles.tiny} numberOfLines={1}>
@@ -173,7 +175,7 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
         {rest.map((r) => (
           <View key={r.cardId} style={[styles.card, styles.spread]}>
             <View style={styles.recInfo}>
-              <View style={[styles.minicard, { backgroundColor: r.colorHex ?? dark.surf3 }]} />
+              <View style={[styles.minicard, { backgroundColor: r.colorHex ?? theme.surf3 }]} />
               <View style={styles.recTextCol}>
                 <Text style={styles.cardName} numberOfLines={1}>{r.cardName}</Text>
                 <Text style={styles.tiny} numberOfLines={1}>
@@ -221,7 +223,7 @@ export function RecommendationScreen({ target, onBack, onNavigateTab }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const makeStyles = (dark: ThemeTokens) => StyleSheet.create({
   safe: { flex: 1, backgroundColor: dark.bg },
   screen: { flex: 1 },
   content: { padding: 20, gap: 13, paddingBottom: 30 },
