@@ -6,7 +6,7 @@
     "annual_fee": 325,
     "color_hex": "#D4AF37",
     "source_url": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
-    "notes": "",
+    "notes": "Confirmed 2026-09-20 via Scout/Auditor weekly check (2 independent sources: WebSearch aggregate and Bankrate/WalletHub) — point-earning categories and $325 annual fee unchanged. This card also carries enrollment-required statement credits not reflected in the category rows below: up to $120/yr Dining Credit (Grubhub incl. Seamless, Buffalo Wild Wings, Five Guys, The Cheesecake Factory, Wonder), $120/yr Uber Cash, $100/yr Resy Credit (10,000+ qualifying U.S. restaurants), and $84/yr Dunkin' Credit. These are card-level statement credits, not category multipliers, and do not change any modeled rate.",
     "categories": [
       { "category": "dining",    "multiplier": 4, "points_type": "MR", "cpp": 0.02, "notes": "capped at first $50,000/yr in purchases, then 1x" },
       { "category": "groceries", "multiplier": 4, "points_type": "MR", "cpp": 0.02, "notes": "U.S. supermarkets only, capped at first $25,000/yr, then 1x" },
@@ -21,7 +21,7 @@
     "annual_fee": 95,
     "color_hex": "#1A3C6E",
     "source_url": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
-    "notes": "",
+    "notes": "Confirmed 2026-09-20 via Scout/Auditor weekly check (2 independent sources: WebSearch aggregate and NerdWallet/Forbes Advisor) — category rates and $95 annual fee unchanged following Chase's June 2026 refresh. This card also carries perks not reflected in the category rows below: a $120 statement credit (once every 4 years) toward Global Entry/TSA PreCheck/NEXUS, a $100/yr Chase Travel hotel credit (up from $50), and a complimentary 1-year Apple TV+ subscription if activated by 2026-12-31. These are card-level credits, not category multipliers, and do not change any modeled rate.",
     "categories": [
       { "category": "travel",    "multiplier": 5, "points_type": "UR", "cpp": 0.0205, "notes": "5x only on travel booked through Chase Travel; other travel earns 2x" },
       { "category": "dining",    "multiplier": 3, "points_type": "UR", "cpp": 0.0205 },
@@ -53,7 +53,7 @@
     "annual_fee": 795,
     "color_hex": "#0F2A4A",
     "source_url": "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
-    "notes": "Verified 2026-07-14 against creditcards.chase.com/rewards-credit-cards/sapphire/reserve.",
+    "notes": "Verified 2026-07-14 against creditcards.chase.com/rewards-credit-cards/sapphire/reserve. Confirmed 2026-09-20 via Scout/Auditor weekly check (2 independent sources: WebSearch aggregate and NerdWallet/Bankrate) — core rates and $795 annual fee unchanged. Card-level statement credits not reflected in the category rows below: $300/yr travel credit, $300/yr dining credit at Sapphire Reserve Exclusive Tables restaurants ($150 in January + $150 in July), and $500/yr in prepaid-stay credits via The Edit (two $250 credits). These are statement credits, not category multipliers, and do not change any modeled rate.",
     "categories": [
       { "category": "dining", "multiplier": 3, "points_type": "UR", "cpp": 0.0205, "notes": "worldwide" },
       { "category": "travel", "multiplier": 4, "points_type": "UR", "cpp": 0.0205, "notes": "flights/hotels booked directly; 8x applies via Chase Travel/The Edit instead" },
@@ -67,7 +67,7 @@
     "annual_fee": 0,
     "color_hex": "#117ACA",
     "source_url": "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
-    "notes": "Verified 2026-07-14 against creditcards.chase.com/cash-back-credit-cards/freedom/flex. Added start_date/end_date to the Q3 2026 rotating rows (gas, ev_charging, transit, entertainment) so Kova's activation-reminder feature actually triggers for this card — the draft previously only described the rotation in notes text, which the app doesn't read.",
+    "notes": "Verified 2026-07-14 against creditcards.chase.com/cash-back-credit-cards/freedom/flex. Added start_date/end_date to the Q3 2026 rotating rows (gas, ev_charging, transit, entertainment) so Kova's activation-reminder feature actually triggers for this card — the draft previously only described the rotation in notes text, which the app doesn't read. Confirmed 2026-09-20 via Scout/Auditor weekly check (2 independent sources: WebSearch aggregate and CNBC/Bankrate) — Chase has announced Q4 2026 (Oct 1–Dec 31) rotating categories: grocery stores (excluding Walmart/Target), dining, and American Red Cross donations, $1,500/quarter combined cap, activation open through 2026-12-14; dining stacks with this card's standing 3x dining rate for 7x total during Q4. The Q3 2026 rows above remain accurate through 2026-09-30. Q4 category rows still need to be added as structured data once Q4 begins — not done automatically this run since it requires new category entries with their own dates/multipliers, not just a notes edit.",
     "categories": [
       { "category": "dining",       "multiplier": 3, "points_type": "UR", "cpp": 0.01, "notes": "plus 5% rotating quarterly categories, $1,500/quarter combined cap, activation required" },
       { "category": "gas",          "multiplier": 5, "points_type": "UR", "cpp": 0.01, "start_date": "2026-07-01", "end_date": "2026-09-30", "notes": "Q3 2026 rotating category — will change Oct 1, 2026, reconfirm each quarter" },
@@ -741,7 +741,7 @@
     "annual_fee": 0,
     "color_hex": "#4A7BC8",
     "source_url": "https://www.usbank.com/credit-cards/cash-plus-visa-signature-credit-card.html",
-    "notes": "Verified 2026-07-14 against usbank.com. This card lets the cardholder choose 2 of 12 categories for 5% back ($2,000/quarter combined cap) plus 1 of 3 'everyday' categories (gas/groceries/restaurants) for 2% — Kova has no way to know which were selected, same unknowable-selection issue as Bank of America Customized Cash Rewards and Citi Custom Cash, so only the guaranteed 1% base rate is modeled. Also 5% on prepaid U.S. Bank Travel Center bookings, not GPS-detectable.",
+    "notes": "Verified 2026-07-14 against usbank.com. This card lets the cardholder choose 2 of 12 categories for 5% back ($2,000/quarter combined cap) plus 1 of 3 'everyday' categories (gas/groceries/restaurants) for 2% — Kova has no way to know which were selected, same unknowable-selection issue as Bank of America Customized Cash Rewards and Citi Custom Cash, so only the guaranteed 1% base rate is modeled. Also 5% on prepaid U.S. Bank Travel Center bookings, not GPS-detectable. Confirmed 2026-09-20 via Scout/Auditor weekly check (2 independent sources: WebSearch aggregate and WalletHub) — the 2% 'everyday' choice bundles gas stations together with EV charging stations as one selectable option, alongside grocery stores and restaurants; does not change the unknowable-selection issue or the modeled 1% base rate.",
     "categories": [
       { "category": "other", "multiplier": 1, "points_type": "CB", "cpp": 0.01 }
     ]
@@ -753,7 +753,7 @@
     "annual_fee": 95,
     "color_hex": "#002F6C",
     "source_url": "https://www.penfed.org/credit-cards/pathfinder-rewards-visa",
-    "notes": "Verified 2026-07-14 — founder confirmed directly on penfed.org (penfed.org is bot-blocked to automated fetching; ~11 automated attempts across all passes failed). Travel split confirmed: 3x standard members, 4x PenFed Honors Advantage members. New addition: a dining category exists that wasn't in the original draft at all — 2x standard, 3x Honors Advantage. Modeled rates use the standard (non-Honors-Advantage) tier throughout, since Kova has no way to know a user's PenFed membership status — same principle as not assuming a Bank of America Preferred Rewards bonus. Fixed source_url to the working link the founder found.",
+    "notes": "Verified 2026-07-14 — founder confirmed directly on penfed.org (penfed.org is bot-blocked to automated fetching; ~11 automated attempts across all passes failed). Travel split confirmed: 3x standard members, 4x PenFed Honors Advantage members. New addition: a dining category exists that wasn't in the original draft at all — 2x standard, 3x Honors Advantage. Modeled rates use the standard (non-Honors-Advantage) tier throughout, since Kova has no way to know a user's PenFed membership status — same principle as not assuming a Bank of America Preferred Rewards bonus. Fixed source_url to the working link the founder found. Confirmed 2026-09-20 via Scout/Auditor weekly check (2 independent sources: WebSearch aggregate and Doctor of Credit) — PenFed has notified cardholders that the Honors Advantage annual-fee waiver on this card ends 2026-09-28; after that date the $95 fee applies to all cardholders regardless of membership tier. Kova already modeled the $95 fee unconditionally, so no change to modeled data, but the 'may have the annual fee waived' language in the travel category note below is now stale going forward.",
     "categories": [
       { "category": "travel",  "multiplier": 3,   "points_type": "CB", "cpp": 0.01, "notes": "standard rate; PenFed Honors Advantage members earn 4x instead and may have the annual fee waived — confirm your own membership status" },
       { "category": "dining",  "multiplier": 2,   "points_type": "CB", "cpp": 0.01, "notes": "standard rate; PenFed Honors Advantage members earn 3x instead" },
