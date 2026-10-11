@@ -495,7 +495,7 @@
     "annual_fee": 395,
     "color_hex": "#D22630",
     "source_url": "https://www.capitalone.com/credit-cards/venture-x/",
-    "notes": "Verified 2026-07-14. $395 fee and 5x Capital One Entertainment rate reconfirmed directly; the base 2x rate and the 5x-flights/10x-hotels travel split could not be pulled from Capital One's JS-rendered page (same wall hit on a prior pass too) and rely on cross-referenced secondary sources instead.",
+    "notes": "Verified 2026-07-14. $395 fee and 5x Capital One Entertainment rate reconfirmed directly; the base 2x rate and the 5x-flights/10x-hotels travel split could not be pulled from Capital One's JS-rendered page (same wall hit on a prior pass too) and rely on cross-referenced secondary sources instead. Confirmed 2026-10-11 via Scout/Auditor weekly check (2 independent sources — The Points Guy, One Mile at a Time): as of Feb 1, 2026, authorized users no longer get automatic lounge access; the primary cardholder can instead pay $125/year per authorized user (up to 4) for Capital One Lounge, Capital One Landings, and Priority Pass access. This doesn't change the card's own fee or earn rates.",
     "categories": [
       { "category": "travel", "multiplier": 5, "points_type": "C1", "cpp": 0.017, "notes": "flights and vacation rentals via Capital One Travel earn 5x; hotels and rental cars via Capital One Travel earn 10x instead — this row uses the more broadly-applicable 5x rate. Capital One Entertainment purchases separately earn 5x" },
       { "category": "other",  "multiplier": 2, "points_type": "C1", "cpp": 0.017, "notes": "general/everyday purchases" }
